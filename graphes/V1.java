@@ -11,7 +11,6 @@ import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;
 
 public class V1 {
-    
     private static final String SEPARATOR = ";";
 
     private static final int DEPART_IDX = 0;
@@ -38,6 +37,10 @@ public class V1 {
         double prix, pollution;
         int Duree;
 
+        int thresholdPrix = Integer.MAX_VALUE, thresholdDuree = Integer.MAX_VALUE;
+        double thresholdPollution = Double.MAX_VALUE;
+
+
 
 
         if (donneesValides(args)) {
@@ -57,16 +60,14 @@ public class V1 {
                 g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
             }
 
-            //ModaliteTransport moyen = getModaliteTransport();
-            ModaliteTransport moyen = ModaliteTransport.TRAIN;
+            ModaliteTransport moyen = getModaliteTransport();
+            //ModaliteTransport moyen = ModaliteTransport.TRAIN;
 
             Lieu dep = getLieuDepart(g);
 
             Lieu dest = getLieuDestination(g, dep);
 
-            Critere critere = getCritere();
 
-            int nb_trajet = getNbTrajet();
             
 
             // if (moyen == null) {
@@ -79,11 +80,58 @@ public class V1 {
             // }
             if (g.hasPathByModalite(dep.toString(), dest.toString(), moyen)) {
                 
-                List<Chemin> chemins = g.getPathByModaliteAndCritere(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
-                System.out.println("Les trajets recommandés de " + dep + " à " + dest + " sont:");
-                for (int i = 0; i < chemins.size(); i++) {
-                    System.out.println(i + 1 + ") " + cheminWithCorre(chemins.get(i), critere));
+                List<Critere> criteres = new ArrayList<>();
+                criteres.add(Critere.PRIX);
+                criteres.add(Critere.POLLUTION);
+                criteres.add(Critere.DUREE);
+                
+                Critere critere = getCritere();
+                criteres.remove(critere);
+
+                for (Critere c : criteres) {
+                    switch (c) {
+                        case PRIX:
+                            thresholdPrix = getThresholdPrix();
+                            break;
+                        case POLLUTION:
+                            thresholdPollution = getThresholdPollution();
+                            break;
+                        case DUREE:
+                            thresholdDuree = getThresholdDuree();
+                            break;
+                    }
                 }
+
+                
+
+                int nb_trajet = getNbTrajet();
+
+
+                List<Chemin> chemins = g.getPathByModaliteAndCritere(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
+                for (Critere c : criteres) {
+                    switch (c) {
+                        case PRIX:
+                            applyThreshold(g, chemins, c, thresholdPrix);
+                            break;
+                        case POLLUTION:
+                            applyThreshold(g, chemins, c, thresholdPollution);
+                            break;
+                        case DUREE:
+                            applyThreshold(g, chemins, c, thresholdDuree);
+                            break;
+                    }
+                }
+
+                if (chemins.size() == 0) {
+                    System.out.println("Il n'y a pas de chemin disponible pour les critères que vous avez choisi");
+                }
+                else {
+                    System.out.println("Les trajets recommandés de " + dep + " à " + dest + " sont:");
+                    for (int i = 0; i < chemins.size(); i++) {
+                        System.out.println(i + 1 + ") " + cheminWithCorre(chemins.get(i), critere));
+                    }
+                }
+                
             }
             else {
                 System.out.println("Il n'y a pas de chemin disponible pour le moyen de transport que vous avez choisi");
@@ -236,6 +284,73 @@ public class V1 {
         }
         return Integer.parseInt(r);
     }
+
+    public static int getThresholdPrix() {
+        System.out.println("Entrez le prix maximum que vous êtes prêt à payer:");
+        String r = getUserInuput();
+        if (r.length() == 0) {
+            System.out.println("Vous n'avez rien entré");
+            return getThresholdPrix();
+        }
+        if (!estNombre(r)) {
+            System.out.println("Vous devez entrer un nombre");
+            return getThresholdPrix();
+        }
+        return Integer.parseInt(r);
+    }
+
+    public static int getThresholdDuree() {
+        System.out.println("Entrez la durée maximum que vous êtes prêt à passer:");
+        String r = getUserInuput();
+        if (r.length() == 0) {
+            System.out.println("Vous n'avez rien entré");
+            return getThresholdDuree();
+        }
+        if (!estNombre(r)) {
+            System.out.println("Vous devez entrer un nombre");
+            return getThresholdDuree();
+        }
+        return Integer.parseInt(r);
+    }
+
+    public static double getThresholdPollution() {
+        System.out.println("Entrez la pollution maximum que vous êtes prêt à subir:");
+        String r = getUserInuput();
+        if (r.length() == 0) {
+            System.out.println("Vous n'avez rien entré");
+            return getThresholdPollution();
+        }
+        if (!estNombre(r)) {
+            System.out.println("Vous devez entrer un nombre");
+            return getThresholdPollution();
+        }
+        return Double.parseDouble(r);
+    }
+
+
+    public static void applyThreshold(Graphes g, List<Chemin> chemins, Critere critere, int threshold) {
+        List<Chemin> toRemove = new ArrayList<>();
+        for (Chemin che : chemins) {
+            double poidsByCritere = g.getPoidsByCritere(che, critere);
+            if (poidsByCritere > threshold) {
+                toRemove.add(che);
+
+            }
+        }
+        chemins.removeAll(toRemove);
+
+    }
+
+    public static void applyThreshold(Graphes g, List<Chemin> chemins, Critere critere, double threshold) {
+        for (Chemin che : chemins) {
+            double poidsByCritere = g.getPoidsByCritere(che, critere);
+            if (poidsByCritere > threshold) {
+                chemins.remove(che);
+            }
+        }
+
+    }
+
 
 
 

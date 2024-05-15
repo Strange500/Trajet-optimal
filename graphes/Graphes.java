@@ -30,6 +30,37 @@ public class Graphes {
         g3 = new MultiGrapheOrienteValue();
     }
 
+    public  double getPoidsByCritere(Chemin chemin, Critere critere) {
+        double poids = 0;
+        for (Trancon t : chemin.aretes()) {
+            if (t.getDepart().toString().equals(ALPHA) || t.getArrivee().toString().equals(OMEGA)) {
+                continue;
+            }
+            switch (critere) {
+                case PRIX:
+                    poids += this.g1.getPoidsArete(t);
+                    break;
+                case POLLUTION:
+                    poids += this.g2.getPoidsArete(t);
+                    break;
+                case DUREE:
+                    poids += this.g3.getPoidsArete(t);
+                    break;
+            }
+        }
+        return poids;
+        
+    }
+
+    // private Trancon findTrancon(String depart, String arrivee, ModaliteTransport modalite) {
+    //     for (Trancon t : this.g1.aretes()) {
+    //         if (t.getDepart().toString().equals(depart) && t.getArrivee().toString().equals(arrivee) && t.getModalite() == modalite) {
+    //             return t;
+    //         }
+    //     }
+    //     return null;
+    // }
+
 
     public boolean hasPathByModalite(String depart, String arrivee, ModaliteTransport modalite) {
         Graphes g = this.clone();
