@@ -1,15 +1,15 @@
 package graphes;
 
-public enum Critere {
-    PRIX, POLLUTION, DUREE;
+public enum TypeCout {
+    PRIX, CO2, TEMPS;
 
-    public static String getUnit(Critere critere) {
+    public static String getUnit(TypeCout critere) {
         switch (critere) {
             case PRIX:
                 return "€";
-            case POLLUTION:
+            case CO2:
                 return "kgCO2";
-            case DUREE:
+            case TEMPS:
                 return "min";
         }
         return "";

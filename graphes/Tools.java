@@ -10,15 +10,15 @@ import fr.ulille.but.sae_s2_2024.AlgorithmeKPCC;
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;
 
-public class V1 {
+public class Tools {
     private static final String SEPARATOR = ";";
 
     private static final int DEPART_IDX = 0;
     private static final int DESTINATION_IDX = 1;
     private static final int MODALITE_IDX = 2;
     private static final int PRIX_IDX = 3;
-    private static final int POLLUTION_IDX = 4;
-    private static final int DUREE_IDX = 5;
+    private static final int CO2_IDX = 4;
+    private static final int TEMPS_IDX = 5;
 
     public static void main (String[] args) {
         String[] data = new String[]{
@@ -40,63 +40,35 @@ public class V1 {
         int thresholdPrix = Integer.MAX_VALUE, thresholdDuree = Integer.MAX_VALUE;
         double thresholdPollution = Double.MAX_VALUE;
 
-
-
-
         if (donneesValides(args)) {
-            Graphes g = new Graphes();
-            for (String arg : args) {
-                String[] elements = arg.split(SEPARATOR);
-                
-                depart = elements[DEPART_IDX];
-                destination = elements[DESTINATION_IDX];
-                modalite = ModaliteTransport.valueOf(elements[MODALITE_IDX].toUpperCase());
-                prix = Double.parseDouble(elements[PRIX_IDX]);
-                pollution = Double.parseDouble(elements[POLLUTION_IDX]);
-                Duree = Integer.parseInt(elements[DUREE_IDX]);
 
-
-                g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
-                g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
-            }
-
+            Plateforme g = initPlateforme(args);
+            
             ModaliteTransport moyen = getModaliteTransport();
-            //ModaliteTransport moyen = ModaliteTransport.TRAIN;
 
             Lieu dep = getLieuDepart(g);
 
             Lieu dest = getLieuDestination(g, dep);
 
-
-            
-
-            // if (moyen == null) {
-            //     List<Chemin> chemins = g.getPathByCritere(dep.toString(), dest.toString(), critere);
-            //     System.out.println("Les trajets recommandés de " + dep + " à " + dest + " sont:");
-            //     for (int i = 0; i < chemins.size(); i++) {
-            //         System.out.println(i + 1 + ") " + cheminWithCorre(chemins.get(i)));
-            //     }
-
-            // }
             if (g.hasPathByModalite(dep.toString(), dest.toString(), moyen)) {
                 
-                List<Critere> criteres = new ArrayList<>();
-                criteres.add(Critere.PRIX);
-                criteres.add(Critere.POLLUTION);
-                criteres.add(Critere.DUREE);
+                List<TypeCout> criteres = new ArrayList<>();
+                criteres.add(TypeCout.PRIX);
+                criteres.add(TypeCout.CO2);
+                criteres.add(TypeCout.TEMPS);
                 
-                Critere critere = getCritere();
+                TypeCout critere = getTypeCout();
                 criteres.remove(critere);
 
-                for (Critere c : criteres) {
+                for (TypeCout c : criteres) {
                     switch (c) {
                         case PRIX:
                             thresholdPrix = getThresholdPrix();
                             break;
-                        case POLLUTION:
+                        case CO2:
                             thresholdPollution = getThresholdPollution();
                             break;
-                        case DUREE:
+                        case TEMPS:
                             thresholdDuree = getThresholdDuree();
                             break;
                     }
@@ -107,16 +79,16 @@ public class V1 {
                 int nb_trajet = getNbTrajet();
 
 
-                List<Chemin> chemins = g.getPathByModaliteAndCritere(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
-                for (Critere c : criteres) {
+                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
+                for (TypeCout c : criteres) {
                     switch (c) {
                         case PRIX:
                             applyThreshold(g, chemins, c, thresholdPrix);
                             break;
-                        case POLLUTION:
+                        case CO2:
                             applyThreshold(g, chemins, c, thresholdPollution);
                             break;
-                        case DUREE:
+                        case TEMPS:
                             applyThreshold(g, chemins, c, thresholdDuree);
                             break;
                     }
@@ -159,7 +131,25 @@ public class V1 {
     }
 
     
+    public static Plateforme initPlateforme(String[] args) {
+        Plateforme g = new Plateforme();
+        for (String arg : args) {
+            String[] elements = arg.split(SEPARATOR);
+            
+            String depart = elements[DEPART_IDX];
+            String destination = elements[DESTINATION_IDX];
+            ModaliteTransport modalite = ModaliteTransport.valueOf(elements[MODALITE_IDX].toUpperCase());
+            double prix = Double.parseDouble(elements[PRIX_IDX]);
+            double pollution = Double.parseDouble(elements[CO2_IDX]);
+            int Duree = Integer.parseInt(elements[TEMPS_IDX]);
 
+
+            g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
+            g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
+        }
+        return g;
+
+    }
     
 
     public static boolean estNombre(String chaine) {
@@ -216,7 +206,7 @@ public class V1 {
         }
     }
 
-    public static Lieu getLieuDepart(Graphes g) {
+    public static Lieu getLieuDepart(Plateforme g) {
         System.out.println("Ville de départ disponible:");
         for (Lieu l : g.getLieux()) {
             System.out.println("\t- " + l);
@@ -227,14 +217,14 @@ public class V1 {
             System.out.println("Vous n'avez rien entré");
             return getLieuDepart(g);
         }
-        if (!Graphes.contientLieux(g.getG1(), r)) {
+        if (!Plateforme.contientLieux(g.getG1(), r)) {
             System.out.println("La ville que vous avez entré n'existe pas");
             return getLieuDepart(g);
         }
         return new ILieu(r);
     }
 
-    public static Lieu getLieuDestination(Graphes g, Lieu depart) {
+    public static Lieu getLieuDestination(Plateforme g, Lieu depart) {
         System.out.println("Ville de destination disponible:");
         for (Lieu l : g.getLieux(depart))  {
             System.out.println("\t- " + l);
@@ -245,29 +235,29 @@ public class V1 {
             System.out.println("Vous n'avez rien entré");
             return getLieuDestination(g, depart);
         }
-        if (!Graphes.contientLieux(g.getG1(), r)) {
+        if (!Plateforme.contientLieux(g.getG1(), r)) {
             System.out.println("La ville que vous avez entré n'existe pas");
             return getLieuDestination(g, depart);
         }
         return new ILieu(r);
     }
 
-    public static Critere getCritere() {
-        System.out.println("Critere disponible:");
-        for (Critere l : Critere.values()) {
+    public static TypeCout getTypeCout() {
+        System.out.println("TypeCout disponible:");
+        for (TypeCout l : TypeCout.values()) {
             System.out.println("\t- " + l);
         }
         System.out.println("Entrez le critere:");
         String r = getUserInuput();
         if (r.length() == 0) {
             System.out.println("Vous n'avez rien entré");
-            return getCritere();
+            return getTypeCout();
         }
         try {
-            return Critere.valueOf(r.toUpperCase());
+            return TypeCout.valueOf(r.toUpperCase());
         } catch (IllegalArgumentException e) {
             System.out.println("Le critere que vous avez entré n'existe pas");
-            return getCritere();
+            return getTypeCout();
         }
     }
 
@@ -328,11 +318,11 @@ public class V1 {
     }
 
 
-    public static void applyThreshold(Graphes g, List<Chemin> chemins, Critere critere, int threshold) {
+    public static void applyThreshold(Plateforme g, List<Chemin> chemins, TypeCout critere, int threshold) {
         List<Chemin> toRemove = new ArrayList<>();
         for (Chemin che : chemins) {
-            double poidsByCritere = g.getPoidsByCritere(che, critere);
-            if (poidsByCritere > threshold) {
+            double poidsByTypeCout = g.getPoidsByTypeCout(che, critere);
+            if (poidsByTypeCout > threshold) {
                 toRemove.add(che);
 
             }
@@ -341,20 +331,22 @@ public class V1 {
 
     }
 
-    public static void applyThreshold(Graphes g, List<Chemin> chemins, Critere critere, double threshold) {
+    public static void applyThreshold(Plateforme g, List<Chemin> chemins, TypeCout critere, double threshold) {
+        List<Chemin> toRemove = new ArrayList<>();
         for (Chemin che : chemins) {
-            double poidsByCritere = g.getPoidsByCritere(che, critere);
-            if (poidsByCritere > threshold) {
-                chemins.remove(che);
+            double poidsByTypeCout = g.getPoidsByTypeCout(che, critere);
+            if (poidsByTypeCout > threshold) {
+                toRemove.add(che);
             }
         }
+        chemins.removeAll(toRemove);
 
     }
 
 
 
 
-    public static String cheminWithCorre(Chemin che, Critere critere) {
+    public static String cheminWithCorre(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
@@ -378,7 +370,7 @@ public class V1 {
             }
             
         }
-        return r + " totale: " + che.poids() + " " +Critere.getUnit(critere) ;
+        return r + " totale: " + che.poids() + " " +TypeCout.getUnit(critere) ;
 
 }
 

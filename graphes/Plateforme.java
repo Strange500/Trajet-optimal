@@ -15,7 +15,7 @@ import fr.ulille.but.sae_s2_2024.Trancon;
 /*
  * c'est un graphe qui contient 3 graphes, chacun se basant sur un critere different
  */
-public class Graphes {
+public class Plateforme {
     public static int TEMP_CHANGEMENT = 10;
     public static String ALPHA = "ALPHA";
     public static String OMEGA = "OMEGA";
@@ -24,13 +24,13 @@ public class Graphes {
     private MultiGrapheOrienteValue g2;
     private MultiGrapheOrienteValue g3;
 
-    public Graphes() {
+    public Plateforme() {
         g1 = new MultiGrapheOrienteValue();
         g2 = new MultiGrapheOrienteValue();
         g3 = new MultiGrapheOrienteValue();
     }
 
-    public  double getPoidsByCritere(Chemin chemin, Critere critere) {
+    public  double getPoidsByTypeCout(Chemin chemin, TypeCout critere) {
         double poids = 0;
         for (Trancon t : chemin.aretes()) {
             if (t.getDepart().toString().equals(ALPHA) || t.getArrivee().toString().equals(OMEGA)) {
@@ -40,10 +40,10 @@ public class Graphes {
                 case PRIX:
                     poids += this.g1.getPoidsArete(t);
                     break;
-                case POLLUTION:
+                case CO2:
                     poids += this.g2.getPoidsArete(t);
                     break;
-                case DUREE:
+                case TEMPS:
                     poids += this.g3.getPoidsArete(t);
                     break;
             }
@@ -63,21 +63,21 @@ public class Graphes {
 
 
     public boolean hasPathByModalite(String depart, String arrivee, ModaliteTransport modalite) {
-        Graphes g = this.clone();
+        Plateforme g = this.clone();
         g.filterByModality(modalite);
         Lieu dep = this.getSommet(depart);
         Lieu arr = this.getSommet(arrivee);
         return AlgorithmeKPCC.kpcc(g.g1, dep, arr, 1).size() > 0;
     }
 
-    public List<Chemin> getPathByModaliteAndCritere(String dep, String arr, ModaliteTransport modalite, Critere critere, int nbChemin) {
-        Graphes g = this.clone();
+    public List<Chemin> getPathByModaliteAndTypeCout(String dep, String arr, ModaliteTransport modalite, TypeCout critere, int nbChemin) {
+        Plateforme g = this.clone();
         g.filterByModality(modalite);
-        return g.getPathByCritere(dep, arr, critere, nbChemin);
+        return g.getPathByTypeCout(dep, arr, critere, nbChemin);
     }
 
-    public List<Chemin> getPathByCritere(String dep, String arr,  Critere critere, int nbChemin) {
-        Graphes g = this.clone();
+    public List<Chemin> getPathByTypeCout(String dep, String arr,  TypeCout critere, int nbChemin) {
+        Plateforme g = this.clone();
         Lieu depart = this.getSommet(dep);
         Lieu arrivee = this.getSommet(arr);
 
@@ -91,16 +91,16 @@ public class Graphes {
         switch (critere) {
             case PRIX:
                 return AlgorithmeKPCC.kpcc(g.g1, alpha, omega, nbChemin);
-            case POLLUTION:
+            case CO2:
                 return AlgorithmeKPCC.kpcc(g.g2, alpha, omega, nbChemin);
-            case DUREE:
+            case TEMPS:
                 return AlgorithmeKPCC.kpcc(g.g3, alpha, omega, nbChemin);
         }
         return new ArrayList<Chemin>();
     }
 
-    public Graphes clone() {
-        Graphes g = new Graphes();
+    public Plateforme clone() {
+        Plateforme g = new Plateforme();
         g.g1 = clone(g1);
         g.g2 = clone(g2);
         g.g3 = clone(g3);
@@ -179,11 +179,11 @@ public class Graphes {
 
     public boolean ajouterLieux(String nom) {
         Lieu l = new ILieu(nom);
-        return Graphes.ajouterLieux(g1, l) && Graphes.ajouterLieux(g2, l) && Graphes.ajouterLieux(g3, l);
+        return Plateforme.ajouterLieux(g1, l) && Plateforme.ajouterLieux(g2, l) && Plateforme.ajouterLieux(g3, l);
     }
 
     private static boolean ajouterLieux(MultiGrapheOrienteValue g, Lieu lieu) {
-        if (Graphes.contientLieux(g, lieu)) {
+        if (Plateforme.contientLieux(g, lieu)) {
             return false;
         }
         g.ajouterSommet(lieu);
