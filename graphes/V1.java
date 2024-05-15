@@ -65,6 +65,8 @@ public class V1 {
             Lieu dest = getLieuDestination(g, dep);
 
             Critere critere = getCritere();
+
+            int nb_trajet = getNbTrajet();
             
 
             // if (moyen == null) {
@@ -77,7 +79,7 @@ public class V1 {
             // }
             if (g.hasPathByModalite(dep.toString(), dest.toString(), moyen)) {
                 
-                List<Chemin> chemins = g.getPathByModaliteAndCritere(dep.toString(), dest.toString(), moyen, critere);
+                List<Chemin> chemins = g.getPathByModaliteAndCritere(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
                 System.out.println("Les trajets recommandés de " + dep + " à " + dest + " sont:");
                 for (int i = 0; i < chemins.size(); i++) {
                     System.out.println(i + 1 + ") " + cheminWithCorre(chemins.get(i), critere));
@@ -219,6 +221,20 @@ public class V1 {
             System.out.println("Le critere que vous avez entré n'existe pas");
             return getCritere();
         }
+    }
+
+    public static int getNbTrajet() {
+        System.out.println("Combien de trajet voulez-vous?");
+        String r = getUserInuput();
+        if (r.length() == 0) {
+            System.out.println("Vous n'avez rien entré");
+            return getNbTrajet();
+        }
+        if (!estNombre(r)) {
+            System.out.println("Vous devez entrer un nombre");
+            return getNbTrajet();
+        }
+        return Integer.parseInt(r);
     }
 
 

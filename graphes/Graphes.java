@@ -39,13 +39,13 @@ public class Graphes {
         return AlgorithmeKPCC.kpcc(g.g1, dep, arr, 1).size() > 0;
     }
 
-    public List<Chemin> getPathByModaliteAndCritere(String dep, String arr, ModaliteTransport modalite, Critere critere) {
+    public List<Chemin> getPathByModaliteAndCritere(String dep, String arr, ModaliteTransport modalite, Critere critere, int nbChemin) {
         Graphes g = this.clone();
         g.filterByModality(modalite);
-        return g.getPathByCritere(dep, arr, critere);
+        return g.getPathByCritere(dep, arr, critere, nbChemin);
     }
 
-    public List<Chemin> getPathByCritere(String dep, String arr,  Critere critere) {
+    public List<Chemin> getPathByCritere(String dep, String arr,  Critere critere, int nbChemin) {
         Graphes g = this.clone();
         Lieu depart = this.getSommet(dep);
         Lieu arrivee = this.getSommet(arr);
@@ -59,11 +59,11 @@ public class Graphes {
 
         switch (critere) {
             case PRIX:
-                return AlgorithmeKPCC.kpcc(g.g1, alpha, omega, 1);
+                return AlgorithmeKPCC.kpcc(g.g1, alpha, omega, nbChemin);
             case POLLUTION:
-                return AlgorithmeKPCC.kpcc(g.g2, alpha, omega, 1);
+                return AlgorithmeKPCC.kpcc(g.g2, alpha, omega, nbChemin);
             case DUREE:
-                return AlgorithmeKPCC.kpcc(g.g3, alpha, omega, 1);
+                return AlgorithmeKPCC.kpcc(g.g3, alpha, omega, nbChemin);
         }
         return new ArrayList<Chemin>();
     }
