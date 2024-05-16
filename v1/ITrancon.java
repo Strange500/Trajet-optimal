@@ -1,4 +1,4 @@
-package graphes;
+package src.v1;
 
 import fr.ulille.but.sae_s2_2024.Lieu;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;

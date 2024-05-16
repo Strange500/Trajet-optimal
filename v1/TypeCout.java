@@ -1,4 +1,4 @@
-package graphes;
+package src.v1;
 
 public enum TypeCout {
     PRIX, CO2, TEMPS;

@@ -1,4 +1,4 @@
-package graphes;
+package v1;
 
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
