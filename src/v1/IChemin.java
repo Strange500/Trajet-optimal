@@ -29,6 +29,9 @@ public class IChemin implements Chemin {
     }
 
     public static List<Chemin> splitByModalite(Chemin chemin) {
+        if (chemin.aretes().size() == 0) {
+            return new ArrayList<Chemin>();
+        }
         List<Chemin> chemins = new ArrayList<Chemin>();
         Iterator<Trancon> it = chemin.aretes().iterator();
         Trancon tmpNext = it.next();
@@ -58,7 +61,10 @@ public class IChemin implements Chemin {
     }
 
     public static int getNbChangement(Chemin che) {
-        return (IChemin.splitByModalite(che).size())/2;
+        if (che.aretes().size() == 0) {
+            return 0;
+        }
+        return (IChemin.splitByModalite(che).size())-1;
     }
 
     public static int getCHangementDuration(Chemin che) {
