@@ -52,6 +52,7 @@ public class Plateforme {
         
     }
 
+
     // private Trancon findTrancon(String depart, String arrivee, ModaliteTransport modalite) {
     //     for (Trancon t : this.g1.aretes()) {
     //         if (t.getDepart().toString().equals(depart) && t.getArrivee().toString().equals(arrivee) && t.getModalite() == modalite) {
