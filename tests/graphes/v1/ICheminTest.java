@@ -22,6 +22,8 @@ public class ICheminTest {
     public Lieu D;
 
 
+
+
     public IChemin ch1;
     public IChemin ch2;
     public IChemin ch3;
@@ -46,6 +48,8 @@ public class ICheminTest {
         ch5 = new IChemin();
 
 
+
+
         ch1.aretes().add(new ITrancon(A, B, ModaliteTransport.AVION));
         ch1.aretes().add(new ITrancon(B, C, ModaliteTransport.AVION));
         ch1.aretes().add(new ITrancon(C, D, ModaliteTransport.AVION));
@@ -61,6 +65,19 @@ public class ICheminTest {
         ch4.aretes().add(new ITrancon(A, B, ModaliteTransport.TRAIN));
         ch4.aretes().add(new ITrancon(B, C, ModaliteTransport.AVION));
         ch4.aretes().add(new ITrancon(C, D, ModaliteTransport.TRAIN));
+
+
+    }
+
+    @Test
+    void testInit() {
+        
+        
+        assertEquals(3, ch1.aretes().size());
+        assertEquals(3, ch2.aretes().size());
+        assertEquals(3, ch3.aretes().size());
+        assertEquals(3, ch4.aretes().size());
+        assertEquals(0, ch5.aretes().size());
 
 
     }
