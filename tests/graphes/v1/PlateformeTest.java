@@ -9,9 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.IChemin;
-import src.v1.ILieu;
-import src.v1.ITrancon;
+import src.v1.CheminImpl;
+import src.v1.LieuImpl;
+import src.v1.TranconImpl;
 import src.v1.Plateforme;
 import src.v1.Tools;
 import src.v1.TypeCout;
@@ -154,10 +154,10 @@ public class PlateformeTest {
 
     @Test
     void testGetLieuxAvoid() {
-        assertEquals(3, g.getLieux(new ILieu("villeA")).size());
-        assertEquals(3, g.getLieux(new ILieu("villeB")).size());
-        assertEquals(3, g.getLieux(new ILieu("villeC")).size());
-        assertEquals(3, g.getLieux(new ILieu("villeD")).size());
+        assertEquals(3, g.getLieux(new LieuImpl("villeA")).size());
+        assertEquals(3, g.getLieux(new LieuImpl("villeB")).size());
+        assertEquals(3, g.getLieux(new LieuImpl("villeC")).size());
+        assertEquals(3, g.getLieux(new LieuImpl("villeD")).size());
     }
 
 
@@ -189,8 +189,8 @@ public class PlateformeTest {
 
     @Test
     void testGetSommet() {
-        assertEquals((new ILieu("villeA")).toString(), (g.getSommet("villeA").toString()));
-        assertEquals((new ILieu("villeB")).toString(), (g.getSommet("villeB").toString()));
+        assertEquals((new LieuImpl("villeA")).toString(), (g.getSommet("villeA").toString()));
+        assertEquals((new LieuImpl("villeB")).toString(), (g.getSommet("villeB").toString()));
     }
 
     @Test
@@ -202,30 +202,30 @@ public class PlateformeTest {
 
     // @Test
     // void testSplitByModalite() {
-    //     assertEquals(1, IChemin.splitByModalite(ch1).size());
-    //     assertEquals(2, IChemin.splitByModalite(ch2).size());
-    //     assertEquals(2, IChemin.splitByModalite(ch3).size());
-    //     assertEquals(3, IChemin.splitByModalite(ch4).size());
-    //     assertEquals(0, IChemin.splitByModalite(ch5).size());
+    //     assertEquals(1, CheminImpl.splitByModalite(ch1).size());
+    //     assertEquals(2, CheminImpl.splitByModalite(ch2).size());
+    //     assertEquals(2, CheminImpl.splitByModalite(ch3).size());
+    //     assertEquals(3, CheminImpl.splitByModalite(ch4).size());
+    //     assertEquals(0, CheminImpl.splitByModalite(ch5).size());
 
     // }
 
     // @Test
     // void testGetNbChangement() {
-    //     assertEquals(0, IChemin.getNbChangement(ch1));
-    //     assertEquals(1, IChemin.getNbChangement(ch2));
-    //     assertEquals(1, IChemin.getNbChangement(ch3));
-    //     assertEquals(2, IChemin.getNbChangement(ch4));
-    //     assertEquals(0, IChemin.getNbChangement(ch5));
+    //     assertEquals(0, CheminImpl.getNbChangement(ch1));
+    //     assertEquals(1, CheminImpl.getNbChangement(ch2));
+    //     assertEquals(1, CheminImpl.getNbChangement(ch3));
+    //     assertEquals(2, CheminImpl.getNbChangement(ch4));
+    //     assertEquals(0, CheminImpl.getNbChangement(ch5));
     // }
 
     // @Test
     // void testGetCHangementDuration() {
-    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 0, IChemin.getCHangementDuration(ch1));
-    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 1, IChemin.getCHangementDuration(ch2));
-    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 1, IChemin.getCHangementDuration(ch3));
-    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 2, IChemin.getCHangementDuration(ch4));
-    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 0, IChemin.getCHangementDuration(ch5));
+    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 0, CheminImpl.getCHangementDuration(ch1));
+    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 1, CheminImpl.getCHangementDuration(ch2));
+    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 1, CheminImpl.getCHangementDuration(ch3));
+    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 2, CheminImpl.getCHangementDuration(ch4));
+    //     assertEquals(Plateforme.TEMP_CHANGEMENT * 0, CheminImpl.getCHangementDuration(ch5));
     // }
 
    

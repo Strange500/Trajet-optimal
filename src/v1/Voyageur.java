@@ -4,9 +4,10 @@ import java.util.List;
 
 import fr.ulille.but.sae_s2_2024.*;
 
+/**
+ * Classe représentant un voyageur
+ */
 public class Voyageur {
-
-
     private static final String[] DATA = new String[]{
         "villeA;villeB;Train;60;1.7;80",
         "villeB;villeD;Train;22;2.4;40",
@@ -39,6 +40,20 @@ public class Voyageur {
     private String arrivee;
     private int nb_trajet;
 
+    /**
+     * @constructor Voyageur
+     * @param nom Nom du voyageur
+     * @param prenom Prénom du voyageur
+     * @param critere Critère de choix
+     * @param modalite Modalité de transport
+     * @param thresholdPrix Seuil de prix
+     * @param thresholdCO2 Seuil de CO2
+     * @param thresholdTemps Seuil de temps
+     * @param depart Lieu de départ
+     * @param arrivee Lieu d'arrivée
+     * @param nb_trajet Nombre de trajets à recommander
+     * Crée un voyageur avec des critères de choix
+     */
     public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite, int thresholdPrix, double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet) {
         this.nom = nom;
         this.prenom = prenom;
@@ -52,78 +67,102 @@ public class Voyageur {
         this.nb_trajet = nb_trajet;
     }
 
-
-
+    /**
+     * @constructor Voyageur
+     * @param nom Nom du voyageur
+     * @param prenom Prénom du voyageur
+     * @param critere Critère de choix
+     * @param modalite Modalité de transport
+     * Crée un voyageur avec des critères de choix par défaut
+     */
     public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite) {
         this(nom, prenom, critere, modalite, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS, DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET);
     }
 
+    /**
+     * @constructor Voyageur
+     * @param nom Nom du voyageur
+     * @param prenom Prénom du voyageur
+     * @param critere Critère de choix
+     * Crée un voyageur avec des critères de choix par défaut
+     */
     public Voyageur(String nom, String prenom, TypeCout critere) {
         this(nom, prenom, critere, DEFAULT_MODALITE);
     }
 
-    
-
+    /**
+     * @return Nom du voyageur
+     */
     public String getNom() {
         return nom;
     }
 
-
-
+    /**
+     * @return Prénom du voyageur
+     */
     public String getPrenom() {
         return prenom;
     }
 
-
-
+    /**
+     * @return Critère de choix
+     */
     public TypeCout getCritere() {
         return critere;
     }
 
-
-
+    /**
+     * @return Modalité de transport
+     */
     public ModaliteTransport getModalite() {
         return modalite;
     }
 
-
-
+    /**
+     * @return Seuil de prix
+     */
     public int getThresholdPrix() {
         return thresholdPrix;
     }
 
-
-
+    /**
+     * @return Seuil de CO2
+     */
     public double getThresholdCO2() {
         return thresholdCO2;
     }
 
-
-
+    /**
+     * @return Seuil de temps
+     */
     public int getThresholdTemps() {
         return thresholdTemps;
     }
 
-
-
+    /**
+     * @return Lieu de départ
+     */
     public String getDepart() {
         return depart;
     }
 
-
-
+    /**
+     * @return Lieu d'arrivée
+     */
     public String getArrivee() {
         return arrivee;
     }
 
-
-
+    /**
+     * @return Nombre de trajets à recommander
+     */
     public int getNb_trajet() {
         return nb_trajet;
     }
 
-
-
+    /**
+     * @return Liste des chemins recommandés
+     */
     public List<Chemin> computeBestPath() {
         if (Tools.donneesValides(DATA)) {
             Plateforme g = Tools.initPlateforme(DATA);
@@ -167,5 +206,4 @@ public class Voyageur {
             }
         }
     }
-
 }

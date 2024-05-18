@@ -9,9 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.IChemin;
-import src.v1.ILieu;
-import src.v1.ITrancon;
+import src.v1.CheminImpl;
+import src.v1.LieuImpl;
+import src.v1.TranconImpl;
 import src.v1.TypeCout;
 
 

@@ -9,39 +9,39 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.IChemin;
-import src.v1.ILieu;
-import src.v1.ITrancon;
+import src.v1.CheminImpl;
+import src.v1.LieuImpl;
+import src.v1.TranconImpl;
 
 
-public class ITranconTest {
+public class TranconImplTest {
     public Lieu A;
     public Lieu B;
     public Lieu C;
     public Lieu D;
 
-    public ITrancon tr1;
-    public ITrancon tr2;
-    public ITrancon tr3;
-    public ITrancon tr4;
-    public ITrancon tr5;
+    public TranconImpl tr1;
+    public TranconImpl tr2;
+    public TranconImpl tr3;
+    public TranconImpl tr4;
+    public TranconImpl tr5;
 
 
 
     @BeforeEach
     public void avantTest() {
         
-        A = new ILieu("A");
-        B = new ILieu("B");
-        C = new ILieu("C");
-        D = new ILieu("D");
+        A = new LieuImpl("A");
+        B = new LieuImpl("B");
+        C = new LieuImpl("C");
+        D = new LieuImpl("D");
         
 
-        tr1 = new ITrancon(A, B, ModaliteTransport.AVION);
-        tr2 = new ITrancon(B, C, ModaliteTransport.TRAIN);
-        tr3 = new ITrancon(C, D, ModaliteTransport.AVION);
-        tr4 = new ITrancon(A, B, ModaliteTransport.TRAIN);
-        tr5 = new ITrancon(B, C, ModaliteTransport.AVION);
+        tr1 = new TranconImpl(A, B, ModaliteTransport.AVION);
+        tr2 = new TranconImpl(B, C, ModaliteTransport.TRAIN);
+        tr3 = new TranconImpl(C, D, ModaliteTransport.AVION);
+        tr4 = new TranconImpl(A, B, ModaliteTransport.TRAIN);
+        tr5 = new TranconImpl(B, C, ModaliteTransport.AVION);
 
 
     }
