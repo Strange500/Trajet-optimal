@@ -52,6 +52,8 @@ public class Voyageur {
         this.nb_trajet = nb_trajet;
     }
 
+
+
     public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite) {
         this(nom, prenom, critere, modalite, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS, DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET);
     }
@@ -59,6 +61,68 @@ public class Voyageur {
     public Voyageur(String nom, String prenom, TypeCout critere) {
         this(nom, prenom, critere, DEFAULT_MODALITE);
     }
+
+    
+
+    public String getNom() {
+        return nom;
+    }
+
+
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+
+
+    public TypeCout getCritere() {
+        return critere;
+    }
+
+
+
+    public ModaliteTransport getModalite() {
+        return modalite;
+    }
+
+
+
+    public int getThresholdPrix() {
+        return thresholdPrix;
+    }
+
+
+
+    public double getThresholdCO2() {
+        return thresholdCO2;
+    }
+
+
+
+    public int getThresholdTemps() {
+        return thresholdTemps;
+    }
+
+
+
+    public String getDepart() {
+        return depart;
+    }
+
+
+
+    public String getArrivee() {
+        return arrivee;
+    }
+
+
+
+    public int getNb_trajet() {
+        return nb_trajet;
+    }
+
+
 
     public List<Chemin> computeBestPath() {
         if (Tools.donneesValides(DATA)) {
