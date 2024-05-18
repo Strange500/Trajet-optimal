@@ -1,4 +1,4 @@
-package src.v1;
+package v1;
 
 public enum TypeCout {
     PRIX, CO2, TEMPS;

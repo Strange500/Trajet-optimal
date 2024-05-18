@@ -104,19 +104,59 @@ public class ToolsTest {
         assertEquals(4, p.getG3().sommets().size());
     }
 
-    // @Test
-    // public void testApplyThreshold() {
-    //     List<Chemin> ch1 = g.getPathByModaliteAndTypeCout("A", "D", ModaliteTransport.TRAIN, TypeCout.PRIX, 3);
-    //     for (Chemin c : ch1) {
-    //         System.err.println(c);
-    //     }
-    //     // nous avons ici le premier trajet a 78€ puis 82€ et enfin 107€
-    //     assertEquals(3, ch1.size());
-    //     assertEquals(78, ch1.get(0).poids());
-    //     assertEquals(82, ch1.get(1).poids());
-    //     assertEquals(107, ch1.get(2).poids());
+    @Test
+    public void testApplyThreshold() {
+        List<Chemin> chPrix = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN, TypeCout.PRIX, 3);
+        List<Chemin> chCO2 = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN, TypeCout.CO2, 3);
+        List<Chemin> chTemps = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN, TypeCout.TEMPS, 3);
+        // nous avons ici le premier trajet a 78€ puis 82€ et enfin 107€
+        assertEquals(3, chPrix.size());
+        assertEquals(78, chPrix.get(0).poids());
+        assertEquals(82, chPrix.get(1).poids());
+        assertEquals(107, chPrix.get(2).poids());
 
-    // }
+        // nous avons ici le premier trajet a 2,6 kgCO2 puis 4,1kgCO2 et enfin 4,3kgCO2
+        assertEquals(3, chCO2.size());
+        assertEquals(2.5999999999999996, chCO2.get(0).poids());
+        assertEquals(4.1, chCO2.get(1).poids());
+        assertEquals(4.3, chCO2.get(2).poids());
+
+        // nous avons ici le premier trajet a 120min puis 140min et enfin 150min
+        assertEquals(3, chTemps.size());
+        assertEquals(120, chTemps.get(0).poids());
+        assertEquals(140, chTemps.get(1).poids());
+        assertEquals(150, chTemps.get(2).poids());
+
+        Tools.applyThreshold(g, chPrix, TypeCout.PRIX, 100);
+        assertEquals(2, chPrix.size());
+
+        Tools.applyThreshold(g, chPrix, TypeCout.PRIX, 80);
+        assertEquals(1, chPrix.size());
+
+        Tools.applyThreshold(g, chCO2, TypeCout.CO2, 4);
+        assertEquals(1, chCO2.size());
+
+        Tools.applyThreshold(g, chCO2, TypeCout.CO2, 3);
+        assertEquals(1, chCO2.size());
+
+        Tools.applyThreshold(g, chTemps, TypeCout.TEMPS, 140);
+        assertEquals(2, chTemps.size());
+
+        
+
+
+
+    }
+
+    @Test
+    public void testCheminWithCorre() {
+        List<Chemin> chPrix = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN, TypeCout.PRIX, 3);
+
+        assertEquals("TRAIN de villeA à villeD en passant par villeC, villeB totale: 78.0 €", Tools.cheminWithCorre(chPrix.get(0), TypeCout.PRIX));
+        assertEquals("TRAIN de villeA à villeD en passant par villeB totale: 82.0 €", Tools.cheminWithCorre(chPrix.get(1), TypeCout.PRIX));
+        assertEquals("TRAIN de villeA à villeD en passant par villeC totale: 107.0 €", Tools.cheminWithCorre(chPrix.get(2), TypeCout.PRIX));
+    }
+
 
         // Tools.applyThreshold(p, ch1, TypeCout.PRIX, 20);
         // assertEquals(2, ch1.aretes().size());
