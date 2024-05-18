@@ -12,7 +12,6 @@ import fr.ulille.but.sae_s2_2024.*;
 import src.v1.IChemin;
 import src.v1.ILieu;
 import src.v1.ITrancon;
-import src.v1.Tp;
 import src.v1.TypeCout;
 
 

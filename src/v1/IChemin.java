@@ -68,7 +68,7 @@ public class IChemin implements Chemin {
     }
 
     public static int getCHangementDuration(Chemin che) {
-        return IChemin.getNbChangement(che) * Tp.TEMP_CHANGEMENT;
+        return IChemin.getNbChangement(che) * Plateforme.TEMP_CHANGEMENT;
     }
 
 

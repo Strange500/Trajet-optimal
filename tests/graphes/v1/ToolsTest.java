@@ -14,7 +14,6 @@ import src.v1.IChemin;
 import src.v1.ILieu;
 import src.v1.ITrancon;
 import src.v1.Plateforme;
-import src.v1.Tp;
 import src.v1.TypeCout;
 import src.v1.Tools;
 

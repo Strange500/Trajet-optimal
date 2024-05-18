@@ -30,7 +30,7 @@ public class Plateforme {
         g3 = new MultiGrapheOrienteValue();
     }
 
-    public  double getPoidsByTypeCout(Chemin chemin, TypeCout critere) {
+    public double getPoidsByTypeCout(Chemin chemin, TypeCout critere) {
         double poids = 0;
         for (Trancon t : chemin.aretes()) {
             if (t.getDepart().toString().equals(ALPHA) || t.getArrivee().toString().equals(OMEGA)) {
@@ -108,7 +108,7 @@ public class Plateforme {
         return g;
     }
 
-    private void filterByModality(ModaliteTransport mod) {
+    public void filterByModality(ModaliteTransport mod) {
         this.g1 = filterByModality(this.g1, mod);
         this.g2 = filterByModality(this.g2, mod);
         this.g3 = filterByModality(this.g3, mod);
@@ -119,7 +119,7 @@ public class Plateforme {
         return g;
     }
 
-    private static MultiGrapheOrienteValue clone(MultiGrapheOrienteValue graph) {
+    public static MultiGrapheOrienteValue clone(MultiGrapheOrienteValue graph) {
         MultiGrapheOrienteValue g = new MultiGrapheOrienteValue();
         for (Lieu l : graph.sommets()) {
             g.ajouterSommet(l);
@@ -130,7 +130,7 @@ public class Plateforme {
         return g;
     }
 
-    private static MultiGrapheOrienteValue clone(MultiGrapheOrienteValue graph, ModaliteTransport mod) {
+    public static MultiGrapheOrienteValue clone(MultiGrapheOrienteValue graph, ModaliteTransport mod) {
         MultiGrapheOrienteValue g = new MultiGrapheOrienteValue();
         for (Lieu l : graph.sommets()) {
             g.ajouterSommet(l);
@@ -202,7 +202,7 @@ public class Plateforme {
         return this.ajouterArreteGraph(g1, t, prix) && this.ajouterArreteGraph(g2, t, pollution) && this.ajouterArreteGraph(g3, t, duree);
     }
 
-    private Lieu getSommet(String nom) {
+    public Lieu getSommet(String nom) {
         for (Lieu l : g1.sommets()) {
             if (l.toString().equals(nom)) {
                 return l;
