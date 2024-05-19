@@ -58,7 +58,11 @@ Son meilleur choix ici serait de passer par la villeB pour arriver ensuite a la 
 ![illustration des chemins possible](./Capture.PNG)
 
 *Donner la solution du problème (càd les meilleurs itinéraires) en tant que chemins dans le graphe.*
-
+Les quatres itinéraire possible sont :
+1) TRAIN de villeA à villeD en passant par villeB totale: 120.0 min         [A,B,D]
+2) TRAIN de villeA à villeD en passant par villeC totale: 140.0 min         [A,C,D]
+3) TRAIN de villeA à villeD en passant par villeC, villeB totale: 150.0 min [A,C,B,D]
+4) TRAIN de villeA à villeD en passant par villeB, villeC totale: 230.0 min [A,B,C,D]
 ### Modélisation pour la Version 1 dans le cas général
 
 *Expliquer de manière abstraite comment, étant donné un problème de recherche d'itinéraire (plateforme avec tous types de lignes, moyen de transport choisi, critère d'optimisation, nombre d'itinéraires demandés) on peut construire un graphe permettant de résoudre le problème de recherche d'itinéraire. C'est à dire:*
@@ -69,11 +73,15 @@ Son meilleur choix ici serait de passer par la villeB pour arriver ensuite a la 
 
 *Utiliser un vocabulaire précis sur les graphes.*
 
+Les sommets que l'on inclus dans le graphe sont les même que dans les données, les arrete sont initialement les même que dans les données.
+Quand l'utilisateur indique qu'il ne souhaite utiliser que le train, le graphe est recreer pour n'inclure que les arrete utilisant se moyen de transport.
+Pour modéliser ce probleme, nous simulons un unique graphe, qui utilise trois autre graphe pour résoudre les probleme, chaque sous represente un critere, cela permet que le poids des arrete reste fidéle au données initiale.
+
 ### Implémentation de la Version 1
 
 *Écrire une classe de test qui reprend l'exemple, définit toutes les données de la plateforme, construit le graphe et calcule la solution.*
 *Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
-*Donner ici le **nom complet de la classe**, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
+*Donner ici le VoyageurTest.java, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
 
 *On insiste sur l'importance de spécifier le commit. En effet, quand vous commencerez la Version 2, le code utilisé pour le test de la Version 1 sera modifié. Il se peut que vous n'ayez pas le temps de finaliser la Version 2 et vous retrouver avec un code qui ne marche pas même pour la Version 1. C'est pourquoi il est important de rédiger le rapport au fur et à mesure et de donner ici un lien vers la version de votre code qui marche pour la Version 1 du projet.*
 
