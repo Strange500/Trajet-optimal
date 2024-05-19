@@ -46,11 +46,14 @@ Version 1 : un seul moyen de transport
 *Donner la solution du problème du point de vue de l'utilisatrice, càd quels sont les itinéraires possibles, quels sont les meilleurs itinéraires et pourquoi.*
 *Pour l'instant on ne parle pas de graphes; on peut éventuellement faire des schémas.*
 
-Prenons comme exemple, un utilisateur, étant pressé car sa voiture vient de tomber en panne, il souhaite le plus rapidement possible atteindre la villeD ou se trouve son lieux de travil, lui se trouve villeA. Deplus l'utilisateur a peur de l'avion il ne peut donc que emrunter le train. 
-les choix a disposition peuvent être illustrer comme suit: 
+Prenons comme exemple un utilisateur pressé, car sa voiture vient de tomber en panne. Il souhaite atteindre le plus rapidement possible la ville D où se trouve son lieu de travail. Il se trouve actuellement dans la ville A. De plus, l'utilisateur a peur de l'avion, il ne peut donc emprunter que le train.
+
+Les choix à sa disposition peuvent être illustrés comme suit :
 ![illustration des chemins possible](./Capture.PNG)
 
-Son meilleur choix ici serait de passer par la villeB pour arriver ensuite a la villeD, il aurait alors un trajet de 120mn en evitant l'avion. les trajet les plus court en terme de saut sont au minimum de 2 saut, et le temps minimum pour les trajet de 2 saut est 120m, l'unique autre chemin est de 140mn. On pourrait imaginer passer par un chemin de 3 saut sauf que seul 2 choix s'offre a nous, avec un temps minimum de 150. Le seul choix logique et donc le chemin de 120mn.
+Son meilleur choix ici serait de passer par la ville B pour arriver ensuite à la ville D. Il aurait alors un trajet de 120 minutes en évitant l'avion. Les trajets les plus courts en termes de nombre d'étapes sont au minimum de 2 étapes, et le temps minimum pour un trajet de 2 étapes est de 120 minutes. L'autre chemin possible de 2 étapes prend 140 minutes.
+
+On pourrait imaginer passer par un chemin avec 3 étapes, mais les deux choix disponibles ont un temps minimum de 150 minutes. Le seul choix logique est donc le chemin de 120 minutes.
 
 ### Modèle pour l'exemple
 
@@ -73,9 +76,10 @@ Les quatres itinéraire possible sont :
 
 *Utiliser un vocabulaire précis sur les graphes.*
 
-Les sommets que l'on inclus dans le graphe sont les même que dans les données, les arrete sont initialement les même que dans les données.
-Quand l'utilisateur indique qu'il ne souhaite utiliser que le train, le graphe est recreer pour n'inclure que les arrete utilisant se moyen de transport.
-Pour modéliser ce probleme, nous simulons un unique graphe, qui utilise trois autre graphe pour résoudre les probleme, chaque sous represente un critere, cela permet que le poids des arrete reste fidéle au données initiale.
+Les sommets inclus dans le graphe sont les mêmes que dans les données, et les arêtes sont initialement les mêmes que dans les données. Lorsque l'utilisateur indique qu'il ne souhaite utiliser que le train, le graphe est recréé pour n'inclure que les arêtes utilisant ce moyen de transport. 
+  Pour modéliser ce problème, nous simulons un unique graphe qui utilise trois autres graphes pour résoudre les problèmes. Chaque sous-graphe représente un critère, ce qui permet que le poids des arêtes reste fidèle aux données initiales.
+
+L'algorithme qui doit être utilisé pour résoudre ce problème est l'algorithme de Dijkstra. Il prend en paramètre un graphe avec uniquement des poids positifs et un sommet de départ.
 
 ### Implémentation de la Version 1
 
