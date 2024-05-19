@@ -31,6 +31,7 @@ SAE S2.02 -- Rapport pour la ressource Graphes
 ===
 
 *Noms des auteurs, groupe*
+Fryson Adrien et Roget Benjamin, Groupe B6
 
 
 Version 1 : un seul moyen de transport
@@ -45,9 +46,17 @@ Version 1 : un seul moyen de transport
 *Donner la solution du problème du point de vue de l'utilisatrice, càd quels sont les itinéraires possibles, quels sont les meilleurs itinéraires et pourquoi.*
 *Pour l'instant on ne parle pas de graphes; on peut éventuellement faire des schémas.*
 
+Prenons comme exemple, un utilisateur, étant pressé car sa voiture vient de tomber en panne, il souhaite le plus rapidement possible atteindre la villeD ou se trouve son lieux de travil, lui se trouve villeA. Deplus l'utilisateur a peur de l'avion il ne peut donc que emrunter le train. 
+les choix a disposition peuvent être illustrer comme suit: 
+![illustration des chemins possible](./Capture.PNG)
+
+Son meilleur choix ici serait de passer par la villeB pour arriver ensuite a la villeD, il aurait alors un trajet de 120mn en evitant l'avion. les trajet les plus court en terme de saut sont au minimum de 2 saut, et le temps minimum pour les trajet de 2 saut est 120m, l'unique autre chemin est de 140mn. On pourrait imaginer passer par un chemin de 3 saut sauf que seul 2 choix s'offre a nous, avec un temps minimum de 150. Le seul choix logique et donc le chemin de 120mn.
+
 ### Modèle pour l'exemple
 
 *Donner le graphe modélisant l'exemple ci-dessus.*
+![illustration des chemins possible](./Capture.PNG)
+
 *Donner la solution du problème (càd les meilleurs itinéraires) en tant que chemins dans le graphe.*
 
 ### Modélisation pour la Version 1 dans le cas général
