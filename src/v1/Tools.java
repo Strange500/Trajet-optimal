@@ -196,7 +196,6 @@ public class Tools {
     public static String getUserInuput() {
         Scanner scanner = new Scanner(System.in);
         String r = scanner.next();
-        scanner.close();
         return r;
         
     }

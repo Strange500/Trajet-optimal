@@ -189,9 +189,7 @@ public class Tools {
     public static String getUserInuput() {
         Scanner scanner = new Scanner(System.in);
         String r = scanner.next();
-        scanner.close();
         return r;
-        
     }
 
     /**
@@ -233,6 +231,10 @@ public class Tools {
         }
         System.out.println("Entrez la ville de départ:");
         String r = getUserInuput();
+        StringBuilder sb = new StringBuilder();
+        sb.append((r.charAt(0) + "").toUpperCase());
+        sb.append(r.substring(1).toLowerCase());
+        r = sb.toString();
         if (r.length() == 0) {
             System.out.println("Vous n'avez rien entré");
             return getLieuDepart(g);
@@ -257,6 +259,10 @@ public class Tools {
         }
         System.out.println("Entrez la ville de destination:");
         String r = getUserInuput();
+        StringBuilder sb = new StringBuilder();
+        sb.append((r.charAt(0) + "").toUpperCase());
+        sb.append(r.substring(1).toLowerCase());
+        r = sb.toString();
         if (r.length() == 0) {
             System.out.println("Vous n'avez rien entré");
             return getLieuDestination(g, depart);
@@ -314,7 +320,7 @@ public class Tools {
      * @return Seuil de prix
      */
     public static int getThresholdPrix() {
-        System.out.println("Entrez le prix maximum que vous êtes prêt à payer:");
+        System.out.println("Entrez le prix maximum que vous êtes prêt à payer (en €):");
         String r = getUserInuput();
         if (r.length() == 0) {
             System.out.println("Vous n'avez rien entré");
@@ -332,7 +338,7 @@ public class Tools {
      * @return Seuil de durée
      */
     public static int getThresholdDuree() {
-        System.out.println("Entrez la durée maximum que vous êtes prêt à passer:");
+        System.out.println("Entrez la durée maximum que vous êtes prêt à passer (en minutes):");
         String r = getUserInuput();
         if (r.length() == 0) {
             System.out.println("Vous n'avez rien entré");
@@ -350,7 +356,7 @@ public class Tools {
      * @return Seuil de pollution
      */
     public static double getThresholdPollution() {
-        System.out.println("Entrez la pollution maximum que vous êtes prêt à subir:");
+        System.out.println("Entrez la pollution maximum que vous êtes prêt à subir (en kgCO2e):");
         String r = getUserInuput();
         if (r.length() == 0) {
             System.out.println("Vous n'avez rien entré");
@@ -432,7 +438,7 @@ public class Tools {
             }
             
         }
-        return r + " totale: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+        return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
     }
 
     public static ArrayList<String> getCSV(String path) {
