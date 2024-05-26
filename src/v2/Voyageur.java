@@ -1,9 +1,11 @@
 package src.v2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fr.ulille.but.sae_s2_2024.*;
+import src.v2.exception.CheminInexistantException;
 
 /**
  * Classe représentant un voyageur
@@ -161,10 +163,10 @@ public class Voyageur {
     /**
      * @return Liste des chemins recommandés
      */
-    public List<Chemin> computeBestPath() {
+    public List<Chemin> computeBestPath() throws CheminInexistantException {
         if (Tools.donneesValides(DATA)) {
             Plateforme g = Tools.initPlateforme(DATA);
-
+            //System.out.println(g.get);
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
                 List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite, this.critere, nb_trajet);
                 for (TypeCout c : new TypeCout[]{TypeCout.PRIX, TypeCout.CO2, TypeCout.TEMPS}) {
@@ -180,11 +182,13 @@ public class Voyageur {
                             break;
                     }
                 }
+                if (chemins.size() == 0) {
+                    throw new CheminInexistantException();
+                }
                 return chemins;
             }
             else {
-                System.out.println("Aucun chemin trouvé pour les critères demandés");
-                return null;
+                throw new CheminInexistantException();
             }
         }
         else {
@@ -195,13 +199,24 @@ public class Voyageur {
     }
 
     public static void main(String[] args) {
-        Voyageur u = new Voyageur("Doe", "John", TypeCout.PRIX, ModaliteTransport.TRAIN, 1000, 1000, 1000, "villeA", "villeD", 3);
-        List<Chemin> chemins = u.computeBestPath();
-        if (chemins != null) {
-            System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont:");
-            for (int i = 0; i < chemins.size(); i++) {
-                System.out.println(i + 1 + ") " + Tools.cheminWithCorre(chemins.get(i), u.critere));
+        Voyageur u = new Voyageur("Doe", "John", TypeCout.PRIX, ModaliteTransport.TRAIN, 2, 1000, 1000, "Lille", "Paris", 3);
+        List<Chemin> chemins = null;
+        try {
+            chemins = u.computeBestPath();
+        } catch (CheminInexistantException e) {
+            chemins = null;
+        }finally {
+            if (chemins != null) {
+                System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont:");
+                for (int i = 0; i < chemins.size(); i++) {
+                    System.out.println(i + 1 + ") " + Tools.cheminWithCorre(chemins.get(i), u.critere));
+                }
+            }
+            else {
+                System.out.println("Aucun chemin trouvé pour les critères demandés");
             }
         }
+        
+        
     }
 }

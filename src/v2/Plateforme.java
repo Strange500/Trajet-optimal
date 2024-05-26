@@ -9,6 +9,7 @@ import fr.ulille.but.sae_s2_2024.Lieu;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.MultiGrapheOrienteValue;
 import fr.ulille.but.sae_s2_2024.Trancon;
+import src.v2.exception.CheminInexistantException;
 
 
 /*
@@ -92,7 +93,7 @@ public class Plateforme {
      * @param nbChemin le nombre de chemins à retourner
      * @return les chemins entre deux lieux avec un mode de transport donné et un critère donné
      */
-    public List<Chemin> getPathByModaliteAndTypeCout(String dep, String arr, ModaliteTransport modalite, TypeCout critere, int nbChemin) {
+    public List<Chemin> getPathByModaliteAndTypeCout(String dep, String arr, ModaliteTransport modalite, TypeCout critere, int nbChemin) throws CheminInexistantException{
         Plateforme g = this.clone();
         g.filterByModality(modalite);
         return g.getPathByTypeCout(dep, arr, critere, nbChemin);
@@ -105,8 +106,9 @@ public class Plateforme {
      * @param nbChemin le nombre de chemins à retourner
      * @return les chemins entre deux lieux avec un critère donné
      */
-    public List<Chemin> getPathByTypeCout(String dep, String arr,  TypeCout critere, int nbChemin) {
+    public List<Chemin> getPathByTypeCout(String dep, String arr,  TypeCout critere, int nbChemin) throws CheminInexistantException{
         Plateforme g = this.clone();
+        List<Chemin> results = new ArrayList<Chemin>();
         //Lieu depart = this.getSommet(dep);
         //Lieu arrivee = this.getSommet(arr);
 
@@ -119,13 +121,16 @@ public class Plateforme {
 
         switch (critere) {
             case PRIX:
-                return AlgorithmeKPCC.kpcc(g.g1, alpha, omega, nbChemin);
+                results = AlgorithmeKPCC.kpcc(g.g1, alpha, omega, nbChemin);
             case CO2:
-                return AlgorithmeKPCC.kpcc(g.g2, alpha, omega, nbChemin);
+                results = AlgorithmeKPCC.kpcc(g.g2, alpha, omega, nbChemin);
             case TEMPS:
-                return AlgorithmeKPCC.kpcc(g.g3, alpha, omega, nbChemin);
+                results = AlgorithmeKPCC.kpcc(g.g3, alpha, omega, nbChemin);
         }
-        return new ArrayList<Chemin>();
+        if (results.size() == 0) {
+            throw new CheminInexistantException();
+        }
+        return results;
     }
 
     /**

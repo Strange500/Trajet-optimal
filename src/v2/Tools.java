@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
+import src.v2.exception.CheminInexistantException;
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;
 
@@ -71,9 +72,14 @@ public class Tools {
                 
 
                 int nb_trajet = getNbTrajet();
-
-
-                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
+                List<Chemin> chemins;
+                try {
+                    chemins = g.getPathByModaliteAndTypeCout(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
+                } catch (CheminInexistantException e) {
+                    System.out.println("Il n'y a pas de chemin disponible pour les critères que vous avez choisi");
+                    return;
+                }
+                
                 for (TypeCout c : criteres) {
                     switch (c) {
                         case PRIX:
