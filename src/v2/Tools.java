@@ -238,7 +238,6 @@ public class Tools {
             for (String depLieu : depLieux) {
                 for (String destLieu : destLieux) {
                     if (depLieu.split("_")[2].equals(destLieu.split("_")[1])) {
-                        System.out.println("AJOUT DE " + depLieu + SUFFIXE + " VERS " + destLieu);
 
                         g.ajouterArrete(depLieu + SUFFIXE , destLieu, modalite, prix, pollution, Duree);
                         //g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution, Duree);
