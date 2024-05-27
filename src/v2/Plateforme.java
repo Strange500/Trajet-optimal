@@ -82,9 +82,12 @@ public class Plateforme {
         if (modalite != null) {
             g.filterByModality(modalite);
         }
-        Lieu dep = this.getSommet(depart);
-        Lieu arr = this.getSommet(arrivee);
-        return AlgorithmeKPCC.kpcc(g.g1, dep, arr, 1).size() > 0;
+        try {
+            getPathByModaliteAndTypeCout(depart, arrivee, modalite, TypeCout.CO2, 1).size();
+            return true;
+        } catch (CheminInexistantException e) {
+            return false;
+        }
     }
 
     /**
@@ -115,9 +118,15 @@ public class Plateforme {
         List<Chemin> results = new ArrayList<Chemin>();
         //Lieu depart = this.getSommet(dep);
         //Lieu arrivee = this.getSommet(arr);
+        for (String names: Tools.buildLieuxNames(dep)) {
+            g.ajouterArrete(ALPHA, names + Tools.SUFFIXE, ModaliteTransport.TRAIN, 0, 0, 0);
+        }
 
-        g.ajouterArrete(ALPHA, dep, ModaliteTransport.TRAIN, 0, 0, 0);
-        g.ajouterArrete(arr, OMEGA, ModaliteTransport.TRAIN, 0, 0, 0);
+        for (String names: Tools.buildLieuxNames(arr)) {
+            g.ajouterArrete(names, OMEGA, ModaliteTransport.TRAIN, 0, 0, 0);
+        }
+        // g.ajouterArrete(ALPHA, dep, ModaliteTransport.TRAIN, 0, 0, 0);
+        // g.ajouterArrete(arr, OMEGA, ModaliteTransport.TRAIN, 0, 0, 0);
 
         Lieu alpha = g.getSommet(ALPHA);
         Lieu omega = g.getSommet(OMEGA);

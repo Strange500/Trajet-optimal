@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.tools.Tool;
+
 import fr.ulille.but.sae_s2_2024.*;
 import src.v2.exception.CheminInexistantException;
 
@@ -13,9 +15,11 @@ import src.v2.exception.CheminInexistantException;
 public class Voyageur {
 
 
-    public static final String path = "src/v2/data.csv";
+    public static final String path = "src/v2/csv/data.csv";
+    public static final String path2 = "src/v2/csv/correspondance.csv";
 
     private static final ArrayList<String> DATA = Tools.getCSV(path);
+    private static final ArrayList<String> CORRESPONDANCE = Tools.getCSV(path2);
     private static final int DEFAULT_THRESHOLD_PRIX = Integer.MAX_VALUE;
     private static final double DEFAULT_THRESHOLD_CO2 = Double.MAX_VALUE;
     private static final int DEFAULT_THRESHOLD_TEMPS = Integer.MAX_VALUE;
@@ -29,6 +33,8 @@ public class Voyageur {
 
 
 
+
+
     private String nom;
     private String prenom;
     private TypeCout critere;
@@ -39,6 +45,7 @@ public class Voyageur {
     private String depart;
     private String arrivee;
     private int nb_trajet;
+    private boolean needCorrespondance = true;
 
     /**
      * @constructor Voyageur
@@ -88,6 +95,14 @@ public class Voyageur {
      */
     public Voyageur(String nom, String prenom, TypeCout critere) {
         this(nom, prenom, critere, DEFAULT_MODALITE);
+    }
+
+    public void showCorrespondance() {
+        this.needCorrespondance = true;
+    }
+
+    public void hideCorrespondance() {
+        this.needCorrespondance = false;
     }
 
     /**
@@ -165,10 +180,12 @@ public class Voyageur {
      */
     public List<Chemin> computeBestPath() throws CheminInexistantException {
         if (Tools.donneesValides(DATA)) {
-            Plateforme g = Tools.initPlateforme(DATA);
+            Plateforme g = Tools.initPlateforme(DATA, CORRESPONDANCE); 
             //System.out.println(g.get);
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
-                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite, this.critere, nb_trajet);
+                
+                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite, this.critere, this.nb_trajet*100);
+                chemins = Tools.removeDuplicates(chemins);
                 for (TypeCout c : new TypeCout[]{TypeCout.PRIX, TypeCout.CO2, TypeCout.TEMPS}) {
                     switch (c) {
                         case PRIX:
@@ -200,7 +217,7 @@ public class Voyageur {
     }
 
     public static void main(String[] args) {
-        Voyageur u = new Voyageur("Doe", "John", TypeCout.TEMPS, null, 1000, 1000, 1000, "Lille", "Paris", 3);
+        Voyageur u = new Voyageur("Doe", "John", TypeCout.PRIX, null, 1000, 1000, 1000, "Paris", "Lille", 3);
         List<Chemin> chemins = null;
         try {
             chemins = u.computeBestPath();
@@ -210,7 +227,7 @@ public class Voyageur {
             if (chemins != null) {
                 System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont:");
                 for (int i = 0; i < chemins.size(); i++) {
-                    System.out.println(i + 1 + ") " + Tools.cheminWithCorreBis(chemins.get(i), u.critere));
+                    System.out.println(i + 1 + ") " + Tools.cheminWithCorre(chemins.get(i), u.critere));
                 }
             }
             else {
@@ -220,4 +237,9 @@ public class Voyageur {
         
         
     }
+
+    // public static void main(String[] args) {
+    //     Plateforme g = Tools.initPlateforme(DATA, Tools.getCSV(path2));
+    //     System.out.println(g);
+    // }
 }

@@ -1,11 +1,16 @@
 package src.v2;
 
 import java.io.File;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.concurrent.LinkedTransferQueue;
 
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
+import fr.ulille.but.sae_s2_2024.Trancon;
 import src.v2.exception.CheminInexistantException;
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;
@@ -23,6 +28,7 @@ public class Tools {
     private static final int CO2_IDX = 4;
     private static final int TEMPS_IDX = 5;
 
+    public static String SUFFIXE = "_BIS";
     public static void main (String[] args) {
 
         ArrayList<String> data = Tools.getCSV(Voyageur.path);
@@ -130,12 +136,85 @@ public class Tools {
         }
     }
 
+    public static String buildLieuname(String ville, ModaliteTransport modality, ModaliteTransport modality2) {
+        return ville + "_" + modality + "_" + modality2;
+    }
+
+    public static Set<String> buildLieuxNames(String ville) {
+        Set<String> lieux = new HashSet<>();
+        for (ModaliteTransport m : ModaliteTransport.values()) {
+            for (ModaliteTransport m2 : ModaliteTransport.values()) {
+                lieux.add(ville+"_"+m+"_"+m2);
+            }
+        }
+        return lieux;
+    }
+
+    public static List<String> getLieuxWithDepModality(String ville, ModaliteTransport modality) {
+        List<String> lieux = new ArrayList<>();
+        for (String s : buildLieuxNames(ville)) {
+            if (s.split("_")[2].equals(modality.toString())) {
+                lieux.add(s);
+            }
+        }
+        return lieux;
+    }
+
+    public static List<String> getLieuxWithArrModality(String ville, ModaliteTransport modality) {
+        List<String> lieux = new ArrayList<>();
+        for (String s : buildLieuxNames(ville)) {
+            if (s.split("_")[1].equals(modality.toString())) {
+                lieux.add(s);
+            }
+        }
+        return lieux;
+    }
+
+    public static void ajouterCorrespondance(Plateforme g, String ville, ArrayList<String> correspondance) {
+        List<String> correspondanceNonRenseigne = new ArrayList<>();
+        for (String s : buildLieuxNames(ville)) {
+
+            correspondanceNonRenseigne.add(s);
+
+            String[] elt = s.split("_");
+            String arrMod = elt[1].toUpperCase();
+            String depMod = elt[2].toUpperCase();
+            String villeBis = elt[0];
+
+            int cpt = 0;
+            while (cpt < correspondance.size()) {
+                String[] elements = correspondance.get(cpt).split(SEPARATOR);
+                String villeDonne = elements[0];
+                String modarr = elements[1].toUpperCase();
+                String moddep = elements[2].toUpperCase();
+                int temp = Integer.parseInt(elements[3]);
+                double pollution = Double.parseDouble(elements[4]);
+                double prix = Double.parseDouble(elements[5]);
+
+                if (villeDonne.equals(villeBis) && modarr.equals(arrMod) && moddep.equals(depMod)) {
+                    String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod), ModaliteTransport.valueOf(depMod));
+                    g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), prix, pollution, temp);
+                    correspondanceNonRenseigne.remove(s);
+                }
+                cpt++;
+            }
+        }
+        for (String s : correspondanceNonRenseigne) {
+            String[] elt = s.split("_");
+            String arrMod = elt[1].toUpperCase();
+            String depMod = elt[2].toUpperCase();
+            String villeBis = elt[0];
+            String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod), ModaliteTransport.valueOf(depMod));
+            g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), 0, 0, 0);
+        }
+    }
+
     /**
      * Initialise la plateforme avec les données passées en paramètre
      * @param args Données
      * @return Plateforme
      */
-    public static Plateforme initPlateforme(ArrayList<String> args) {
+    public static Plateforme initPlateforme(ArrayList<String> args, ArrayList<String> correspondance) {
         Plateforme g = new Plateforme();
         for (String arg : args) {
             String[] elements = arg.split(SEPARATOR);
@@ -147,10 +226,41 @@ public class Tools {
             double pollution = Double.parseDouble(elements[CO2_IDX]);
             int Duree = Integer.parseInt(elements[TEMPS_IDX]);
 
+            ajouterCorrespondance(g, depart, correspondance);
+            ajouterCorrespondance(g, destination, correspondance);
 
+            List<String> depLieux = getLieuxWithDepModality(depart, modalite);
+            List<String> destLieux = getLieuxWithArrModality(destination, modalite);
 
-            g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
-            g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
+            for (String depLieu : depLieux) {
+                for (String destLieu : destLieux) {
+                    if (depLieu.split("_")[2].equals(destLieu.split("_")[1])) {
+                        System.out.println("AJOUT DE " + depLieu + SUFFIXE + " VERS " + destLieu);
+
+                        g.ajouterArrete(depLieu + SUFFIXE , destLieu, modalite, prix, pollution, Duree);
+                        //g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution, Duree);
+                    }
+                    
+                    
+                }
+            }
+
+            depLieux = getLieuxWithDepModality(destination, modalite);
+            destLieux = getLieuxWithArrModality(depart, modalite);
+
+            for (String depLieu : depLieux) {
+                for (String destLieu : destLieux) {
+                    if (depLieu.split("_")[2].equals(destLieu.split("_")[1])) {
+                        System.out.println("AJOUT DE " + depLieu + SUFFIXE + " VERS " + destLieu);
+                        g.ajouterArrete(depLieu + SUFFIXE , destLieu, modalite, prix, pollution, Duree);
+                        //g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution, Duree);
+                    }
+                    
+                    
+                }
+            }
+            // g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
+            // g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
         }
         return g;
 
@@ -415,6 +525,10 @@ public class Tools {
 
     }
 
+    public static String cleanLieux(String name) {
+        return name.split("_")[0];
+    }
+
     /**
      * Retourne une chaîne de caractères représentant un chemin
      * @param che Chemin
@@ -432,20 +546,71 @@ public class Tools {
                 r += " puis ";
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cheModal.aretes().get(0).getDepart() + " à " + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee() + " ";
+                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à " + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
             if (cheModal.aretes().size() > 1) {
-                r += "en passant par";
+                boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
-                    r += " " + cheModal.aretes().get(i).getDepart() + "";
-                    if (i < cheModal.aretes().size() - 1) {
-                        r += ",";
+                    if (!cheModal.aretes().get(i).getDepart().toString().contains(Tools.SUFFIXE)) {
+                        if (first) {
+                            r += "en passant par";
+                            first = false;
+                        }
+                        r += " " + cleanLieux(cheModal.aretes().get(i).getDepart().toString()) + "";
+                        if (i < cheModal.aretes().size() - 1) {
+                            r += ",";
+                        }
                     }
                     
+                    
                 }
+                
             }
             
         }
         return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+    }
+
+    public static boolean equalsArrete(Trancon tr1, Trancon tr2) {
+        if (!cleanLieux(tr1.getDepart().toString()).equals(cleanLieux(tr2.getDepart().toString())) ) {
+            return false;
+        }
+        if (!cleanLieux(tr1.getArrivee().toString()).equals(cleanLieux(tr2.getArrivee().toString())) ) {
+            return false;
+        }
+        // if (tr1.getModalite() != tr2.getModalite()) {
+        //     return false;
+        // }
+        return true;
+    }
+
+    public static boolean equalsChemin(Chemin che1, Chemin che2) {
+        if (che1.aretes().size() != che2.aretes().size()) {
+            return false;
+        }
+        for (int i = 0; i < che1.aretes().size(); i++) {
+            if (!equalsArrete(che1.aretes().get(i), che2.aretes().get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static List<Chemin>  removeDuplicates(List<Chemin> chemins) {
+        List<Chemin> n = new ArrayList<>();
+        for (Chemin che : chemins) {
+            boolean add = true;
+            for (Chemin che2 : n) {
+                if (equalsChemin(che, che2)) {
+                    add = false;
+                    break;
+                }
+            }
+            if (add) {
+                n.add(che);
+            }
+            
+        }
+        return n;
     }
 
     /**
@@ -465,7 +630,7 @@ public class Tools {
                 r += " puis ";
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cheModal.aretes().get(0).getDepart() + " à " + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee() + " ";
+                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à " + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
             // if (cheModal.aretes().size() > 1) {
             //     r += "en passant par";
             //     for (int i = 1; i < cheModal.aretes().size(); i++) {
