@@ -9,6 +9,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.LinkedTransferQueue;
 
+import javax.tools.Tool;
+
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.Trancon;
 import src.v2.exception.CheminInexistantException;
@@ -32,6 +34,7 @@ public class Tools {
     public static void main (String[] args) {
 
         ArrayList<String> data = Tools.getCSV(Voyageur.path);
+        ArrayList<String> correspondance = Tools.getCSV(Voyageur.path2);
 
         String depart, destination ;
         ModaliteTransport modalite;
@@ -43,7 +46,7 @@ public class Tools {
 
         if (donneesValides(data)) {
 
-            Plateforme g = initPlateforme(data);
+            Plateforme g = initPlateforme(data, correspondance);
             
             ModaliteTransport moyen = getModaliteTransport();
 
@@ -563,7 +566,47 @@ public class Tools {
                     
                     
                 }
-                
+
+            }
+            
+        }
+        return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+    }
+
+    /**
+     * Retourne une chaîne de caractères représentant un chemin
+     * @param che Chemin
+     * @param critere Critère
+     * @return Chaîne de caractères
+     */
+    public static String cheminWithCorreDEBUG(Chemin che, TypeCout critere) {
+        String r = "";
+        // on enleve les arrete vers alpha et omega
+        che.aretes().remove(0);
+        che.aretes().remove(che.aretes().size()-1);
+
+        for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
+            if (!r.isEmpty()) {
+                r += " puis ";
+            }
+            r += cheModal.aretes().get(0).getModalite() + " de " +
+                    cheModal.aretes().get(0).getDepart().toString() + " à " + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString() + " ";
+            if (cheModal.aretes().size() > 1) {
+                boolean first = true;
+                for (int i = 1; i < cheModal.aretes().size(); i++) {
+                        if (first) {
+                            r += "en passant par";
+                            first = false;
+                        }
+                        r += " " + cheModal.aretes().get(i).getDepart().toString() + "";
+                        if (i < cheModal.aretes().size() - 1) {
+                            r += ",";
+                        }
+                    
+                    
+                    
+                }
+
             }
             
         }
@@ -595,9 +638,12 @@ public class Tools {
         return true;
     }
 
-    public static List<Chemin>  removeDuplicates(List<Chemin> chemins) {
+    public static List<Chemin>  removeDuplicates(List<Chemin> chemins, int nb_trajet) {
         List<Chemin> n = new ArrayList<>();
         for (Chemin che : chemins) {
+            if (n.size() == nb_trajet) {
+                break;
+            }
             boolean add = true;
             for (Chemin che2 : n) {
                 if (equalsChemin(che, che2)) {

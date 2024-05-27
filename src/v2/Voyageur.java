@@ -185,7 +185,7 @@ public class Voyageur {
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
                 
                 List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite, this.critere, this.nb_trajet*100);
-                chemins = Tools.removeDuplicates(chemins);
+                chemins = Tools.removeDuplicates(chemins, this.nb_trajet);
                 for (TypeCout c : new TypeCout[]{TypeCout.PRIX, TypeCout.CO2, TypeCout.TEMPS}) {
                     switch (c) {
                         case PRIX:
@@ -217,7 +217,7 @@ public class Voyageur {
     }
 
     public static void main(String[] args) {
-        Voyageur u = new Voyageur("Doe", "John", TypeCout.PRIX, null, 1000, 1000, 1000, "Paris", "Lille", 3);
+        Voyageur u = new Voyageur("Doe", "John", TypeCout.TEMPS, null, 1000, 1000, 1000, "Paris", "Lille", 20);
         List<Chemin> chemins = null;
         try {
             chemins = u.computeBestPath();
@@ -227,7 +227,7 @@ public class Voyageur {
             if (chemins != null) {
                 System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont:");
                 for (int i = 0; i < chemins.size(); i++) {
-                    System.out.println(i + 1 + ") " + Tools.cheminWithCorre(chemins.get(i), u.critere));
+                    System.out.println(i + 1 + ") " + Tools.cheminWithCorreBis(chemins.get(i), u.critere));
                 }
             }
             else {
