@@ -188,6 +188,7 @@ public class Voyageur {
                 return chemins;
             }
             else {
+
                 throw new CheminInexistantException();
             }
         }
@@ -199,7 +200,7 @@ public class Voyageur {
     }
 
     public static void main(String[] args) {
-        Voyageur u = new Voyageur("Doe", "John", TypeCout.PRIX, ModaliteTransport.TRAIN, 2, 1000, 1000, "Lille", "Paris", 3);
+        Voyageur u = new Voyageur("Doe", "John", TypeCout.TEMPS, null, 1000, 1000, 1000, "Lille", "Paris", 3);
         List<Chemin> chemins = null;
         try {
             chemins = u.computeBestPath();
@@ -209,7 +210,7 @@ public class Voyageur {
             if (chemins != null) {
                 System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont:");
                 for (int i = 0; i < chemins.size(); i++) {
-                    System.out.println(i + 1 + ") " + Tools.cheminWithCorre(chemins.get(i), u.critere));
+                    System.out.println(i + 1 + ") " + Tools.cheminWithCorreBis(chemins.get(i), u.critere));
                 }
             }
             else {

@@ -79,7 +79,9 @@ public class Plateforme {
      */
     public boolean hasPathByModalite(String depart, String arrivee, ModaliteTransport modalite) {
         Plateforme g = this.clone();
-        g.filterByModality(modalite);
+        if (modalite != null) {
+            g.filterByModality(modalite);
+        }
         Lieu dep = this.getSommet(depart);
         Lieu arr = this.getSommet(arrivee);
         return AlgorithmeKPCC.kpcc(g.g1, dep, arr, 1).size() > 0;
@@ -95,7 +97,9 @@ public class Plateforme {
      */
     public List<Chemin> getPathByModaliteAndTypeCout(String dep, String arr, ModaliteTransport modalite, TypeCout critere, int nbChemin) throws CheminInexistantException{
         Plateforme g = this.clone();
-        g.filterByModality(modalite);
+        if (modalite != null) {
+            g.filterByModality(modalite);
+        }
         return g.getPathByTypeCout(dep, arr, critere, nbChemin);
     }
 
@@ -122,10 +126,13 @@ public class Plateforme {
         switch (critere) {
             case PRIX:
                 results = AlgorithmeKPCC.kpcc(g.g1, alpha, omega, nbChemin);
+                break;
             case CO2:
                 results = AlgorithmeKPCC.kpcc(g.g2, alpha, omega, nbChemin);
+                break;
             case TEMPS:
                 results = AlgorithmeKPCC.kpcc(g.g3, alpha, omega, nbChemin);
+                break;
         }
         if (results.size() == 0) {
             throw new CheminInexistantException();

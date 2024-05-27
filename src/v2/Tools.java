@@ -148,6 +148,7 @@ public class Tools {
             int Duree = Integer.parseInt(elements[TEMPS_IDX]);
 
 
+
             g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
             g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
         }
@@ -442,6 +443,39 @@ public class Tools {
                     
                 }
             }
+            
+        }
+        return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+    }
+
+    /**
+     * Retourne une chaîne de caractères représentant un chemin
+     * @param che Chemin
+     * @param critere Critère
+     * @return Chaîne de caractères
+     */
+    public static String cheminWithCorreBis(Chemin che, TypeCout critere) {
+        String r = "";
+        // on enleve les arrete vers alpha et omega
+        che.aretes().remove(0);
+        che.aretes().remove(che.aretes().size()-1);
+
+        for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
+            if (!r.isEmpty()) {
+                r += " puis ";
+            }
+            r += cheModal.aretes().get(0).getModalite() + " de " +
+                    cheModal.aretes().get(0).getDepart() + " à " + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee() + " ";
+            // if (cheModal.aretes().size() > 1) {
+            //     r += "en passant par";
+            //     for (int i = 1; i < cheModal.aretes().size(); i++) {
+            //         r += " " + cheModal.aretes().get(i).getDepart() + "";
+            //         if (i < cheModal.aretes().size() - 1) {
+            //             r += ",";
+            //         }
+                    
+            //     }
+            // }
             
         }
         return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
