@@ -1,10 +1,7 @@
 package src.v2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.tools.Tool;
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.v2.exception.CheminInexistantException;
@@ -225,7 +222,7 @@ public class Voyageur {
             chemins = null;
         }finally {
             if (chemins != null) {
-                System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont:");
+                System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont :");
                 for (int i = 0; i < chemins.size(); i++) {
                     System.out.println(i + 1 + ") " + Tools.cheminWithCorreBis(chemins.get(i), u.critere));
                 }
@@ -234,8 +231,6 @@ public class Voyageur {
                 System.out.println("Aucun chemin trouvé pour les critères demandés");
             }
         }
-        
-        
     }
 
     // public static void main(String[] args) {

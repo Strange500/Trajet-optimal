@@ -1,15 +1,11 @@
 package src.v2;
 
 import java.io.File;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.concurrent.LinkedTransferQueue;
-
-import javax.tools.Tool;
 
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.Trancon;
@@ -36,10 +32,10 @@ public class Tools {
         ArrayList<String> data = Tools.getCSV(Voyageur.path);
         ArrayList<String> correspondance = Tools.getCSV(Voyageur.path2);
 
-        String depart, destination ;
+        /*String depart, destination ;
         ModaliteTransport modalite;
         double prix, pollution;
-        int Duree;
+        int Duree;*/
 
         int thresholdPrix = Integer.MAX_VALUE, thresholdDuree = Integer.MAX_VALUE;
         double thresholdPollution = Double.MAX_VALUE;
@@ -139,10 +135,20 @@ public class Tools {
         }
     }
 
+    /**
+     * @param ville
+     * @param modality
+     * @param modality2
+     * @return Chaîne de caractères représentant un lieu
+     */
     public static String buildLieuname(String ville, ModaliteTransport modality, ModaliteTransport modality2) {
         return ville + "_" + modality + "_" + modality2;
     }
 
+    /**
+     * @param ville
+     * @return Set de String contenant les noms des lieux
+     */
     public static Set<String> buildLieuxNames(String ville) {
         Set<String> lieux = new HashSet<>();
         for (ModaliteTransport m : ModaliteTransport.values()) {
@@ -153,6 +159,11 @@ public class Tools {
         return lieux;
     }
 
+    /**
+     * @param ville
+     * @param modality
+     * @return Liste de String contenant les noms des lieux avec la modalité de départ
+     */
     public static List<String> getLieuxWithDepModality(String ville, ModaliteTransport modality) {
         List<String> lieux = new ArrayList<>();
         for (String s : buildLieuxNames(ville)) {
@@ -163,6 +174,11 @@ public class Tools {
         return lieux;
     }
 
+    /**
+     * @param ville
+     * @param modality
+     * @return Liste de String contenant les noms des lieux avec la modalité d'arrivée
+     */
     public static List<String> getLieuxWithArrModality(String ville, ModaliteTransport modality) {
         List<String> lieux = new ArrayList<>();
         for (String s : buildLieuxNames(ville)) {
@@ -173,6 +189,12 @@ public class Tools {
         return lieux;
     }
 
+    /**
+     * Ajoute les correspondances à la plateforme
+     * @param g
+     * @param ville
+     * @param correspondance
+     */
     public static void ajouterCorrespondance(Plateforme g, String ville, ArrayList<String> correspondance) {
         List<String> correspondanceNonRenseigne = new ArrayList<>();
         for (String s : buildLieuxNames(ville)) {
@@ -206,7 +228,7 @@ public class Tools {
             String[] elt = s.split("_");
             String arrMod = elt[1].toUpperCase();
             String depMod = elt[2].toUpperCase();
-            String villeBis = elt[0];
+            //String villeBis = elt[0];
             String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod), ModaliteTransport.valueOf(depMod));
             g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), 0, 0, 0);
         }
@@ -612,6 +634,11 @@ public class Tools {
         return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
     }
 
+    /**
+     * @param tr1
+     * @param tr2
+     * @return true si les arretes sont égales, false sinon
+     */
     public static boolean equalsArrete(Trancon tr1, Trancon tr2) {
         if (!cleanLieux(tr1.getDepart().toString()).equals(cleanLieux(tr2.getDepart().toString())) ) {
             return false;
@@ -625,6 +652,11 @@ public class Tools {
         return true;
     }
 
+    /**
+     * @param che1
+     * @param che2
+     * @return true si les chemins sont égaux, false sinon
+     */
     public static boolean equalsChemin(Chemin che1, Chemin che2) {
         if (che1.aretes().size() != che2.aretes().size()) {
             return false;
@@ -637,6 +669,11 @@ public class Tools {
         return true;
     }
 
+    /**
+     * @param chemins
+     * @param nb_trajet
+     * @return Liste de Chemin sans doublons
+     */
     public static List<Chemin>  removeDuplicates(List<Chemin> chemins, int nb_trajet) {
         List<Chemin> n = new ArrayList<>();
         for (Chemin che : chemins) {
@@ -672,7 +709,7 @@ public class Tools {
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
-                r += " puis ";
+                r += "puis ";
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
                     cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à " + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
@@ -688,9 +725,22 @@ public class Tools {
             // }
             
         }
-        return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+        if (critere == TypeCout.PRIX) {
+            r += "pour un prix total de : " + che.poids() + " €";
+        }
+        else if (critere == TypeCout.CO2) {
+            r += "pour une pollution totale de : " + che.poids() + " kgCO2e";
+        }
+        else if (critere == TypeCout.TEMPS) {
+            r += "pour une durée totale de : " + che.poids() + " minutes";
+        }
+        return r;
     }
 
+    /**
+     * @param path
+     * @return ArrayList de String contenant les données d'un fichier CSV
+     */
     public static ArrayList<String> getCSV(String path) {
         try {
             Scanner scanner = new Scanner(new File(path));

@@ -101,7 +101,7 @@ public class CheminImpl implements Chemin {
     public static String  toString(Chemin che) {
         String r = "";
         for (Trancon t : che.aretes()) {
-            r += t.getModalite() + " de " + t.getDepart() + " à " + t.getArrivee() + " ";
+            r += t.getModalite() + " de " + t.getDepart() + " à " + t.getArrivee();
         }
         return r;
     }
