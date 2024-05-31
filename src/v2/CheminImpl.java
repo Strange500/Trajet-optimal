@@ -30,7 +30,7 @@ public class CheminImpl implements Chemin {
 
     /**
      * @constructor CheminImpl
-     * Crée un chemin vide
+     *              Crée un chemin vide
      */
     public CheminImpl() {
         aretes = new ArrayList<Trancon>();
@@ -38,8 +38,10 @@ public class CheminImpl implements Chemin {
     }
 
     /**
-     * Divise un chemin en plusieurs chemins, chaque chemin contenant des trançons de la même modalité. 
-     * @param chemin 
+     * Divise un chemin en plusieurs chemins, chaque chemin contenant des trançons
+     * de la même modalité.
+     * 
+     * @param chemin
      * @return Une liste de chemins contenant des trançons de la même modalité
      */
     public static List<Chemin> splitByModalite(Chemin chemin) {
@@ -49,9 +51,9 @@ public class CheminImpl implements Chemin {
         List<Chemin> chemins = new ArrayList<Chemin>();
         Iterator<Trancon> it = chemin.aretes().iterator();
         Trancon tmpNext = it.next();
-        Chemin tmp ;
-        while (tmpNext!=null) {
-            Trancon t= tmpNext;
+        Chemin tmp;
+        while (tmpNext != null) {
+            Trancon t = tmpNext;
             tmp = new CheminImpl();
             tmp.aretes().add(t);
             if (!it.hasNext()) {
@@ -71,7 +73,7 @@ public class CheminImpl implements Chemin {
             chemins.add(tmp);
         }
         return chemins;
-        
+
     }
 
     /**
@@ -82,7 +84,7 @@ public class CheminImpl implements Chemin {
         if (che.aretes().size() == 0) {
             return 0;
         }
-        return (CheminImpl.splitByModalite(che).size())-1;
+        return (CheminImpl.splitByModalite(che).size()) - 1;
     }
 
     /**
@@ -93,12 +95,11 @@ public class CheminImpl implements Chemin {
         return CheminImpl.getNbChangement(che) * Plateforme.TEMP_CHANGEMENT;
     }
 
-
     /**
      * @param chemin
      * @return un chemin sous forme de chaine de caractères
      */
-    public static String  toString(Chemin che) {
+    public static String toString(Chemin che) {
         String r = "";
         for (Trancon t : che.aretes()) {
             r += t.getModalite() + " de " + t.getDepart() + " à " + t.getArrivee();

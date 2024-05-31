@@ -11,7 +11,6 @@ import src.v2.exception.CheminInexistantException;
  */
 public class Voyageur {
 
-
     public static final String path = "src/v2/csv/data.csv";
     public static final String path2 = "src/v2/csv/correspondance.csv";
 
@@ -28,10 +27,6 @@ public class Voyageur {
 
     private static final int DEFAULT_NB_TRAJET = 1;
 
-
-
-
-
     private String nom;
     private String prenom;
     private TypeCout critere;
@@ -46,19 +41,20 @@ public class Voyageur {
 
     /**
      * @constructor Voyageur
-     * @param nom Nom du voyageur
-     * @param prenom Prénom du voyageur
-     * @param critere Critère de choix
-     * @param modalite Modalité de transport
-     * @param thresholdPrix Seuil de prix
-     * @param thresholdCO2 Seuil de CO2
+     * @param nom            Nom du voyageur
+     * @param prenom         Prénom du voyageur
+     * @param critere        Critère de choix
+     * @param modalite       Modalité de transport
+     * @param thresholdPrix  Seuil de prix
+     * @param thresholdCO2   Seuil de CO2
      * @param thresholdTemps Seuil de temps
-     * @param depart Lieu de départ
-     * @param arrivee Lieu d'arrivée
-     * @param nb_trajet Nombre de trajets à recommander
-     * Crée un voyageur avec des critères de choix
+     * @param depart         Lieu de départ
+     * @param arrivee        Lieu d'arrivée
+     * @param nb_trajet      Nombre de trajets à recommander
+     *                       Crée un voyageur avec des critères de choix
      */
-    public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite, int thresholdPrix, double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet) {
+    public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite, int thresholdPrix,
+            double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet) {
         this.nom = nom;
         this.prenom = prenom;
         this.critere = critere;
@@ -73,22 +69,23 @@ public class Voyageur {
 
     /**
      * @constructor Voyageur
-     * @param nom Nom du voyageur
-     * @param prenom Prénom du voyageur
-     * @param critere Critère de choix
+     * @param nom      Nom du voyageur
+     * @param prenom   Prénom du voyageur
+     * @param critere  Critère de choix
      * @param modalite Modalité de transport
-     * Crée un voyageur avec des critères de choix par défaut
+     *                 Crée un voyageur avec des critères de choix par défaut
      */
     public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite) {
-        this(nom, prenom, critere, modalite, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS, DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET);
+        this(nom, prenom, critere, modalite, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS,
+                DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET);
     }
 
     /**
      * @constructor Voyageur
-     * @param nom Nom du voyageur
-     * @param prenom Prénom du voyageur
+     * @param nom     Nom du voyageur
+     * @param prenom  Prénom du voyageur
      * @param critere Critère de choix
-     * Crée un voyageur avec des critères de choix par défaut
+     *                Crée un voyageur avec des critères de choix par défaut
      */
     public Voyageur(String nom, String prenom, TypeCout critere) {
         this(nom, prenom, critere, DEFAULT_MODALITE);
@@ -177,13 +174,14 @@ public class Voyageur {
      */
     public List<Chemin> computeBestPath() throws CheminInexistantException {
         if (Tools.donneesValides(DATA)) {
-            Plateforme g = Tools.initPlateforme(DATA, CORRESPONDANCE); 
-            //System.out.println(g.get);
+            Plateforme g = Tools.initPlateforme(DATA, CORRESPONDANCE);
+            // System.out.println(g.get);
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
-                
-                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite, this.critere, this.nb_trajet*100);
+
+                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite,
+                        this.critere, this.nb_trajet * 100);
                 chemins = Tools.removeDuplicates(chemins, this.nb_trajet);
-                for (TypeCout c : new TypeCout[]{TypeCout.PRIX, TypeCout.CO2, TypeCout.TEMPS}) {
+                for (TypeCout c : new TypeCout[] { TypeCout.PRIX, TypeCout.CO2, TypeCout.TEMPS }) {
                     switch (c) {
                         case PRIX:
                             Tools.applyThreshold(g, chemins, c, this.thresholdPrix);
@@ -200,13 +198,11 @@ public class Voyageur {
                     throw new CheminInexistantException();
                 }
                 return chemins;
-            }
-            else {
+            } else {
 
                 throw new CheminInexistantException();
             }
-        }
-        else {
+        } else {
             System.out.println("Données invalides");
             return null;
         }
@@ -220,21 +216,20 @@ public class Voyageur {
             chemins = u.computeBestPath();
         } catch (CheminInexistantException e) {
             chemins = null;
-        }finally {
+        } finally {
             if (chemins != null) {
                 System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont :");
                 for (int i = 0; i < chemins.size(); i++) {
                     System.out.println(i + 1 + ") " + Tools.cheminWithCorreBis(chemins.get(i), u.critere));
                 }
-            }
-            else {
+            } else {
                 System.out.println("Aucun chemin trouvé pour les critères demandés");
             }
         }
     }
 
     // public static void main(String[] args) {
-    //     Plateforme g = Tools.initPlateforme(DATA, Tools.getCSV(path2));
-    //     System.out.println(g);
+    // Plateforme g = Tools.initPlateforme(DATA, Tools.getCSV(path2));
+    // System.out.println(g);
     // }
 }

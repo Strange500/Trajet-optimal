@@ -156,7 +156,6 @@ public class ToolsTest {
         assertEquals("TRAIN de villeA à villeD en passant par villeC totale: 107.0 €", Tools.cheminWithCorre(chPrix.get(2), TypeCout.PRIX));
     }
 
-
         // Tools.applyThreshold(p, ch1, TypeCout.PRIX, 20);
         // assertEquals(2, ch1.aretes().size());
         // Tools.applyThreshold(p, ch2, TypeCout.CO2,

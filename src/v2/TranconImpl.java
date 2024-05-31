@@ -14,10 +14,10 @@ public class TranconImpl implements Trancon {
 
     /**
      * @constructor TranconImpl
-     * @param depart Lieu de départ
-     * @param arrivee Lieu d'arrivée
+     * @param depart   Lieu de départ
+     * @param arrivee  Lieu d'arrivée
      * @param modalite Modalité de transport
-     * Crée une arête entre deux lieux
+     *                 Crée une arête entre deux lieux
      */
     public TranconImpl(Lieu depart, Lieu arrivee, ModaliteTransport modalite) {
         this.depart = depart;

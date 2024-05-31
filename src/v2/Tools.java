@@ -27,15 +27,18 @@ public class Tools {
     private static final int TEMPS_IDX = 5;
 
     public static String SUFFIXE = "_BIS";
-    public static void main (String[] args) {
+
+    public static void main(String[] args) {
 
         ArrayList<String> data = Tools.getCSV(Voyageur.path);
         ArrayList<String> correspondance = Tools.getCSV(Voyageur.path2);
 
-        /*String depart, destination ;
-        ModaliteTransport modalite;
-        double prix, pollution;
-        int Duree;*/
+        /*
+         * String depart, destination ;
+         * ModaliteTransport modalite;
+         * double prix, pollution;
+         * int Duree;
+         */
 
         int thresholdPrix = Integer.MAX_VALUE, thresholdDuree = Integer.MAX_VALUE;
         double thresholdPollution = Double.MAX_VALUE;
@@ -43,7 +46,7 @@ public class Tools {
         if (donneesValides(data)) {
 
             Plateforme g = initPlateforme(data, correspondance);
-            
+
             ModaliteTransport moyen = getModaliteTransport();
 
             Lieu dep = getLieuDepart(g);
@@ -51,12 +54,12 @@ public class Tools {
             Lieu dest = getLieuDestination(g, dep);
 
             if (g.hasPathByModalite(dep.toString(), dest.toString(), moyen)) {
-                
+
                 List<TypeCout> criteres = new ArrayList<>();
                 criteres.add(TypeCout.PRIX);
                 criteres.add(TypeCout.CO2);
                 criteres.add(TypeCout.TEMPS);
-                
+
                 TypeCout critere = getTypeCout();
                 criteres.remove(critere);
 
@@ -74,17 +77,16 @@ public class Tools {
                     }
                 }
 
-                
-
                 int nb_trajet = getNbTrajet();
                 List<Chemin> chemins;
                 try {
-                    chemins = g.getPathByModaliteAndTypeCout(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
+                    chemins = g.getPathByModaliteAndTypeCout(dep.toString(), dest.toString(), moyen, critere,
+                            nb_trajet);
                 } catch (CheminInexistantException e) {
                     System.out.println("Il n'y a pas de chemin disponible pour les critères que vous avez choisi");
                     return;
                 }
-                
+
                 for (TypeCout c : criteres) {
                     switch (c) {
                         case PRIX:
@@ -101,37 +103,42 @@ public class Tools {
 
                 if (chemins.size() == 0) {
                     System.out.println("Il n'y a pas de chemin disponible pour les critères que vous avez choisi");
-                }
-                else {
+                } else {
                     System.out.println("Les trajets recommandés de " + dep + " à " + dest + " sont:");
                     for (int i = 0; i < chemins.size(); i++) {
                         System.out.println(i + 1 + ") " + cheminWithCorre(chemins.get(i), critere));
                     }
                 }
-                
-            }
-            else {
+
+            } else {
                 System.out.println("Il n'y a pas de chemin disponible pour le moyen de transport que vous avez choisi");
             }
-            
-            
 
-            /*List<Chemin> chemins = AlgorithmeKPCC.kpcc(g, new LieuImpl("villeA"), new LieuImpl("villeD"), 3);
-            System.out.println("Les 3 trajets recommandés de A à D sont:");
-            for (int i = 0; i < chemins.size(); i++) {
-                if (chemins.get(i).aretes().get(1).getModalite() == ModaliteTransport.TRAIN) {
-                    System.out.println(i + 1 + ") " + chemins.get(i).aretes().get(0).getModalite() + " de " +
-                            chemins.get(i).aretes().get(0).getDepart() + " à " + chemins.get(i).aretes().get(0).getArrivee() +
-                            " en passant par " + chemins.get(i).aretes().get(1).getDepart() +
-                            ". Durée : " + (int) chemins.get(i).poids() + " minutes");
-                } else {
-                    System.out.println(i + 1 + ") " + chemins.get(i).aretes().get(0).getModalite() + " de " +
-                            chemins.get(i).aretes().get(0).getDepart() + " à " + chemins.get(i).aretes().get(0).getArrivee() +
-                            " puis " + chemins.get(i).aretes().get(1).getModalite() + " de " +
-                            chemins.get(i).aretes().get(1).getDepart() + " à " + chemins.get(i).aretes().get(1).getArrivee() +
-                            ". Durée : " + (int) chemins.get(i).poids() + " minutes");
-                }
-            }*/
+            /*
+             * List<Chemin> chemins = AlgorithmeKPCC.kpcc(g, new LieuImpl("villeA"), new
+             * LieuImpl("villeD"), 3);
+             * System.out.println("Les 3 trajets recommandés de A à D sont:");
+             * for (int i = 0; i < chemins.size(); i++) {
+             * if (chemins.get(i).aretes().get(1).getModalite() == ModaliteTransport.TRAIN)
+             * {
+             * System.out.println(i + 1 + ") " +
+             * chemins.get(i).aretes().get(0).getModalite() + " de " +
+             * chemins.get(i).aretes().get(0).getDepart() + " à " +
+             * chemins.get(i).aretes().get(0).getArrivee() +
+             * " en passant par " + chemins.get(i).aretes().get(1).getDepart() +
+             * ". Durée : " + (int) chemins.get(i).poids() + " minutes");
+             * } else {
+             * System.out.println(i + 1 + ") " +
+             * chemins.get(i).aretes().get(0).getModalite() + " de " +
+             * chemins.get(i).aretes().get(0).getDepart() + " à " +
+             * chemins.get(i).aretes().get(0).getArrivee() +
+             * " puis " + chemins.get(i).aretes().get(1).getModalite() + " de " +
+             * chemins.get(i).aretes().get(1).getDepart() + " à " +
+             * chemins.get(i).aretes().get(1).getArrivee() +
+             * ". Durée : " + (int) chemins.get(i).poids() + " minutes");
+             * }
+             * }
+             */
         }
     }
 
@@ -153,7 +160,7 @@ public class Tools {
         Set<String> lieux = new HashSet<>();
         for (ModaliteTransport m : ModaliteTransport.values()) {
             for (ModaliteTransport m2 : ModaliteTransport.values()) {
-                lieux.add(ville+"_"+m+"_"+m2);
+                lieux.add(ville + "_" + m + "_" + m2);
             }
         }
         return lieux;
@@ -162,7 +169,8 @@ public class Tools {
     /**
      * @param ville
      * @param modality
-     * @return Liste de String contenant les noms des lieux avec la modalité de départ
+     * @return Liste de String contenant les noms des lieux avec la modalité de
+     *         départ
      */
     public static List<String> getLieuxWithDepModality(String ville, ModaliteTransport modality) {
         List<String> lieux = new ArrayList<>();
@@ -177,7 +185,8 @@ public class Tools {
     /**
      * @param ville
      * @param modality
-     * @return Liste de String contenant les noms des lieux avec la modalité d'arrivée
+     * @return Liste de String contenant les noms des lieux avec la modalité
+     *         d'arrivée
      */
     public static List<String> getLieuxWithArrModality(String ville, ModaliteTransport modality) {
         List<String> lieux = new ArrayList<>();
@@ -191,6 +200,7 @@ public class Tools {
 
     /**
      * Ajoute les correspondances à la plateforme
+     * 
      * @param g
      * @param ville
      * @param correspondance
@@ -217,8 +227,10 @@ public class Tools {
                 double prix = Double.parseDouble(elements[5]);
 
                 if (villeDonne.equals(villeBis) && modarr.equals(arrMod) && moddep.equals(depMod)) {
-                    String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod), ModaliteTransport.valueOf(depMod));
-                    g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), prix, pollution, temp);
+                    String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod),
+                            ModaliteTransport.valueOf(depMod));
+                    g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), prix, pollution,
+                            temp);
                     correspondanceNonRenseigne.remove(s);
                 }
                 cpt++;
@@ -228,14 +240,16 @@ public class Tools {
             String[] elt = s.split("_");
             String arrMod = elt[1].toUpperCase();
             String depMod = elt[2].toUpperCase();
-            //String villeBis = elt[0];
-            String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod), ModaliteTransport.valueOf(depMod));
+            // String villeBis = elt[0];
+            String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod),
+                    ModaliteTransport.valueOf(depMod));
             g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), 0, 0, 0);
         }
     }
 
     /**
      * Initialise la plateforme avec les données passées en paramètre
+     * 
      * @param args Données
      * @return Plateforme
      */
@@ -243,7 +257,7 @@ public class Tools {
         Plateforme g = new Plateforme();
         for (String arg : args) {
             String[] elements = arg.split(SEPARATOR);
-            
+
             String depart = elements[DEPART_IDX];
             String destination = elements[DESTINATION_IDX];
             ModaliteTransport modalite = ModaliteTransport.valueOf(elements[MODALITE_IDX].toUpperCase());
@@ -261,11 +275,11 @@ public class Tools {
                 for (String destLieu : destLieux) {
                     if (depLieu.split("_")[2].equals(destLieu.split("_")[1])) {
 
-                        g.ajouterArrete(depLieu + SUFFIXE , destLieu, modalite, prix, pollution, Duree);
-                        //g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution, Duree);
+                        g.ajouterArrete(depLieu + SUFFIXE, destLieu, modalite, prix, pollution, Duree);
+                        // g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution,
+                        // Duree);
                     }
-                    
-                    
+
                 }
             }
 
@@ -275,12 +289,11 @@ public class Tools {
             for (String depLieu : depLieux) {
                 for (String destLieu : destLieux) {
                     if (depLieu.split("_")[2].equals(destLieu.split("_")[1])) {
-                        System.out.println("AJOUT DE " + depLieu + SUFFIXE + " VERS " + destLieu);
-                        g.ajouterArrete(depLieu + SUFFIXE , destLieu, modalite, prix, pollution, Duree);
-                        //g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution, Duree);
+                        g.ajouterArrete(depLieu + SUFFIXE, destLieu, modalite, prix, pollution, Duree);
+                        // g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution,
+                        // Duree);
                     }
-                    
-                    
+
                 }
             }
             // g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
@@ -289,9 +302,10 @@ public class Tools {
         return g;
 
     }
-    
+
     /**
      * Vérifie si une chaîne de caractères est un nombre
+     * 
      * @param chaine Chaîne de caractères
      * @return Vrai si la chaîne est un nombre, faux sinon
      */
@@ -306,6 +320,7 @@ public class Tools {
 
     /**
      * Vérifie si les données passées en paramètre sont valides
+     * 
      * @param args Données
      * @return Vrai si les données sont valides, faux sinon
      */
@@ -315,8 +330,9 @@ public class Tools {
         }
         for (String arg : args) {
             String[] elements = arg.split(";");
-            if (elements.length != 6 || !estNombre(elements[3]) || !estNombre(elements[4]) || !estNombre(elements[5]) || 
-            elements[0].length() == 0 || elements[1].length() == 0 || elements[2].length() == 0 || elements[3].length() == 0 || elements[4].length() == 0 || elements[5].length() == 0) {
+            if (elements.length != 6 || !estNombre(elements[3]) || !estNombre(elements[4]) || !estNombre(elements[5]) ||
+                    elements[0].length() == 0 || elements[1].length() == 0 || elements[2].length() == 0
+                    || elements[3].length() == 0 || elements[4].length() == 0 || elements[5].length() == 0) {
                 return false;
             }
         }
@@ -325,6 +341,7 @@ public class Tools {
 
     /**
      * Récupère une chaîne de caractères entrée par l'utilisateur
+     * 
      * @return Chaîne de caractères
      */
     public static String getUserInuput() {
@@ -335,6 +352,7 @@ public class Tools {
 
     /**
      * Récupère le moyen de transport entré par l'utilisateur
+     * 
      * @return Moyen de transport
      */
     public static ModaliteTransport getModaliteTransport() {
@@ -342,7 +360,7 @@ public class Tools {
         for (ModaliteTransport m : ModaliteTransport.values()) {
             System.out.println("\t- " + m);
         }
-        //System.out.println("\t- Tous");
+        // System.out.println("\t- Tous");
         System.out.println("Entrez le moyen de transport:");
         String moyen = getUserInuput();
         if (moyen.length() == 0) {
@@ -350,7 +368,7 @@ public class Tools {
             return getModaliteTransport();
         }
         // if (moyen.toLowerCase().equals("tous")) {
-        //     return null;
+        // return null;
         // }
         try {
             return ModaliteTransport.valueOf(moyen.toUpperCase());
@@ -362,12 +380,13 @@ public class Tools {
 
     /**
      * Récupère le lieu de départ entré par l'utilisateur
+     * 
      * @param g Plateforme
      * @return Lieu de départ
      */
     public static Lieu getLieuDepart(Plateforme g) {
         System.out.println("Ville de départ disponible:");
-        for (Lieu l : g.getLieux()) {
+        for (String l : g.getLieux()) {
             System.out.println("\t- " + l);
         }
         System.out.println("Entrez la ville de départ:");
@@ -389,13 +408,15 @@ public class Tools {
 
     /**
      * Récupère le lieu de destination entré par l'utilisateur
-     * @param g Plateforme
+     * 
+     * @param g      Plateforme
      * @param depart Lieu de départ
      * @return Lieu de destination
      */
     public static Lieu getLieuDestination(Plateforme g, Lieu depart) {
         System.out.println("Ville de destination disponible:");
-        for (Lieu l : g.getLieux(depart))  {
+        String[] departSplit = depart.toString().split("_");
+        for (String l : g.getLieux(departSplit[0])) {
             System.out.println("\t- " + l);
         }
         System.out.println("Entrez la ville de destination:");
@@ -417,6 +438,7 @@ public class Tools {
 
     /**
      * Récupère le critère entré par l'utilisateur
+     * 
      * @return Critère
      */
     public static TypeCout getTypeCout() {
@@ -440,6 +462,7 @@ public class Tools {
 
     /**
      * Récupère le nombre de trajets entré par l'utilisateur
+     * 
      * @return Nombre de trajets
      */
     public static int getNbTrajet() {
@@ -458,6 +481,7 @@ public class Tools {
 
     /**
      * Récupère le seuil de prix entré par l'utilisateur
+     * 
      * @return Seuil de prix
      */
     public static int getThresholdPrix() {
@@ -476,6 +500,7 @@ public class Tools {
 
     /**
      * Récupère le seuil de durée entré par l'utilisateur
+     * 
      * @return Seuil de durée
      */
     public static int getThresholdDuree() {
@@ -494,6 +519,7 @@ public class Tools {
 
     /**
      * Récupère le seuil de pollution entré par l'utilisateur
+     * 
      * @return Seuil de pollution
      */
     public static double getThresholdPollution() {
@@ -512,9 +538,10 @@ public class Tools {
 
     /**
      * Applique un seuil sur les chemins
-     * @param g Plateforme
-     * @param chemins Chemins
-     * @param critere Critère
+     * 
+     * @param g         Plateforme
+     * @param chemins   Chemins
+     * @param critere   Critère
      * @param threshold Seuil
      */
     public static void applyThreshold(Plateforme g, List<Chemin> chemins, TypeCout critere, int threshold) {
@@ -527,14 +554,14 @@ public class Tools {
             }
         }
         chemins.removeAll(toRemove);
-
     }
 
     /**
      * Applique un seuil sur les chemins
-     * @param g Plateforme
-     * @param chemins Chemins
-     * @param critere Critère
+     * 
+     * @param g         Plateforme
+     * @param chemins   Chemins
+     * @param critere   Critère
      * @param threshold Seuil
      */
     public static void applyThreshold(Plateforme g, List<Chemin> chemins, TypeCout critere, double threshold) {
@@ -555,7 +582,8 @@ public class Tools {
 
     /**
      * Retourne une chaîne de caractères représentant un chemin
-     * @param che Chemin
+     * 
+     * @param che     Chemin
      * @param critere Critère
      * @return Chaîne de caractères
      */
@@ -563,14 +591,15 @@ public class Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().remove(che.aretes().size() - 1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à " + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
+                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
+                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString()) + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -584,19 +613,19 @@ public class Tools {
                             r += ",";
                         }
                     }
-                    
-                    
+
                 }
 
             }
-            
+
         }
-        return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+        return r + " total: " + che.poids() + " " + TypeCout.getUnit(critere);
     }
 
     /**
      * Retourne une chaîne de caractères représentant un chemin
-     * @param che Chemin
+     * 
+     * @param che     Chemin
      * @param critere Critère
      * @return Chaîne de caractères
      */
@@ -604,34 +633,33 @@ public class Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().remove(che.aretes().size() - 1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cheModal.aretes().get(0).getDepart().toString() + " à " + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString() + " ";
+                    cheModal.aretes().get(0).getDepart().toString() + " à "
+                    + cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString() + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
-                        if (first) {
-                            r += "en passant par";
-                            first = false;
-                        }
-                        r += " " + cheModal.aretes().get(i).getDepart().toString() + "";
-                        if (i < cheModal.aretes().size() - 1) {
-                            r += ",";
-                        }
-                    
-                    
-                    
+                    if (first) {
+                        r += "en passant par";
+                        first = false;
+                    }
+                    r += " " + cheModal.aretes().get(i).getDepart().toString() + "";
+                    if (i < cheModal.aretes().size() - 1) {
+                        r += ",";
+                    }
+
                 }
 
             }
-            
+
         }
-        return r + " total: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+        return r + " total: " + che.poids() + " " + TypeCout.getUnit(critere);
     }
 
     /**
@@ -640,14 +668,14 @@ public class Tools {
      * @return true si les arretes sont égales, false sinon
      */
     public static boolean equalsArrete(Trancon tr1, Trancon tr2) {
-        if (!cleanLieux(tr1.getDepart().toString()).equals(cleanLieux(tr2.getDepart().toString())) ) {
+        if (!cleanLieux(tr1.getDepart().toString()).equals(cleanLieux(tr2.getDepart().toString()))) {
             return false;
         }
-        if (!cleanLieux(tr1.getArrivee().toString()).equals(cleanLieux(tr2.getArrivee().toString())) ) {
+        if (!cleanLieux(tr1.getArrivee().toString()).equals(cleanLieux(tr2.getArrivee().toString()))) {
             return false;
         }
         // if (tr1.getModalite() != tr2.getModalite()) {
-        //     return false;
+        // return false;
         // }
         return true;
     }
@@ -674,7 +702,7 @@ public class Tools {
      * @param nb_trajet
      * @return Liste de Chemin sans doublons
      */
-    public static List<Chemin>  removeDuplicates(List<Chemin> chemins, int nb_trajet) {
+    public static List<Chemin> removeDuplicates(List<Chemin> chemins, int nb_trajet) {
         List<Chemin> n = new ArrayList<>();
         for (Chemin che : chemins) {
             if (n.size() == nb_trajet) {
@@ -690,14 +718,15 @@ public class Tools {
             if (add) {
                 n.add(che);
             }
-            
+
         }
         return n;
     }
 
     /**
      * Retourne une chaîne de caractères représentant un chemin
-     * @param che Chemin
+     * 
+     * @param che     Chemin
      * @param critere Critère
      * @return Chaîne de caractères
      */
@@ -705,33 +734,32 @@ public class Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().remove(che.aretes().size() - 1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += "puis ";
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à " + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
+                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
+                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString()) + " ";
             // if (cheModal.aretes().size() > 1) {
-            //     r += "en passant par";
-            //     for (int i = 1; i < cheModal.aretes().size(); i++) {
-            //         r += " " + cheModal.aretes().get(i).getDepart() + "";
-            //         if (i < cheModal.aretes().size() - 1) {
-            //             r += ",";
-            //         }
-                    
-            //     }
+            // r += "en passant par";
+            // for (int i = 1; i < cheModal.aretes().size(); i++) {
+            // r += " " + cheModal.aretes().get(i).getDepart() + "";
+            // if (i < cheModal.aretes().size() - 1) {
+            // r += ",";
             // }
-            
+
+            // }
+            // }
+
         }
         if (critere == TypeCout.PRIX) {
             r += "pour un prix total de : " + che.poids() + " €";
-        }
-        else if (critere == TypeCout.CO2) {
+        } else if (critere == TypeCout.CO2) {
             r += "pour une pollution totale de : " + che.poids() + " kgCO2e";
-        }
-        else if (critere == TypeCout.TEMPS) {
+        } else if (critere == TypeCout.TEMPS) {
             r += "pour une durée totale de : " + che.poids() + " minutes";
         }
         return r;

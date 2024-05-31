@@ -54,8 +54,8 @@ public class VoyageurTest {
         assertEquals(TypeCout.PRIX, v1.getCritere());
         assertEquals(ModaliteTransport.TRAIN, v1.getModalite());
         assertEquals(100, v1.getThresholdPrix());
-        assertEquals(100, v1.getThresholdCO2());
-        assertEquals(100, v1.getThresholdTemps());
+        assertEquals(500, v1.getThresholdCO2());
+        assertEquals(500, v1.getThresholdTemps());
         assertEquals("villeA", v1.getDepart());
         assertEquals("villeD", v1.getArrivee());
         assertEquals(1, v1.getNb_trajet());

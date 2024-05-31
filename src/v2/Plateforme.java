@@ -11,7 +11,6 @@ import fr.ulille.but.sae_s2_2024.MultiGrapheOrienteValue;
 import fr.ulille.but.sae_s2_2024.Trancon;
 import src.v2.exception.CheminInexistantException;
 
-
 /*
  * c'est un graphe qui contient 3 graphes, chacun se basant sur un critere different
  */
@@ -19,14 +18,14 @@ public class Plateforme {
     public static int TEMP_CHANGEMENT = 10;
     public static String ALPHA = "ALPHA";
     public static String OMEGA = "OMEGA";
-    
+
     private MultiGrapheOrienteValue g1;
     private MultiGrapheOrienteValue g2;
     private MultiGrapheOrienteValue g3;
 
     /**
      * @constructor Plateforme
-     * Crée une plateforme vide
+     *              Crée une plateforme vide
      */
     public Plateforme() {
         g1 = new MultiGrapheOrienteValue();
@@ -35,7 +34,7 @@ public class Plateforme {
     }
 
     /**
-     * @param chemin un chemin à évaluer
+     * @param chemin  un chemin à évaluer
      * @param critere le critère à utiliser (CO2, PRIX, TEMPS)
      * @return le poids d'un chemin en fonction d'un critère
      */
@@ -58,24 +57,26 @@ public class Plateforme {
             }
         }
         return poids;
-        
+
     }
 
-
-    // private Trancon findTrancon(String depart, String arrivee, ModaliteTransport modalite) {
-    //     for (Trancon t : this.g1.aretes()) {
-    //         if (t.getDepart().toString().equals(depart) && t.getArrivee().toString().equals(arrivee) && t.getModalite() == modalite) {
-    //             return t;
-    //         }
-    //     }
-    //     return null;
+    // private Trancon findTrancon(String depart, String arrivee, ModaliteTransport
+    // modalite) {
+    // for (Trancon t : this.g1.aretes()) {
+    // if (t.getDepart().toString().equals(depart) &&
+    // t.getArrivee().toString().equals(arrivee) && t.getModalite() == modalite) {
+    // return t;
+    // }
+    // }
+    // return null;
     // }
 
     /**
-     * @param depart le lieu de départ
-     * @param arrivee le lieu d'arrivée
+     * @param depart   le lieu de départ
+     * @param arrivee  le lieu d'arrivée
      * @param modalite le mode de transport
-     * @return vrai si un chemin existe entre deux lieux avec un mode de transport donné
+     * @return vrai si un chemin existe entre deux lieux avec un mode de transport
+     *         donné
      */
     public boolean hasPathByModalite(String depart, String arrivee, ModaliteTransport modalite) {
         Plateforme g = this.clone();
@@ -91,14 +92,16 @@ public class Plateforme {
     }
 
     /**
-     * @param dep le lieu de départ
-     * @param arr le lieu d'arrivée
+     * @param dep      le lieu de départ
+     * @param arr      le lieu d'arrivée
      * @param modalite le mode de transport
-     * @param critere le critère à utiliser (CO2, PRIX, TEMPS)
+     * @param critere  le critère à utiliser (CO2, PRIX, TEMPS)
      * @param nbChemin le nombre de chemins à retourner
-     * @return les chemins entre deux lieux avec un mode de transport donné et un critère donné
+     * @return les chemins entre deux lieux avec un mode de transport donné et un
+     *         critère donné
      */
-    public List<Chemin> getPathByModaliteAndTypeCout(String dep, String arr, ModaliteTransport modalite, TypeCout critere, int nbChemin) throws CheminInexistantException{
+    public List<Chemin> getPathByModaliteAndTypeCout(String dep, String arr, ModaliteTransport modalite,
+            TypeCout critere, int nbChemin) throws CheminInexistantException {
         Plateforme g = this.clone();
         if (modalite != null) {
             g.filterByModality(modalite);
@@ -107,22 +110,23 @@ public class Plateforme {
     }
 
     /**
-     * @param dep le lieu de départ
-     * @param arr le lieu d'arrivée
-     * @param critere le critère à utiliser (CO2, PRIX, TEMPS)
+     * @param dep      le lieu de départ
+     * @param arr      le lieu d'arrivée
+     * @param critere  le critère à utiliser (CO2, PRIX, TEMPS)
      * @param nbChemin le nombre de chemins à retourner
      * @return les chemins entre deux lieux avec un critère donné
      */
-    public List<Chemin> getPathByTypeCout(String dep, String arr,  TypeCout critere, int nbChemin) throws CheminInexistantException{
+    public List<Chemin> getPathByTypeCout(String dep, String arr, TypeCout critere, int nbChemin)
+            throws CheminInexistantException {
         Plateforme g = this.clone();
         List<Chemin> results = new ArrayList<Chemin>();
-        //Lieu depart = this.getSommet(dep);
-        //Lieu arrivee = this.getSommet(arr);
-        for (String names: Tools.buildLieuxNames(dep)) {
+        // Lieu depart = this.getSommet(dep);
+        // Lieu arrivee = this.getSommet(arr);
+        for (String names : Tools.buildLieuxNames(dep)) {
             g.ajouterArrete(ALPHA, names + Tools.SUFFIXE, ModaliteTransport.TRAIN, 0, 0, 0);
         }
 
-        for (String names: Tools.buildLieuxNames(arr)) {
+        for (String names : Tools.buildLieuxNames(arr)) {
             g.ajouterArrete(names, OMEGA, ModaliteTransport.TRAIN, 0, 0, 0);
         }
         // g.ajouterArrete(ALPHA, dep, ModaliteTransport.TRAIN, 0, 0, 0);
@@ -130,7 +134,6 @@ public class Plateforme {
 
         Lieu alpha = g.getSommet(ALPHA);
         Lieu omega = g.getSommet(OMEGA);
-
 
         switch (critere) {
             case PRIX:
@@ -170,7 +173,7 @@ public class Plateforme {
     }
 
     /**
-     * @param g le graphe à filtrer
+     * @param g   le graphe à filtrer
      * @param mod le mode de transport à filtrer
      * @return un graphe filtré
      */
@@ -196,7 +199,7 @@ public class Plateforme {
 
     /**
      * @param graph le graphe à cloner
-     * @param mod le mode de transport à filtrer
+     * @param mod   le mode de transport à filtrer
      * @return une copie du graphe filtrée
      */
     public static MultiGrapheOrienteValue clone(MultiGrapheOrienteValue graph, ModaliteTransport mod) {
@@ -205,7 +208,7 @@ public class Plateforme {
             g.ajouterSommet(l);
         }
         for (Trancon t : graph.aretes()) {
-            if (t.getModalite() == mod) {   
+            if (t.getModalite() == mod) {
                 g.ajouterArete(t, graph.getPoidsArete(t));
             }
         }
@@ -213,24 +216,30 @@ public class Plateforme {
     }
 
     /**
-     * @return la liste des lieux de la plateforme
+     * @return la liste des lieux de la plateforme (sous forme de chaînes de
+     *         caractères)
      */
-    public List<Lieu> getLieux() {
-        List<Lieu> lieux = new ArrayList<Lieu>();
+    public List<String> getLieux() {
+        List<String> lieux = new ArrayList<String>();
         for (Lieu l : g1.sommets()) {
-            lieux.add(l);
+            String[] ligne = l.toString().split("_");
+            if (!lieux.contains(ligne[0])) {
+                lieux.add(ligne[0]);
+            }
         }
         return lieux;
     }
 
     /**
      * @param avoid le lieu à éviter
-     * @return la liste des lieux de la plateforme sans le lieu à éviter
+     * @return la liste des lieux de la plateforme sans le lieu à éviter (sous forme
+     *         de chaînes de caractères)
      */
-    public List<Lieu> getLieux(Lieu avoid) {
-        List<Lieu> lieux = this.getLieux();
-        for (Lieu l : lieux) {
-            if (l.toString().equals(avoid.toString())) {
+    public List<String> getLieux(String avoid) {
+        List<String> lieux = this.getLieux();
+        for (String l : lieux) {
+            String[] ligne = l.toString().split("_");
+            if (ligne[0].equals(avoid)) {
                 lieux.remove(l);
                 break;
             }
@@ -269,7 +278,7 @@ public class Plateforme {
     }
 
     /**
-     * @param g le graphe à modifier
+     * @param g    le graphe à modifier
      * @param lieu le lieu à ajouter
      * @return vrai si le lieu a été ajouté, faux si le lieu est déjà présent
      */
@@ -282,23 +291,25 @@ public class Plateforme {
     }
 
     /**
-     * @param depart le lieu de départ
-     * @param arrivee le lieu d'arrivée
-     * @param modalite le mode de transport
-     * @param prix le prix de l'arrête
+     * @param depart    le lieu de départ
+     * @param arrivee   le lieu d'arrivée
+     * @param modalite  le mode de transport
+     * @param prix      le prix de l'arrête
      * @param pollution la pollution de l'arrête
-     * @param duree la durée de l'arrête
+     * @param duree     la durée de l'arrête
      * @return vrai si l'arrête a été ajoutée
      */
-    public boolean ajouterArrete(String depart, String arrivee, ModaliteTransport modalite, double prix, double pollution, double duree) {
-        //Lieu lDepart = new LieuImpl(depart);
-        //Lieu lArrivee = new LieuImpl(arrivee);
+    public boolean ajouterArrete(String depart, String arrivee, ModaliteTransport modalite, double prix,
+            double pollution, double duree) {
+        // Lieu lDepart = new LieuImpl(depart);
+        // Lieu lArrivee = new LieuImpl(arrivee);
         this.ajouterLieux(arrivee);
         this.ajouterLieux(depart);
         Lieu g1Depart = this.getSommet(depart);
         Lieu g1Arrivee = this.getSommet(arrivee);
         Trancon t = new TranconImpl(g1Depart, g1Arrivee, modalite);
-        return this.ajouterArreteGraph(g1, t, prix) && this.ajouterArreteGraph(g2, t, pollution) && this.ajouterArreteGraph(g3, t, duree);
+        return this.ajouterArreteGraph(g1, t, prix) && this.ajouterArreteGraph(g2, t, pollution)
+                && this.ajouterArreteGraph(g3, t, duree);
     }
 
     /**
@@ -315,12 +326,12 @@ public class Plateforme {
     }
 
     /**
-     * @param g le graphe à modifier
+     * @param g       le graphe à modifier
      * @param trancon l'arrête à ajouter
-     * @param value la valeur de l'arrête
+     * @param value   la valeur de l'arrête
      * @return vrai si l'arrête a été ajoutée
      */
-    private boolean ajouterArreteGraph(MultiGrapheOrienteValue g, Trancon trancon, double value) {      
+    private boolean ajouterArreteGraph(MultiGrapheOrienteValue g, Trancon trancon, double value) {
         if (g.aretes().contains(trancon)) {
             return false;
         }
@@ -329,7 +340,7 @@ public class Plateforme {
     }
 
     /**
-     * @param g le graphe à modifier
+     * @param g    le graphe à modifier
      * @param lieu le lieu à chercher (sous forme de chaîne de caractères)
      * @return vrai si le graphe contient le lieu
      */
@@ -343,7 +354,7 @@ public class Plateforme {
     }
 
     /**
-     * @param g le graphe à modifier
+     * @param g    le graphe à modifier
      * @param lieu le lieu à chercher (sous forme de Lieu)
      * @return vrai si le graphe contient le lieu
      */
@@ -363,15 +374,15 @@ public class Plateforme {
         String r = "";
 
         Object[] g1List = this.g1.aretes().toArray();
-        //Object[] g2List = this.g2.aretes().toArray();
-        //Object[] g3List = this.g3.aretes().toArray();
+        // Object[] g2List = this.g2.aretes().toArray();
+        // Object[] g3List = this.g3.aretes().toArray();
 
-        for (int j = 0; j < g1List.length; j++){
-            r+= ((Trancon) g1List[j]).getModalite().name() +" ";
-            r+= ((Trancon) g1List[j]).getDepart() + " -> " + ((Trancon) g1List[j]).getArrivee() + " (" ;
-            r+= this.g1.getPoidsArete(((Trancon) g1List[j])) + ",";
-            r+= this.g2.getPoidsArete(((Trancon) g1List[j]))+"," ;
-            r+= this.g3.getPoidsArete(((Trancon) g1List[j])) + ")\n";
+        for (int j = 0; j < g1List.length; j++) {
+            r += ((Trancon) g1List[j]).getModalite().name() + " ";
+            r += ((Trancon) g1List[j]).getDepart() + " -> " + ((Trancon) g1List[j]).getArrivee() + " (";
+            r += this.g1.getPoidsArete(((Trancon) g1List[j])) + ",";
+            r += this.g2.getPoidsArete(((Trancon) g1List[j])) + ",";
+            r += this.g3.getPoidsArete(((Trancon) g1List[j])) + ")\n";
 
         }
         return r;
