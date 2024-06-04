@@ -114,11 +114,17 @@ public class ToolsTest {
     public void testApplyThreshold() {
         try {
             List<Chemin> chPrix = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.PRIX, 3);
+                    TypeCout.PRIX, 3 *100);
+
+            chPrix = Tools.removeDuplicates(chPrix, 3);
+            
             List<Chemin> chCO2 = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.CO2, 3);
+                    TypeCout.CO2, 3 *100);
+            chCO2 = Tools.removeDuplicates(chCO2, 3);
+
             List<Chemin> chTemps = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.TEMPS, 3);
+                    TypeCout.TEMPS, 3 *100);
+            chTemps = Tools.removeDuplicates(chTemps, 3);
             // nous avons ici le premier trajet a 78€ puis 82€ et enfin 107€
             assertEquals(3, chPrix.size());
             assertEquals(78, chPrix.get(0).poids());
@@ -161,13 +167,14 @@ public class ToolsTest {
     public void testCheminWithCorre() {
         try {
             List<Chemin> chPrix = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.PRIX, 3);
+                    TypeCout.PRIX, 3*100);
+            chPrix = Tools.removeDuplicates(chPrix, 3);
 
-            assertEquals("TRAIN de villeA à villeD en passant par villeC, villeB totale: 78.0 €",
+            assertEquals("TRAIN de villeA à villeD en passant par villeC, villeB, total: 78.0 €",
                     Tools.cheminWithCorre(chPrix.get(0), TypeCout.PRIX));
-            assertEquals("TRAIN de villeA à villeD en passant par villeB totale: 82.0 €",
+            assertEquals("TRAIN de villeA à villeD en passant par villeB, total: 82.0 €",
                     Tools.cheminWithCorre(chPrix.get(1), TypeCout.PRIX));
-            assertEquals("TRAIN de villeA à villeD en passant par villeC totale: 107.0 €",
+            assertEquals("TRAIN de villeA à villeD en passant par villeC, total: 107.0 €",
                     Tools.cheminWithCorre(chPrix.get(2), TypeCout.PRIX));
         } catch (CheminInexistantException e) {
             e.printStackTrace();

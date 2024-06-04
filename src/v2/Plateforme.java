@@ -22,6 +22,7 @@ public class Plateforme {
     private MultiGrapheOrienteValue g1;
     private MultiGrapheOrienteValue g2;
     private MultiGrapheOrienteValue g3;
+    
 
     /**
      * @constructor Plateforme

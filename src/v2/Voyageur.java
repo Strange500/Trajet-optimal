@@ -11,11 +11,12 @@ import src.v2.exception.CheminInexistantException;
  */
 public class Voyageur {
 
-    public static final String path = "src/v2/csv/data.csv";
-    public static final String path2 = "src/v2/csv/correspondance.csv";
+    public static final String path_default = "src/v2/csv/data.csv";
+    public static final String path_cor_default = "src/v2/csv/correspondance.csv";
 
-    private static final ArrayList<String> DATA = Tools.getCSV(path);
-    private static final ArrayList<String> CORRESPONDANCE = Tools.getCSV(path2);
+    private  final ArrayList<String> DATA ;
+    private  final ArrayList<String> CORRESPONDANCE ;
+
     private static final int DEFAULT_THRESHOLD_PRIX = Integer.MAX_VALUE;
     private static final double DEFAULT_THRESHOLD_CO2 = Double.MAX_VALUE;
     private static final int DEFAULT_THRESHOLD_TEMPS = Integer.MAX_VALUE;
@@ -38,6 +39,35 @@ public class Voyageur {
     private String arrivee;
     private int nb_trajet;
     private boolean needCorrespondance = true;
+    /**
+     * @constructor Voyageur
+     * @param nom            Nom du voyageur
+     * @param prenom         Prénom du voyageur
+     * @param critere        Critère de choix
+     * @param modalite       Modalité de transport
+     * @param thresholdPrix  Seuil de prix
+     * @param thresholdCO2   Seuil de CO2
+     * @param thresholdTemps Seuil de temps
+     * @param depart         Lieu de départ
+     * @param arrivee        Lieu d'arrivée
+     * @param nb_trajet      Nombre de trajets à recommander
+     *                       Crée un voyageur avec des critères de choix
+     */
+    public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite, int thresholdPrix,
+            double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet, String data_path, String corres_path) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.critere = critere;
+        this.modalite = modalite;
+        this.thresholdPrix = thresholdPrix;
+        this.thresholdCO2 = thresholdCO2;
+        this.thresholdTemps = thresholdTemps;
+        this.depart = depart;
+        this.arrivee = arrivee;
+        this.nb_trajet = nb_trajet;
+        this.DATA = Tools.getCSV(data_path);
+        this.CORRESPONDANCE = Tools.getCSV(corres_path);
+    }
 
     /**
      * @constructor Voyageur
@@ -55,16 +85,8 @@ public class Voyageur {
      */
     public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite, int thresholdPrix,
             double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.critere = critere;
-        this.modalite = modalite;
-        this.thresholdPrix = thresholdPrix;
-        this.thresholdCO2 = thresholdCO2;
-        this.thresholdTemps = thresholdTemps;
-        this.depart = depart;
-        this.arrivee = arrivee;
-        this.nb_trajet = nb_trajet;
+        this( nom,  prenom,  critere,  modalite,  thresholdPrix,
+         thresholdCO2,  thresholdTemps,  depart,  arrivee,  nb_trajet, Voyageur.path_default, Voyageur.path_cor_default);
     }
 
     /**
@@ -169,12 +191,22 @@ public class Voyageur {
         return nb_trajet;
     }
 
+    
+
+    public ArrayList<String> getDATA() {
+        return DATA;
+    }
+
+    public ArrayList<String> getCORRESPONDANCE() {
+        return CORRESPONDANCE;
+    }
+
     /**
      * @return Liste des chemins recommandés
      */
     public List<Chemin> computeBestPath() throws CheminInexistantException {
-        if (Tools.donneesValides(DATA)) {
-            Plateforme g = Tools.initPlateforme(DATA, CORRESPONDANCE);
+        if (Tools.donneesValides(this.DATA)) {
+            Plateforme g = Tools.initPlateforme(this.DATA, this.CORRESPONDANCE);
             // System.out.println(g.get);
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
 
@@ -198,7 +230,7 @@ public class Voyageur {
                     throw new CheminInexistantException();
                 }
                 return chemins;
-            } else {
+            } else {    
 
                 throw new CheminInexistantException();
             }
@@ -210,7 +242,7 @@ public class Voyageur {
     }
 
     public static void main(String[] args) {
-        Voyageur u = new Voyageur("Doe", "John", TypeCout.TEMPS, null, 1000, 1000, 1000, "Paris", "Lille", 20);
+        Voyageur u = new Voyageur("Doe", "John", TypeCout.TEMPS, null, 1000, 1000, 1000, "Paris", "Lille", 3);
         List<Chemin> chemins = null;
         try {
             chemins = u.computeBestPath();

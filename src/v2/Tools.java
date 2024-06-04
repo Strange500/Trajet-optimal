@@ -30,8 +30,8 @@ public class Tools {
 
     public static void main(String[] args) {
 
-        ArrayList<String> data = Tools.getCSV(Voyageur.path);
-        ArrayList<String> correspondance = Tools.getCSV(Voyageur.path2);
+        ArrayList<String> data = Tools.getCSV(Voyageur.path_default);
+        ArrayList<String> correspondance = Tools.getCSV(Voyageur.path_cor_default);
 
         /*
          * String depart, destination ;
@@ -146,7 +146,7 @@ public class Tools {
      * @param ville
      * @param modality
      * @param modality2
-     * @return Chaîne de caractères représentant un lieu
+     * @return Chaîne de caractères représentant un lieu composé du nom de la vile suivi des modalités de départ et d'arrivée
      */
     public static String buildLieuname(String ville, ModaliteTransport modality, ModaliteTransport modality2) {
         return ville + "_" + modality + "_" + modality2;
@@ -154,7 +154,7 @@ public class Tools {
 
     /**
      * @param ville
-     * @return Set de String contenant les noms des lieux
+     * @return Set de String contenant les noms des lieux reprsentant une ville
      */
     public static Set<String> buildLieuxNames(String ville) {
         Set<String> lieux = new HashSet<>();
@@ -206,11 +206,12 @@ public class Tools {
      * @param correspondance
      */
     public static void ajouterCorrespondance(Plateforme g, String ville, ArrayList<String> correspondance) {
+        // cette fonction ajoute toutes correspondance existante pour une ville (chaque correspodance donne création a un lieux dédiée)
         List<String> correspondanceNonRenseigne = new ArrayList<>();
         for (String s : buildLieuxNames(ville)) {
 
             correspondanceNonRenseigne.add(s);
-
+            // on recupere le nom de la ville ainsi qie les modalités de départ et d'arrivée
             String[] elt = s.split("_");
             String arrMod = elt[1].toUpperCase();
             String depMod = elt[2].toUpperCase();
@@ -218,6 +219,7 @@ public class Tools {
 
             int cpt = 0;
             while (cpt < correspondance.size()) {
+                // on recupere les informations de la correspondance
                 String[] elements = correspondance.get(cpt).split(SEPARATOR);
                 String villeDonne = elements[0];
                 String modarr = elements[1].toUpperCase();
@@ -225,6 +227,8 @@ public class Tools {
                 int temp = Integer.parseInt(elements[3]);
                 double pollution = Double.parseDouble(elements[4]);
                 double prix = Double.parseDouble(elements[5]);
+
+                // si la ville de la correspondance est la même que celle du lieu et que les modalités de départ et d'arrivée sont les mêmes que celles du lieu alors on ajoute l'arrete
 
                 if (villeDonne.equals(villeBis) && modarr.equals(arrMod) && moddep.equals(depMod)) {
                     String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod),
@@ -236,6 +240,8 @@ public class Tools {
                 cpt++;
             }
         }
+
+        // enfin on ajoute les correspondance ne donnant lieux a aucun malus
         for (String s : correspondanceNonRenseigne) {
             String[] elt = s.split("_");
             String arrMod = elt[1].toUpperCase();
