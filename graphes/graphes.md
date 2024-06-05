@@ -100,16 +100,39 @@ Version 2 : multimodalité et prise en compte des correspondances
 *Présenter un exemple concret (plateforme, couts de correspondance, critère d'optimalité).*
 *Donner la solution du problème du point de vue de l'utilisatrice (quels sont les itinéraires possibles, lesquels sont optimaux et pourquoi).*
 *Il est possible d'utiliser le même exemple que pour la Version 1 ou le modifier si pertinent.*
+![illustration des chemins possible](./img/image.png)
+Dans cet exemple, l'utilisateur n'est intéressé que par un seul critère et est capable de prendre n'importe quel moyen de transport. Il cherche à se rendre de la ville 1 à la ville 2. Sachant qu'il y a une correspondance à la ville 3 donnant un malus de 3, le meilleur chemin est 1 -> 3 -> 4 (6). Ce chemin permet d'optimiser le trajet, peu importe le moyen de transport. L'autre chemin passant par la ville 2 n'a pas de malus de correspondance, mais il est le plus long (poids de 9) parmi les chemins possibles.
 
 ### Modèle pour l'exemple
 
 *Donner le graphe modélisant l'exemple ci-dessus.*
 *Donner la solution du problème (càd les meilleurs itinéraires) en tant que chemins dans le graphe.*
+![modeliasation graphe V2](./img/graphev2.png)
+
+Pour modéliser ce problème, nous avons décidé de représenter les correspondances par des arêtes entre deux sommets précis. Ainsi, chaque correspondance se trouve entre un sommet et un autre ayant le suffixe '_BIS'. Ici, l'utilisateur partant de ALPHA devra suivre le chemin suivant pour obtenir le plus court trajet :
+
+```ALPHA -> 1_TRAIN_AVION_BIS -> 3_AVION_TRAIN -> 3_AVION_TRAIN_BIS -> 4_TRAIN_TRAIN -> OMEGA```
+
+Ce chemin a un poids de 6 et correspond à l'exemple ci-dessus. Le second meilleur chemin est :
+
+```ALPHA -> 1_TRAIN_TRAIN_BIS -> 2_TRAIN_TRAIN_BIS -> 2_TRAIN_TRAIN_BIS -> 4_TRAIN_TRAIN -> OMEGA```
+
+Ce modèle permet de bien représenter les correspondances et d'optimiser le trajet en fonction des critères donnés.
+
+À noter qu'ALPHA est directement lié aux '_BIS' pour éviter les coûts de correspondance de la ville de départ. OMEGA esquive également les '_BIS' pour les mêmes raisons. Chaque nom de lieu suit ce format : NOM_ModArr_ModDep(_BIS), où ModArr est le moyen de transport permettant d'atteindre ce lieu et ModDep est le moyen de transport quittant ce lieu.
 
 ### Modélisation pour la Version 2 dans le cas général
 
 *Mêmes questions que pour la section correspondante de la Version 1, mais cette fois-ci les données d'entrée contiennent aussi des couts de correspondance.*
 *Vous pouvez expliquer l'entièreté de la solution pour la Version 2, ou bien indiquer **clairement** les différences par rapport à la solution proposée pour la Version 1.*
+
+D'abord, pour construire notre graphe, nous commençons par construire les correspondances. Pour cela, nous créons d'abord, pour chaque correspondance renseignée, un premier lieu nommé suivant le format expliqué ci-dessus, que nous lions à un autre sommet portant le même nom suivi du suffixe _BIS. Nous donnons a cette arrete le poids correspondant au critère demandé. Le moyen de transport de cette arête n'a pas d'importance.
+
+Après avoir créé toutes les correspondances renseignées, nous créons toutes les correspondances non renseignées avec tous les moyens de transport possibles en attribuant un poids nul.
+
+Ensuite, nous créons les différentes routes possibles entre les villes. Il faut tout particulièrement faire attention à ce que les modalités de départ des villes de départ soient égales aux modalités d'arrivée des villes d'arrivée, sinon les coûts de correspondance seront incohérents.
+
+Enfin, pour résoudre le problème, il ne reste plus qu'à lier le sommet ALPHA à tous les lieux de la ville de départ possédant le suffixe '_BIS'. Puis, lier le sommet OMEGA aux sommets de la ville de destination ne possédant pas ce suffixe. Ensuite, il faut lancer l'algorithme de Dijkstra en lui fournissant le graphe ainsi que la ville de départ.
 
 ### Implémentation de la Version 2
 
