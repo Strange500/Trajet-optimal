@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
+import src.v1.exception.CheminInexistantException;
 import src.v2.CheminImpl;
 import src.v2.LieuImpl;
 import src.v2.TranconImpl;
@@ -17,7 +18,6 @@ import src.v2.Plateforme;
 import src.v2.Tools;
 import src.v2.TypeCout;
 import src.v2.Voyageur;
-import src.v2.exception.CheminInexistantException;
 
 public class VoyageurTest {
     private static final String path_data = "src/v2/csv/test2.csv";

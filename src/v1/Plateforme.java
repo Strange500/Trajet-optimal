@@ -19,9 +19,9 @@ public class Plateforme {
     public static String ALPHA = "ALPHA";
     public static String OMEGA = "OMEGA";
     
-    private MultiGrapheOrienteValue g1;
-    private MultiGrapheOrienteValue g2;
-    private MultiGrapheOrienteValue g3;
+    protected MultiGrapheOrienteValue g1;
+    protected MultiGrapheOrienteValue g2;
+    protected MultiGrapheOrienteValue g3;
 
     /**
      * @constructor Plateforme

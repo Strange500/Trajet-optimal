@@ -1,4 +1,4 @@
-package src.v2.exception;
+package src.v1.exception;
 
 public class CheminInexistantException extends Exception{
     

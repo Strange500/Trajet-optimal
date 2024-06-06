@@ -9,7 +9,7 @@ import fr.ulille.but.sae_s2_2024.Lieu;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.MultiGrapheOrienteValue;
 import fr.ulille.but.sae_s2_2024.Trancon;
-import src.v2.exception.CheminInexistantException;
+import src.v1.exception.CheminInexistantException;
 
 /*
  * c'est un graphe qui contient 3 graphes, chacun se basant sur un critere different

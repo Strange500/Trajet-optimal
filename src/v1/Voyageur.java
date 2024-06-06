@@ -29,16 +29,16 @@ public class Voyageur {
 
 
 
-    private String nom;
-    private String prenom;
-    private TypeCout critere;
-    private ModaliteTransport modalite;
-    private int thresholdPrix;
-    private double thresholdCO2;
-    private int thresholdTemps;
-    private String depart;
-    private String arrivee;
-    private int nb_trajet;
+    protected String nom;
+    protected String prenom;
+    protected TypeCout critere;
+    protected ModaliteTransport modalite;
+    protected int thresholdPrix;
+    protected double thresholdCO2;
+    protected int thresholdTemps;
+    protected String depart;
+    protected String arrivee;
+    protected int nb_trajet;
 
     /**
      * @constructor Voyageur

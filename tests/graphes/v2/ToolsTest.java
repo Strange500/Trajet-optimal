@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
+import src.v1.exception.CheminInexistantException;
 import src.v2.CheminImpl;
 import src.v2.LieuImpl;
 import src.v2.TranconImpl;
 import src.v2.Plateforme;
 import src.v2.TypeCout;
-import src.v2.exception.CheminInexistantException;
 import src.v2.Tools;
 
 public class ToolsTest {

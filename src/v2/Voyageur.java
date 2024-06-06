@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v2.exception.CheminInexistantException;
+import src.v1.exception.CheminInexistantException;
 
 /**
  * Classe représentant un voyageur
@@ -38,7 +38,6 @@ public class Voyageur {
     private String depart;
     private String arrivee;
     private int nb_trajet;
-    private boolean needCorrespondance = true;
     /**
      * @constructor Voyageur
      * @param nom            Nom du voyageur
@@ -113,13 +112,7 @@ public class Voyageur {
         this(nom, prenom, critere, DEFAULT_MODALITE);
     }
 
-    public void showCorrespondance() {
-        this.needCorrespondance = true;
-    }
-
-    public void hideCorrespondance() {
-        this.needCorrespondance = false;
-    }
+    
 
     /**
      * @return Nom du voyageur
