@@ -11,14 +11,14 @@ import java.util.List;
  * Implémentation de l'interface Chemin
  */
 public class CheminImpl implements Chemin {
-    private final List<Trancon> ARRETES;
+    private final List<Trancon> ARETES;
     private final double POIDS;
 
     /**
      * @return la liste des trançons qui composent le chemin
      */
     public List<Trancon> aretes() {
-        return ARRETES;
+        return ARETES;
     }
 
     /**
@@ -33,7 +33,7 @@ public class CheminImpl implements Chemin {
      *              Crée un chemin vide
      */
     public CheminImpl() {
-        ARRETES = new ArrayList<Trancon>();
+        ARETES = new ArrayList<Trancon>();
         POIDS = 0;
     }
 
