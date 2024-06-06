@@ -1,13 +1,5 @@
 package src;
 
-import static src.Tools.CO2_IDX;
-import static src.Tools.DEPART_IDX;
-import static src.Tools.DESTINATION_IDX;
-import static src.Tools.MODALITE_IDX;
-import static src.Tools.PRIX_IDX;
-import static src.Tools.SEPARATOR;
-import static src.Tools.TEMPS_IDX;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,12 +15,12 @@ public class ToolsCorrespondance extends Tools {
 
     public static String SUFFIXE = "_BIS";
 
-    
     /**
      * @param ville
      * @param modality
      * @param modality2
-     * @return Chaîne de caractères représentant un lieu composé du nom de la vile suivi des modalités de départ et d'arrivée
+     * @return Chaîne de caractères représentant un lieu composé du nom de la vile
+     *         suivi des modalités de départ et d'arrivée
      */
     public static String buildLieuname(String ville, ModaliteTransport modality, ModaliteTransport modality2) {
         return ville + "_" + modality + "_" + modality2;
@@ -88,7 +80,8 @@ public class ToolsCorrespondance extends Tools {
      * @param correspondance
      */
     public static void ajouterCorrespondance(Plateforme g, String ville, ArrayList<String> correspondance) {
-        // cette fonction ajoute toutes correspondance existante pour une ville (chaque correspodance donne création a un lieux dédiée)
+        // cette fonction ajoute toutes correspondance existante pour une ville (chaque
+        // correspodance donne création a un lieux dédiée)
         List<String> correspondanceNonRenseigne = new ArrayList<>();
         for (String s : buildLieuxNames(ville)) {
 
@@ -110,7 +103,9 @@ public class ToolsCorrespondance extends Tools {
                 double pollution = Double.parseDouble(elements[4]);
                 double prix = Double.parseDouble(elements[5]);
 
-                // si la ville de la correspondance est la même que celle du lieu et que les modalités de départ et d'arrivée sont les mêmes que celles du lieu alors on ajoute l'arrete
+                // si la ville de la correspondance est la même que celle du lieu et que les
+                // modalités de départ et d'arrivée sont les mêmes que celles du lieu alors on
+                // ajoute l'arrete
 
                 if (villeDonne.equals(villeBis) && modarr.equals(arrMod) && moddep.equals(depMod)) {
                     String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod),
@@ -137,6 +132,7 @@ public class ToolsCorrespondance extends Tools {
 
     /**
      * Initialise la plateforme avec les données passées en paramètre
+     * 
      * @param args Données
      * @return Plateforme
      */
@@ -204,16 +200,16 @@ public class ToolsCorrespondance extends Tools {
     public static String cheminWithCorre(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
-        che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size() - 1);
+        che.aretes().removeFirst();
+        che.aretes().removeLast();
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
-            r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
-                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString()) + " ";
+            r += cheModal.aretes().getFirst().getModalite() + " de " +
+                    cleanLieux(cheModal.aretes().getFirst().getDepart().toString()) + " à "
+                    + cleanLieux(cheModal.aretes().getLast().getArrivee().toString()) + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -222,7 +218,7 @@ public class ToolsCorrespondance extends Tools {
                             r += "en passant par";
                             first = false;
                         }
-                        r += " " + cleanLieux(cheModal.aretes().get(i).getDepart().toString()) + "";
+                        r += " " + cleanLieux(cheModal.aretes().get(i).getDepart().toString());
                         if (i < cheModal.aretes().size() - 1) {
                             r += ",";
                         }
@@ -246,16 +242,16 @@ public class ToolsCorrespondance extends Tools {
     public static String cheminWithCorreDEBUG(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
-        che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size() - 1);
+        che.aretes().removeFirst();
+        che.aretes().removeLast();
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
-            r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cheModal.aretes().get(0).getDepart().toString() + " à "
-                    + cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString() + " ";
+            r += cheModal.aretes().getFirst().getModalite() + " de " +
+                    cheModal.aretes().getFirst().getDepart().toString() + " à "
+                    + cheModal.aretes().getLast().getArrivee().toString() + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -263,7 +259,7 @@ public class ToolsCorrespondance extends Tools {
                         r += "en passant par";
                         first = false;
                     }
-                    r += " " + cheModal.aretes().get(i).getDepart().toString() + "";
+                    r += " " + cheModal.aretes().get(i).getDepart().toString();
                     if (i < cheModal.aretes().size() - 1) {
                         r += ",";
                     }
@@ -347,16 +343,16 @@ public class ToolsCorrespondance extends Tools {
     public static String cheminWithCorreBis(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
-        che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size() - 1);
+        che.aretes().removeFirst();
+        che.aretes().removeLast();
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += "puis ";
             }
-            r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
-                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString()) + " ";
+            r += cheModal.aretes().getFirst().getModalite() + " de " +
+                    cleanLieux(cheModal.aretes().getFirst().getDepart().toString()) + " à "
+                    + cleanLieux(cheModal.aretes().getLast().getArrivee().toString()) + " ";
             // if (cheModal.aretes().size() > 1) {
             // r += "en passant par";
             // for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -405,21 +401,18 @@ public class ToolsCorrespondance extends Tools {
      * @return Vrai si les données sont valides, faux sinon
      */
     public static boolean donneesValides(ArrayList<String> args) {
-        if (args.size() == 0) {
+        if (args.isEmpty()) {
             return false;
         }
         for (String arg : args) {
             String[] elements = arg.split(";");
             if (elements.length != 6 || !estNombre(elements[3]) || !estNombre(elements[4]) || !estNombre(elements[5]) ||
-                    elements[0].length() == 0 || elements[1].length() == 0 || elements[2].length() == 0
-                    || elements[3].length() == 0 || elements[4].length() == 0 || elements[5].length() == 0) {
+                    elements[0].isEmpty() || elements[1].isEmpty() || elements[2].isEmpty()
+                    || elements[3].isEmpty() || elements[4].isEmpty() || elements[5].isEmpty()) {
                 return false;
             }
         }
         return true;
     }
-
-
-
 
 }

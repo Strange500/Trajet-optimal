@@ -2,7 +2,6 @@ package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,38 +10,34 @@ import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.exception.CheminInexistantException;
-import src.CheminImpl;
-import src.LieuImpl;
-import src.TranconImpl;
-import src.Plateforme;
 import src.PlateformeCorrespondance;
-import src.Tools;
 import src.ToolsCorrespondance;
 import src.TypeCout;
-import src.Voyageur;
 import src.VoyageurCorrespondance;
 
 public class VoyageurTest {
     private static final String path_data = "csv/test2.csv";
     private static final String path_cor = "csv/test_cor.csv";
-    
+
     public PlateformeCorrespondance g;
-    
 
     ArrayList<String> arg = new ArrayList<String>();
     ArrayList<String> cor = new ArrayList<String>();
 
-    private VoyageurCorrespondance v1 = new VoyageurCorrespondance("nom1", "prenom1", TypeCout.PRIX, ModaliteTransport.TRAIN, 500, 500, 500,
+    private VoyageurCorrespondance v1 = new VoyageurCorrespondance("nom1", "prenom1", TypeCout.PRIX,
+            ModaliteTransport.TRAIN, 500, 500, 500,
             "villeA", "villeD", 1, path_data, path_cor);
-    private VoyageurCorrespondance v2 = new VoyageurCorrespondance("nom2", "prenom2", TypeCout.TEMPS, ModaliteTransport.TRAIN, 500, 500, 500,
+    private VoyageurCorrespondance v2 = new VoyageurCorrespondance("nom2", "prenom2", TypeCout.TEMPS,
+            ModaliteTransport.TRAIN, 500, 500, 500,
             "villeA", "villeD", 1, path_data, path_cor);
-    
+
     // mettre modalite a null permet d'emprunter n'importe quelle moyen de transport
-    private VoyageurCorrespondance v3 = new VoyageurCorrespondance("nom3", "prenom3", TypeCout.CO2, null, 500, 500, 500, "villeA",
+    private VoyageurCorrespondance v3 = new VoyageurCorrespondance("nom3", "prenom3", TypeCout.CO2, null, 500, 500, 500,
+            "villeA",
             "villeD", 1, path_data, path_cor);
 
     @BeforeEach
-    public void avantTest() {       
+    public void avantTest() {
         // un fichier CSV contenant des sommets, arrete et corresposnance est fournit
         g = ToolsCorrespondance.initPlateforme(v1.getDATA(), v1.getCORRESPONDANCE());
 
@@ -71,7 +66,7 @@ public class VoyageurTest {
 
             assertEquals(v1.getNb_trajet(), ch1.size());
             assertEquals(v2.getNb_trajet(), ch2.size());
-            //assertEquals(v3.getNb_trajet(), ch3.size());
+            // assertEquals(v3.getNb_trajet(), ch3.size());
 
             Chemin c1 = ch1.get(0);
             Chemin c2 = ch2.get(0);

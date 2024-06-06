@@ -2,7 +2,6 @@ package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.exception.CheminInexistantException;
-import src.CheminImpl;
-import src.LieuImpl;
-import src.TranconImpl;
-import src.Plateforme;
 import src.PlateformeCorrespondance;
 import src.TypeCout;
 import src.Tools;
@@ -115,17 +110,20 @@ public class ToolsTest {
     @Test
     public void testApplyThreshold() {
         try {
-            List<Chemin> chPrix = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.PRIX, 3 *100);
+            List<Chemin> chPrix = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD",
+                    ModaliteTransport.TRAIN,
+                    TypeCout.PRIX, 3 * 100);
 
             chPrix = ToolsCorrespondance.removeDuplicates(chPrix, 3);
-            
-            List<Chemin> chCO2 = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.CO2, 3 *100);
+
+            List<Chemin> chCO2 = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD",
+                    ModaliteTransport.TRAIN,
+                    TypeCout.CO2, 3 * 100);
             chCO2 = ToolsCorrespondance.removeDuplicates(chCO2, 3);
 
-            List<Chemin> chTemps = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.TEMPS, 3 *100);
+            List<Chemin> chTemps = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD",
+                    ModaliteTransport.TRAIN,
+                    TypeCout.TEMPS, 3 * 100);
             chTemps = ToolsCorrespondance.removeDuplicates(chTemps, 3);
             // nous avons ici le premier trajet a 78€ puis 82€ et enfin 107€
             assertEquals(3, chPrix.size());
@@ -168,8 +166,9 @@ public class ToolsTest {
     @Test
     public void testCheminWithCorre() {
         try {
-            List<Chemin> chPrix = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
-                    TypeCout.PRIX, 3*100);
+            List<Chemin> chPrix = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD",
+                    ModaliteTransport.TRAIN,
+                    TypeCout.PRIX, 3 * 100);
             chPrix = ToolsCorrespondance.removeDuplicates(chPrix, 3);
 
             assertEquals("TRAIN de villeA à villeD en passant par villeC, villeB, total: 78.0 €",

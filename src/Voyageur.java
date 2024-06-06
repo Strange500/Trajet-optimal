@@ -8,13 +8,13 @@ import fr.ulille.but.sae_s2_2024.*;
  * Classe représentant un voyageur
  */
 public class Voyageur {
-    private static final String[] DATA = new String[]{
-        "villeA;villeB;Train;60;1.7;80",
-        "villeB;villeD;Train;22;2.4;40",
-        "villeA;villeC;Train;42;1.4;50",
-        "villeB;villeC;Train;14;1.4;60",
-        "villeC;villeD;Avion;110;150;22",
-        "villeC;villeD;Train;65;1.2;90"
+    private static final String[] DATA = new String[] {
+            "villeA;villeB;Train;60;1.7;80",
+            "villeB;villeD;Train;22;2.4;40",
+            "villeA;villeC;Train;42;1.4;50",
+            "villeB;villeC;Train;14;1.4;60",
+            "villeC;villeD;Avion;110;150;22",
+            "villeC;villeD;Train;65;1.2;90"
     };
     private static final int DEFAULT_THRESHOLD_PRIX = Integer.MAX_VALUE;
     private static final double DEFAULT_THRESHOLD_CO2 = Double.MAX_VALUE;
@@ -26,8 +26,6 @@ public class Voyageur {
     private static final String DEFAULT_ARRIVEE = "villeD";
 
     private static final int DEFAULT_NB_TRAJET = 1;
-
-
 
     protected String nom;
     protected String prenom;
@@ -42,19 +40,20 @@ public class Voyageur {
 
     /**
      * @constructor Voyageur
-     * @param nom Nom du voyageur
-     * @param prenom Prénom du voyageur
-     * @param critere Critère de choix
-     * @param modalite Modalité de transport
-     * @param thresholdPrix Seuil de prix
-     * @param thresholdCO2 Seuil de CO2
+     * @param nom            Nom du voyageur
+     * @param prenom         Prénom du voyageur
+     * @param critere        Critère de choix
+     * @param modalite       Modalité de transport
+     * @param thresholdPrix  Seuil de prix
+     * @param thresholdCO2   Seuil de CO2
      * @param thresholdTemps Seuil de temps
-     * @param depart Lieu de départ
-     * @param arrivee Lieu d'arrivée
-     * @param nb_trajet Nombre de trajets à recommander
-     * Crée un voyageur avec des critères de choix
+     * @param depart         Lieu de départ
+     * @param arrivee        Lieu d'arrivée
+     * @param nb_trajet      Nombre de trajets à recommander
+     *                       Crée un voyageur avec des critères de choix
      */
-    public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite, int thresholdPrix, double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet) {
+    public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite, int thresholdPrix,
+            double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet) {
         this.nom = nom;
         this.prenom = prenom;
         this.critere = critere;
@@ -69,22 +68,23 @@ public class Voyageur {
 
     /**
      * @constructor Voyageur
-     * @param nom Nom du voyageur
-     * @param prenom Prénom du voyageur
-     * @param critere Critère de choix
+     * @param nom      Nom du voyageur
+     * @param prenom   Prénom du voyageur
+     * @param critere  Critère de choix
      * @param modalite Modalité de transport
-     * Crée un voyageur avec des critères de choix par défaut
+     *                 Crée un voyageur avec des critères de choix par défaut
      */
     public Voyageur(String nom, String prenom, TypeCout critere, ModaliteTransport modalite) {
-        this(nom, prenom, critere, modalite, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS, DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET);
+        this(nom, prenom, critere, modalite, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS,
+                DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET);
     }
 
     /**
      * @constructor Voyageur
-     * @param nom Nom du voyageur
-     * @param prenom Prénom du voyageur
+     * @param nom     Nom du voyageur
+     * @param prenom  Prénom du voyageur
      * @param critere Critère de choix
-     * Crée un voyageur avec des critères de choix par défaut
+     *                Crée un voyageur avec des critères de choix par défaut
      */
     public Voyageur(String nom, String prenom, TypeCout critere) {
         this(nom, prenom, critere, DEFAULT_MODALITE);
@@ -168,8 +168,9 @@ public class Voyageur {
             Plateforme g = Tools.initPlateforme(DATA);
 
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
-                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite, this.critere, nb_trajet);
-                for (TypeCout c : new TypeCout[]{TypeCout.PRIX, TypeCout.CO2, TypeCout.TEMPS}) {
+                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite,
+                        this.critere, nb_trajet);
+                for (TypeCout c : new TypeCout[] { TypeCout.PRIX, TypeCout.CO2, TypeCout.TEMPS }) {
                     switch (c) {
                         case PRIX:
                             Tools.applyThreshold(g, chemins, c, this.thresholdPrix);
@@ -183,13 +184,11 @@ public class Voyageur {
                     }
                 }
                 return chemins;
-            }
-            else {
+            } else {
                 System.out.println("Aucun chemin trouvé pour les critères demandés");
                 return null;
             }
-        }
-        else {
+        } else {
             System.out.println("Données invalides");
             return null;
         }
@@ -197,7 +196,8 @@ public class Voyageur {
     }
 
     public static void main(String[] args) {
-        Voyageur u = new Voyageur("Doe", "John", TypeCout.PRIX, ModaliteTransport.TRAIN, 1000, 1000, 1000, "villeA", "villeD", 3);
+        Voyageur u = new Voyageur("Doe", "John", TypeCout.PRIX, ModaliteTransport.TRAIN, 1000, 1000, 1000, "villeA",
+                "villeD", 3);
         List<Chemin> chemins = u.computeBestPath();
         if (chemins != null) {
             System.out.println("Les trajets recommandés de " + u.depart + " à " + u.arrivee + " sont:");

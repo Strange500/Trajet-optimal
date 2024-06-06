@@ -7,8 +7,6 @@ import fr.ulille.but.sae_s2_2024.AlgorithmeKPCC;
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
-import fr.ulille.but.sae_s2_2024.MultiGrapheOrienteValue;
-import fr.ulille.but.sae_s2_2024.Trancon;
 import src.exception.CheminInexistantException;
 
 public class PlateformeCorrespondance extends Plateforme {
@@ -58,7 +56,7 @@ public class PlateformeCorrespondance extends Plateforme {
      */
     @Override
     public List<Chemin> getPathByModaliteAndTypeCout(String dep, String arr, ModaliteTransport modalite,
-            TypeCout critere, int nbChemin)  {
+            TypeCout critere, int nbChemin) {
         PlateformeCorrespondance g = this.clone();
         if (modalite != null) {
             g.filterByModality(modalite);
@@ -84,20 +82,16 @@ public class PlateformeCorrespondance extends Plateforme {
         return g.getPathByTypeCoutTriggerNoPath(dep, arr, critere, nbChemin);
     }
 
-    
-
-
-
     /**
      * @param dep      le lieu de départ
      * @param arr      le lieu d'arrivée
      * @param critere  le critère à utiliser (CO2, PRIX, TEMPS)
      * @param nbChemin le nombre de chemins à retourner
      * @return les chemins entre deux lieux avec un critère donné
-     * @throws CheminInexistantException 
+     * @throws CheminInexistantException
      */
     @Override
-    public List<Chemin> getPathByTypeCout(String dep, String arr, TypeCout critere, int nbChemin)  {
+    public List<Chemin> getPathByTypeCout(String dep, String arr, TypeCout critere, int nbChemin) {
         Plateforme g = this.clone();
         List<Chemin> results = new ArrayList<Chemin>();
         // Lieu depart = this.getSommet(dep);
@@ -135,16 +129,16 @@ public class PlateformeCorrespondance extends Plateforme {
      * @param critere  le critère à utiliser (CO2, PRIX, TEMPS)
      * @param nbChemin le nombre de chemins à retourner
      * @return les chemins entre deux lieux avec un critère donné
-     * @throws CheminInexistantException 
+     * @throws CheminInexistantException
      */
-    public List<Chemin> getPathByTypeCoutTriggerNoPath(String dep, String arr, TypeCout critere, int nbChemin) throws CheminInexistantException  {
+    public List<Chemin> getPathByTypeCoutTriggerNoPath(String dep, String arr, TypeCout critere, int nbChemin)
+            throws CheminInexistantException {
         List<Chemin> results = this.getPathByTypeCout(dep, arr, critere, nbChemin);
-        if (results.size() == 0) {
+        if (results.isEmpty()) {
             throw new CheminInexistantException();
         }
         return results;
     }
-
 
     /**
      * @return la liste des lieux de la plateforme (sous forme de chaînes de
@@ -169,7 +163,7 @@ public class PlateformeCorrespondance extends Plateforme {
     public List<String> getLieuxNames(String avoid) {
         List<String> lieux = this.getLieuxNames();
         for (String l : lieux) {
-            String[] ligne = l.toString().split("_");
+            String[] ligne = l.split("_");
             if (ligne[0].equals(avoid)) {
                 lieux.remove(l);
                 break;
@@ -178,5 +172,4 @@ public class PlateformeCorrespondance extends Plateforme {
         return lieux;
     }
 
-    
 }

@@ -2,7 +2,6 @@ package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,46 +10,35 @@ import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.exception.CheminInexistantException;
-import src.CheminImpl;
-import src.LieuImpl;
-import src.TranconImpl;
-import src.Plateforme;
 import src.PlateformeCorrespondance;
-import src.Tools;
 import src.ToolsCorrespondance;
 import src.TypeCout;
-import src.Voyageur;
 import src.VoyageurCorrespondance;
 
 public class VoyageurTestReadMe {
     private static final String path_data = "csv/testVoyageur_map.csv";
     private static final String path_cor = "csv/testVoyageur_cor.csv";
-    
+
     public PlateformeCorrespondance g;
-    
 
     ArrayList<String> arg = new ArrayList<String>();
     ArrayList<String> cor = new ArrayList<String>();
 
-    private VoyageurCorrespondance v1 = new VoyageurCorrespondance("nom1", "prenom1", TypeCout.PRIX, null, 500, 500, 500,
+    private VoyageurCorrespondance v1 = new VoyageurCorrespondance("nom1", "prenom1", TypeCout.PRIX, null, 500, 500,
+            500,
             "1", "4", 3, path_data, path_cor);
-    
-    
 
     @BeforeEach
-    public void avantTest() {       
-        // un fichier CSV contenant des sommets, arrete et corresposnance est fournit
+    public void avantTest() {
+        // un fichier CSV contenant des sommets, arretes et correspondances est fourni
         g = ToolsCorrespondance.initPlateforme(v1.getDATA(), v1.getCORRESPONDANCE());
 
     }
-
-   
 
     @Test
     void testComputeBestPath() {
         try {
             List<Chemin> ch1 = v1.computeBestPathTrigger();
-            
 
             assertEquals(v1.getNb_trajet(), ch1.size());
 

@@ -21,12 +21,9 @@ public class Tools {
     protected static final int CO2_IDX = 4;
     protected static final int TEMPS_IDX = 5;
 
-
-
-    
-
     /**
      * Initialise la plateforme avec les données passées en paramètre
+     * 
      * @param args Données
      * @return Plateforme
      */
@@ -34,7 +31,7 @@ public class Tools {
         Plateforme g = new Plateforme();
         for (String arg : args) {
             String[] elements = arg.split(SEPARATOR);
-            
+
             String depart = elements[DEPART_IDX];
             String destination = elements[DESTINATION_IDX];
             ModaliteTransport modalite = ModaliteTransport.valueOf(elements[MODALITE_IDX].toUpperCase());
@@ -42,16 +39,16 @@ public class Tools {
             double pollution = Double.parseDouble(elements[CO2_IDX]);
             int Duree = Integer.parseInt(elements[TEMPS_IDX]);
 
-
             g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
             g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
         }
         return g;
 
     }
-    
+
     /**
      * Vérifie si une chaîne de caractères est un nombre
+     * 
      * @param chaine Chaîne de caractères
      * @return Vrai si la chaîne est un nombre, faux sinon
      */
@@ -66,6 +63,7 @@ public class Tools {
 
     /**
      * Vérifie si les données passées en paramètre sont valides
+     * 
      * @param args Données
      * @return Vrai si les données sont valides, faux sinon
      */
@@ -75,8 +73,9 @@ public class Tools {
         }
         for (String arg : args) {
             String[] elements = arg.split(";");
-            if (elements.length != 6 || !estNombre(elements[3]) || !estNombre(elements[4]) || !estNombre(elements[5]) || 
-            elements[0].length() == 0 || elements[1].length() == 0 || elements[2].length() == 0 || elements[3].length() == 0 || elements[4].length() == 0 || elements[5].length() == 0) {
+            if (elements.length != 6 || !estNombre(elements[3]) || !estNombre(elements[4]) || !estNombre(elements[5]) ||
+                    elements[0].isEmpty() || elements[1].isEmpty() || elements[2].isEmpty() || elements[3].isEmpty()
+                    || elements[4].isEmpty() || elements[5].isEmpty()) {
                 return false;
             }
         }
@@ -85,17 +84,19 @@ public class Tools {
 
     /**
      * Récupère une chaîne de caractères entrée par l'utilisateur
+     * 
      * @return Chaîne de caractères
      */
     public static String getUserInuput() {
         Scanner scanner = new Scanner(System.in);
         String r = scanner.next();
         return r;
-        
+
     }
 
     /**
      * Récupère le moyen de transport entré par l'utilisateur
+     * 
      * @return Moyen de transport
      */
     public static ModaliteTransport getModaliteTransport() {
@@ -103,15 +104,15 @@ public class Tools {
         for (ModaliteTransport m : ModaliteTransport.values()) {
             System.out.println("\t- " + m);
         }
-        //System.out.println("\t- Tous");
+        // System.out.println("\t- Tous");
         System.out.println("Entrez le moyen de transport:");
         String moyen = getUserInuput();
-        if (moyen.length() == 0) {
+        if (moyen.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getModaliteTransport();
         }
         // if (moyen.toLowerCase().equals("tous")) {
-        //     return null;
+        // return null;
         // }
         try {
             return ModaliteTransport.valueOf(moyen.toUpperCase());
@@ -123,6 +124,7 @@ public class Tools {
 
     /**
      * Récupère le lieu de départ entré par l'utilisateur
+     * 
      * @param g Plateforme
      * @return Lieu de départ
      */
@@ -133,7 +135,7 @@ public class Tools {
         }
         System.out.println("Entrez la ville de départ:");
         String r = getUserInuput();
-        if (r.length() == 0) {
+        if (r.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getLieuDepart(g);
         }
@@ -146,18 +148,19 @@ public class Tools {
 
     /**
      * Récupère le lieu de destination entré par l'utilisateur
-     * @param g Plateforme
+     * 
+     * @param g      Plateforme
      * @param depart Lieu de départ
      * @return Lieu de destination
      */
     public static Lieu getLieuDestination(Plateforme g, Lieu depart) {
         System.out.println("Ville de destination disponible:");
-        for (Lieu l : g.getLieux(depart))  {
+        for (Lieu l : g.getLieux(depart)) {
             System.out.println("\t- " + l);
         }
         System.out.println("Entrez la ville de destination:");
         String r = getUserInuput();
-        if (r.length() == 0) {
+        if (r.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getLieuDestination(g, depart);
         }
@@ -170,6 +173,7 @@ public class Tools {
 
     /**
      * Récupère le critère entré par l'utilisateur
+     * 
      * @return Critère
      */
     public static TypeCout getTypeCout() {
@@ -179,7 +183,7 @@ public class Tools {
         }
         System.out.println("Entrez le critere:");
         String r = getUserInuput();
-        if (r.length() == 0) {
+        if (r.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getTypeCout();
         }
@@ -193,12 +197,13 @@ public class Tools {
 
     /**
      * Récupère le nombre de trajets entré par l'utilisateur
+     * 
      * @return Nombre de trajets
      */
     public static int getNbTrajet() {
         System.out.println("Combien de trajet voulez-vous?");
         String r = getUserInuput();
-        if (r.length() == 0) {
+        if (r.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getNbTrajet();
         }
@@ -211,12 +216,13 @@ public class Tools {
 
     /**
      * Récupère le seuil de prix entré par l'utilisateur
+     * 
      * @return Seuil de prix
      */
     public static int getThresholdPrix() {
         System.out.println("Entrez le prix maximum que vous êtes prêt à payer:");
         String r = getUserInuput();
-        if (r.length() == 0) {
+        if (r.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getThresholdPrix();
         }
@@ -229,12 +235,13 @@ public class Tools {
 
     /**
      * Récupère le seuil de durée entré par l'utilisateur
+     * 
      * @return Seuil de durée
      */
     public static int getThresholdDuree() {
         System.out.println("Entrez la durée maximum que vous êtes prêt à passer:");
         String r = getUserInuput();
-        if (r.length() == 0) {
+        if (r.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getThresholdDuree();
         }
@@ -247,12 +254,13 @@ public class Tools {
 
     /**
      * Récupère le seuil de pollution entré par l'utilisateur
+     * 
      * @return Seuil de pollution
      */
     public static double getThresholdPollution() {
         System.out.println("Entrez la pollution maximum que vous êtes prêt à subir:");
         String r = getUserInuput();
-        if (r.length() == 0) {
+        if (r.isEmpty()) {
             System.out.println("Vous n'avez rien entré");
             return getThresholdPollution();
         }
@@ -265,9 +273,10 @@ public class Tools {
 
     /**
      * Applique un seuil sur les chemins
-     * @param g Plateforme
-     * @param chemins Chemins
-     * @param critere Critère
+     * 
+     * @param g         Plateforme
+     * @param chemins   Chemins
+     * @param critere   Critère
      * @param threshold Seuil
      */
     public static void applyThreshold(Plateforme g, List<Chemin> chemins, TypeCout critere, int threshold) {
@@ -285,9 +294,10 @@ public class Tools {
 
     /**
      * Applique un seuil sur les chemins
-     * @param g Plateforme
-     * @param chemins Chemins
-     * @param critere Critère
+     * 
+     * @param g         Plateforme
+     * @param chemins   Chemins
+     * @param critere   Critère
      * @param threshold Seuil
      */
     public static void applyThreshold(Plateforme g, List<Chemin> chemins, TypeCout critere, double threshold) {
@@ -304,22 +314,23 @@ public class Tools {
 
     /**
      * Retourne une chaîne de caractères représentant un chemin
-     * @param che Chemin
+     * 
+     * @param che     Chemin
      * @param critere Critère
      * @return Chaîne de caractères
      */
     public static String cheminWithCorre(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
-        che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().removeFirst();
+        che.aretes().removeLast();
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
-            r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cheModal.aretes().get(0).getDepart() + " à " + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee() + " ";
+            r += cheModal.aretes().getFirst().getModalite() + " de " +
+                    cheModal.aretes().getFirst().getDepart() + " à " + cheModal.aretes().getLast().getArrivee() + " ";
             if (cheModal.aretes().size() > 1) {
                 r += "en passant par";
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -327,11 +338,11 @@ public class Tools {
                     if (i < cheModal.aretes().size() - 1) {
                         r += ",";
                     }
-                    
+
                 }
             }
-            
+
         }
-        return r + " totale: " + che.poids() + " " +TypeCout.getUnit(critere) ;
+        return r + " totale: " + che.poids() + " " + TypeCout.getUnit(critere);
     }
 }

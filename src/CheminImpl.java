@@ -11,47 +11,49 @@ import java.util.List;
  * Implémentation de l'interface Chemin
  */
 public class CheminImpl implements Chemin {
-    private List<Trancon> aretes;
-    private double poids;
+    private final List<Trancon> ARRETES;
+    private final double POIDS;
 
     /**
      * @return la liste des trançons qui composent le chemin
      */
     public List<Trancon> aretes() {
-        return aretes;
+        return ARRETES;
     }
 
     /**
      * @return le poids du chemin
      */
     public double poids() {
-        return poids;
+        return POIDS;
     }
 
     /**
      * @constructor CheminImpl
-     * Crée un chemin vide
+     *              Crée un chemin vide
      */
     public CheminImpl() {
-        aretes = new ArrayList<Trancon>();
-        poids = 0;
+        ARRETES = new ArrayList<Trancon>();
+        POIDS = 0;
     }
 
     /**
-     * Divise un chemin en plusieurs chemins, chaque chemin contenant des trançons de la même modalité. 
-     * @param chemin 
+     * Divise un chemin en plusieurs chemins, chaque chemin contenant des trançons
+     * de la même modalité.
+     * 
+     * @param chemin
      * @return Une liste de chemins contenant des trançons de la même modalité
      */
     public static List<Chemin> splitByModalite(Chemin chemin) {
-        if (chemin.aretes().size() == 0) {
+        if (chemin.aretes().isEmpty()) {
             return new ArrayList<Chemin>();
         }
         List<Chemin> chemins = new ArrayList<Chemin>();
         Iterator<Trancon> it = chemin.aretes().iterator();
         Trancon tmpNext = it.next();
-        Chemin tmp ;
-        while (tmpNext!=null) {
-            Trancon t= tmpNext;
+        Chemin tmp;
+        while (tmpNext != null) {
+            Trancon t = tmpNext;
             tmp = new CheminImpl();
             tmp.aretes().add(t);
             if (!it.hasNext()) {
@@ -71,7 +73,7 @@ public class CheminImpl implements Chemin {
             chemins.add(tmp);
         }
         return chemins;
-        
+
     }
 
     /**
@@ -79,26 +81,25 @@ public class CheminImpl implements Chemin {
      * @return le nombre de changements dans un chemin
      */
     public static int getNbChangement(Chemin che) {
-        if (che.aretes().size() == 0) {
+        if (che.aretes().isEmpty()) {
             return 0;
         }
-        return (CheminImpl.splitByModalite(che).size())-1;
+        return (CheminImpl.splitByModalite(che).size()) - 1;
     }
 
     /**
      * @param chemin
      * @return la durée des changements dans un chemin
      */
-    public static int getCHangementDuration(Chemin che) {
+    public static int getChangementDuration(Chemin che) {
         return CheminImpl.getNbChangement(che) * Plateforme.TEMP_CHANGEMENT;
     }
-
 
     /**
      * @param chemin
      * @return un chemin sous forme de chaine de caractères
      */
-    public static String  toString(Chemin che) {
+    public static String toString(Chemin che) {
         String r = "";
         for (Trancon t : che.aretes()) {
             r += t.getModalite() + " de " + t.getDepart() + " à " + t.getArrivee() + " ";

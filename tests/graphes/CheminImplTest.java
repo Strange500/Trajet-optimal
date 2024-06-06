@@ -2,8 +2,6 @@ package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -91,11 +89,11 @@ public class CheminImplTest {
 
     @Test
     void testGetCHangementDuration() {
-        assertEquals(Plateforme.TEMP_CHANGEMENT * 0, CheminImpl.getCHangementDuration(ch1));
-        assertEquals(Plateforme.TEMP_CHANGEMENT * 1, CheminImpl.getCHangementDuration(ch2));
-        assertEquals(Plateforme.TEMP_CHANGEMENT * 1, CheminImpl.getCHangementDuration(ch3));
-        assertEquals(Plateforme.TEMP_CHANGEMENT * 2, CheminImpl.getCHangementDuration(ch4));
-        assertEquals(Plateforme.TEMP_CHANGEMENT * 0, CheminImpl.getCHangementDuration(ch5));
+        assertEquals(Plateforme.TEMP_CHANGEMENT * 0, CheminImpl.getChangementDuration(ch1));
+        assertEquals(Plateforme.TEMP_CHANGEMENT * 1, CheminImpl.getChangementDuration(ch2));
+        assertEquals(Plateforme.TEMP_CHANGEMENT * 1, CheminImpl.getChangementDuration(ch3));
+        assertEquals(Plateforme.TEMP_CHANGEMENT * 2, CheminImpl.getChangementDuration(ch4));
+        assertEquals(Plateforme.TEMP_CHANGEMENT * 0, CheminImpl.getChangementDuration(ch5));
     }
 
 }

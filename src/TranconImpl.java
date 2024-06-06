@@ -8,48 +8,48 @@ import fr.ulille.but.sae_s2_2024.Trancon;
  * Implémentation de l'interface Trancon
  */
 public class TranconImpl implements Trancon {
-    private Lieu depart;
-    private Lieu arrivee;
-    private ModaliteTransport modalite;
+    private final Lieu DEPART;
+    private final Lieu ARRIVEE;
+    private final ModaliteTransport MODALITE;
 
     /**
      * @constructor TranconImpl
-     * @param depart Lieu de départ
-     * @param arrivee Lieu d'arrivée
+     * @param depart   Lieu de départ
+     * @param arrivee  Lieu d'arrivée
      * @param modalite Modalité de transport
-     * Crée une arête entre deux lieux
+     *                 Crée une arête entre deux lieux
      */
     public TranconImpl(Lieu depart, Lieu arrivee, ModaliteTransport modalite) {
-        this.depart = depart;
-        this.arrivee = arrivee;
-        this.modalite = modalite;
+        this.DEPART = depart;
+        this.ARRIVEE = arrivee;
+        this.MODALITE = modalite;
     }
 
     /**
      * @return Lieu de départ
      */
     public Lieu getDepart() {
-        return depart;
+        return DEPART;
     }
 
     /**
      * @return Lieu d'arrivée
      */
     public Lieu getArrivee() {
-        return arrivee;
+        return ARRIVEE;
     }
 
     /**
      * @return Modalité de transport
      */
     public ModaliteTransport getModalite() {
-        return modalite;
+        return MODALITE;
     }
 
     /**
      * @return Chaîne de caractères représentant l'arete
      */
     public String toString() {
-        return depart + " -> " + arrivee + " (" + modalite + ")";
+        return DEPART + " -> " + ARRIVEE + " (" + MODALITE + ")";
     }
 }
