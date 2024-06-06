@@ -1,4 +1,4 @@
-package tests.graphes.v2;
+package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,10 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.CheminImpl;
-import src.v1.LieuImpl;
-import src.v1.TranconImpl;
-import src.v1.TypeCout;
+import src.CheminImpl;
+import src.LieuImpl;
+import src.TranconImpl;
+import src.TypeCout;
 
 public class TypeCoutTest {
 

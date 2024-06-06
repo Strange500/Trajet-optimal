@@ -1,4 +1,4 @@
-package src.v1;
+package src;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,124 +12,18 @@ import fr.ulille.but.sae_s2_2024.Lieu;
  * Classe contenant des outils pour l'application
  */
 public class Tools {
-    private static final String SEPARATOR = ";";
+    protected static final String SEPARATOR = ";";
 
-    private static final int DEPART_IDX = 0;
-    private static final int DESTINATION_IDX = 1;
-    private static final int MODALITE_IDX = 2;
-    private static final int PRIX_IDX = 3;
-    private static final int CO2_IDX = 4;
-    private static final int TEMPS_IDX = 5;
-
-    public static void main (String[] args) {
-        String[] data = new String[]{
-            "villeA;villeB;Train;60;1.7;80",
-            "villeB;villeD;Train;22;2.4;40",
-            "villeA;villeC;Train;42;1.4;50",
-            "villeB;villeC;Train;14;1.4;60",
-            "villeC;villeD;Avion;110;150;22",
-            "villeC;villeD;Train;65;1.2;90"
-        };
-
-        args = data;
-
-        String depart, destination ;
-        ModaliteTransport modalite;
-        double prix, pollution;
-        int Duree;
-
-        int thresholdPrix = Integer.MAX_VALUE, thresholdDuree = Integer.MAX_VALUE;
-        double thresholdPollution = Double.MAX_VALUE;
-
-        if (donneesValides(args)) {
-
-            Plateforme g = initPlateforme(args);
-            
-            ModaliteTransport moyen = getModaliteTransport();
-
-            Lieu dep = getLieuDepart(g);
-
-            Lieu dest = getLieuDestination(g, dep);
-
-            if (g.hasPathByModalite(dep.toString(), dest.toString(), moyen)) {
-                
-                List<TypeCout> criteres = new ArrayList<>();
-                criteres.add(TypeCout.PRIX);
-                criteres.add(TypeCout.CO2);
-                criteres.add(TypeCout.TEMPS);
-                
-                TypeCout critere = getTypeCout();
-                criteres.remove(critere);
-
-                for (TypeCout c : criteres) {
-                    switch (c) {
-                        case PRIX:
-                            thresholdPrix = getThresholdPrix();
-                            break;
-                        case CO2:
-                            thresholdPollution = getThresholdPollution();
-                            break;
-                        case TEMPS:
-                            thresholdDuree = getThresholdDuree();
-                            break;
-                    }
-                }
-
-                
-
-                int nb_trajet = getNbTrajet();
+    protected static final int DEPART_IDX = 0;
+    protected static final int DESTINATION_IDX = 1;
+    protected static final int MODALITE_IDX = 2;
+    protected static final int PRIX_IDX = 3;
+    protected static final int CO2_IDX = 4;
+    protected static final int TEMPS_IDX = 5;
 
 
-                List<Chemin> chemins = g.getPathByModaliteAndTypeCout(dep.toString(), dest.toString(), moyen, critere, nb_trajet);
-                for (TypeCout c : criteres) {
-                    switch (c) {
-                        case PRIX:
-                            applyThreshold(g, chemins, c, thresholdPrix);
-                            break;
-                        case CO2:
-                            applyThreshold(g, chemins, c, thresholdPollution);
-                            break;
-                        case TEMPS:
-                            applyThreshold(g, chemins, c, thresholdDuree);
-                            break;
-                    }
-                }
 
-                if (chemins.size() == 0) {
-                    System.out.println("Il n'y a pas de chemin disponible pour les critères que vous avez choisi");
-                }
-                else {
-                    System.out.println("Les trajets recommandés de " + dep + " à " + dest + " sont:");
-                    for (int i = 0; i < chemins.size(); i++) {
-                        System.out.println(i + 1 + ") " + cheminWithCorre(chemins.get(i), critere));
-                    }
-                }
-                
-            }
-            else {
-                System.out.println("Il n'y a pas de chemin disponible pour le moyen de transport que vous avez choisi");
-            }
-            
-            
-
-            /*List<Chemin> chemins = AlgorithmeKPCC.kpcc(g, new LieuImpl("villeA"), new LieuImpl("villeD"), 3);
-            System.out.println("Les 3 trajets recommandés de A à D sont:");
-            for (int i = 0; i < chemins.size(); i++) {
-                if (chemins.get(i).aretes().get(1).getModalite() == ModaliteTransport.TRAIN) {
-                    System.out.println(i + 1 + ") " + chemins.get(i).aretes().get(0).getModalite() + " de " +
-                            chemins.get(i).aretes().get(0).getDepart() + " à " + chemins.get(i).aretes().get(0).getArrivee() +
-                            " en passant par " + chemins.get(i).aretes().get(1).getDepart() +
-                            ". Durée : " + (int) chemins.get(i).poids() + " minutes");
-                } else {
-                    System.out.println(i + 1 + ") " + chemins.get(i).aretes().get(0).getModalite() + " de " +
-                            chemins.get(i).aretes().get(0).getDepart() + " à " + chemins.get(i).aretes().get(0).getArrivee() +
-                            " puis " + chemins.get(i).aretes().get(1).getModalite() + " de " +
-                            chemins.get(i).aretes().get(1).getDepart() + " à " + chemins.get(i).aretes().get(1).getArrivee() +
-                            ". Durée : " + (int) chemins.get(i).poids() + " minutes");
-                }
-            }*/
-        }
-    }
+    
 
     /**
      * Initialise la plateforme avec les données passées en paramètre

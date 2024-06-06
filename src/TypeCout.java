@@ -1,4 +1,4 @@
-package src.v2;
+package src;
 
 /**
  * Enumération des types de coûts
