@@ -1,4 +1,4 @@
-package tests.graphes.v2;
+package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 

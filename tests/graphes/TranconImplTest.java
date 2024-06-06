@@ -1,5 +1,4 @@
-package tests.graphes.v1;
-
+package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +12,6 @@ import src.CheminImpl;
 import src.LieuImpl;
 import src.TranconImpl;
 
-
 public class TranconImplTest {
     public Lieu A;
     public Lieu B;
@@ -26,16 +24,13 @@ public class TranconImplTest {
     public TranconImpl tr4;
     public TranconImpl tr5;
 
-
-
     @BeforeEach
     public void avantTest() {
-        
+
         A = new LieuImpl("A");
         B = new LieuImpl("B");
         C = new LieuImpl("C");
         D = new LieuImpl("D");
-        
 
         tr1 = new TranconImpl(A, B, ModaliteTransport.AVION);
         tr2 = new TranconImpl(B, C, ModaliteTransport.TRAIN);
@@ -43,10 +38,8 @@ public class TranconImplTest {
         tr4 = new TranconImpl(A, B, ModaliteTransport.TRAIN);
         tr5 = new TranconImpl(B, C, ModaliteTransport.AVION);
 
-
     }
 
-   
     @Test
     public void testGetDepart() {
         assertEquals(A, tr1.getDepart());
@@ -83,7 +76,4 @@ public class TranconImplTest {
         assertEquals("B -> C (AVION)", tr5.toString());
     }
 
-   
-
-   
 }

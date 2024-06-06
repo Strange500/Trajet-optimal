@@ -1,4 +1,4 @@
-package tests.graphes.v2;
+package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,13 +10,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.exception.CheminInexistantException;
-import src.v2.CheminImpl;
-import src.v2.LieuImpl;
-import src.v2.TranconImpl;
-import src.v2.Plateforme;
-import src.v2.TypeCout;
-import src.v2.Tools;
+import src.exception.CheminInexistantException;
+import src.CheminImpl;
+import src.LieuImpl;
+import src.TranconImpl;
+import src.Plateforme;
+import src.PlateformeCorrespondance;
+import src.TypeCout;
+import src.Tools;
+import src.ToolsCorrespondance;
 
 public class ToolsTest {
 
@@ -30,7 +32,7 @@ public class ToolsTest {
 
     ArrayList<String> correspondances = new ArrayList<String>();
 
-    public Plateforme g;
+    public PlateformeCorrespondance g;
 
     @BeforeEach
     public void avantTest() {
@@ -68,7 +70,7 @@ public class ToolsTest {
 
         // init plateform g et sommets A B C D
 
-        g = Tools.initPlateforme(arg1Ok, new ArrayList<String>());
+        g = ToolsCorrespondance.initPlateforme(arg1Ok, new ArrayList<String>());
 
     }
 
@@ -83,16 +85,16 @@ public class ToolsTest {
 
     @Test
     public void testDonneesValide() {
-        assertTrue(Tools.donneesValides(arg1Ok));
-        assertFalse(Tools.donneesValides(arg1PasOk1));
-        assertFalse(Tools.donneesValides(arg1PasOk2));
-        assertFalse(Tools.donneesValides(arg1PasOk3));
+        assertTrue(ToolsCorrespondance.donneesValides(arg1Ok));
+        assertFalse(ToolsCorrespondance.donneesValides(arg1PasOk1));
+        assertFalse(ToolsCorrespondance.donneesValides(arg1PasOk2));
+        assertFalse(ToolsCorrespondance.donneesValides(arg1PasOk3));
     }
 
     @Test
     public void testGetCSV() {
         ArrayList<String> res = new ArrayList<String>();
-        res = Tools.getCSV("src/v2/csv/test.csv");
+        res = ToolsCorrespondance.getCSV("csv/test.csv");
         assertEquals(5, res.size());
         assertEquals("toto", res.get(0));
         assertEquals("tata", res.get(1));
@@ -103,28 +105,28 @@ public class ToolsTest {
 
     @Test
     public void testInitPlateforme() {
-        Plateforme p = Tools.initPlateforme(arg1Ok, correspondances);
-        for (String l : p.getLieux()) {
+        PlateformeCorrespondance p = ToolsCorrespondance.initPlateforme(arg1Ok, correspondances);
+        for (String l : p.getLieuxNames()) {
             System.out.println(l);
         }
-        assertEquals(4, p.getLieux().size());
+        assertEquals(4, p.getLieuxNames().size());
     }
 
     @Test
     public void testApplyThreshold() {
         try {
-            List<Chemin> chPrix = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
+            List<Chemin> chPrix = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
                     TypeCout.PRIX, 3 *100);
 
-            chPrix = Tools.removeDuplicates(chPrix, 3);
+            chPrix = ToolsCorrespondance.removeDuplicates(chPrix, 3);
             
-            List<Chemin> chCO2 = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
+            List<Chemin> chCO2 = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
                     TypeCout.CO2, 3 *100);
-            chCO2 = Tools.removeDuplicates(chCO2, 3);
+            chCO2 = ToolsCorrespondance.removeDuplicates(chCO2, 3);
 
-            List<Chemin> chTemps = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
+            List<Chemin> chTemps = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
                     TypeCout.TEMPS, 3 *100);
-            chTemps = Tools.removeDuplicates(chTemps, 3);
+            chTemps = ToolsCorrespondance.removeDuplicates(chTemps, 3);
             // nous avons ici le premier trajet a 78€ puis 82€ et enfin 107€
             assertEquals(3, chPrix.size());
             assertEquals(78, chPrix.get(0).poids());
@@ -166,16 +168,16 @@ public class ToolsTest {
     @Test
     public void testCheminWithCorre() {
         try {
-            List<Chemin> chPrix = g.getPathByModaliteAndTypeCout("villeA", "villeD", ModaliteTransport.TRAIN,
+            List<Chemin> chPrix = g.getPathByModaliteAndTypeCoutTriggerNoPath("villeA", "villeD", ModaliteTransport.TRAIN,
                     TypeCout.PRIX, 3*100);
-            chPrix = Tools.removeDuplicates(chPrix, 3);
+            chPrix = ToolsCorrespondance.removeDuplicates(chPrix, 3);
 
             assertEquals("TRAIN de villeA à villeD en passant par villeC, villeB, total: 78.0 €",
-                    Tools.cheminWithCorre(chPrix.get(0), TypeCout.PRIX));
+                    ToolsCorrespondance.cheminWithCorre(chPrix.get(0), TypeCout.PRIX));
             assertEquals("TRAIN de villeA à villeD en passant par villeB, total: 82.0 €",
-                    Tools.cheminWithCorre(chPrix.get(1), TypeCout.PRIX));
+                    ToolsCorrespondance.cheminWithCorre(chPrix.get(1), TypeCout.PRIX));
             assertEquals("TRAIN de villeA à villeD en passant par villeC, total: 107.0 €",
-                    Tools.cheminWithCorre(chPrix.get(2), TypeCout.PRIX));
+                    ToolsCorrespondance.cheminWithCorre(chPrix.get(2), TypeCout.PRIX));
         } catch (CheminInexistantException e) {
             e.printStackTrace();
         }

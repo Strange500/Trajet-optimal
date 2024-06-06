@@ -1,5 +1,4 @@
-package tests.graphes.v1;
-
+package tests.graphes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,9 +10,8 @@ import org.junit.jupiter.api.Test;
 import fr.ulille.but.sae_s2_2024.*;
 import src.CheminImpl;
 import src.LieuImpl;
-import src.Plateforme;
 import src.TranconImpl;
-
+import src.Plateforme;
 
 public class CheminImplTest {
     public Lieu A;
@@ -21,34 +19,27 @@ public class CheminImplTest {
     public Lieu C;
     public Lieu D;
 
-
-
-
     public CheminImpl ch1;
     public CheminImpl ch2;
     public CheminImpl ch3;
     public CheminImpl ch4;
     public CheminImpl ch5;
 
-
     @BeforeEach
     public void avantTest() {
-        // initialise les chemin avec les sommet A B C D, construit les arrete et utilise des modalité permettant de tester plusieur cas
-        
+        // initialise les chemin avec les sommet A B C D, construit les arrete et
+        // utilise des modalité permettant de tester plusieur cas
+
         A = new LieuImpl("A");
         B = new LieuImpl("B");
         C = new LieuImpl("C");
         D = new LieuImpl("D");
-        
 
         ch1 = new CheminImpl();
         ch2 = new CheminImpl();
         ch3 = new CheminImpl();
         ch4 = new CheminImpl();
         ch5 = new CheminImpl();
-
-
-
 
         ch1.aretes().add(new TranconImpl(A, B, ModaliteTransport.AVION));
         ch1.aretes().add(new TranconImpl(B, C, ModaliteTransport.AVION));
@@ -66,19 +57,16 @@ public class CheminImplTest {
         ch4.aretes().add(new TranconImpl(B, C, ModaliteTransport.AVION));
         ch4.aretes().add(new TranconImpl(C, D, ModaliteTransport.TRAIN));
 
-
     }
 
     @Test
     void testInit() {
-        
-        
+
         assertEquals(3, ch1.aretes().size());
         assertEquals(3, ch2.aretes().size());
         assertEquals(3, ch3.aretes().size());
         assertEquals(3, ch4.aretes().size());
         assertEquals(0, ch5.aretes().size());
-
 
     }
 
@@ -110,5 +98,4 @@ public class CheminImplTest {
         assertEquals(Plateforme.TEMP_CHANGEMENT * 0, CheminImpl.getCHangementDuration(ch5));
     }
 
-   
 }
