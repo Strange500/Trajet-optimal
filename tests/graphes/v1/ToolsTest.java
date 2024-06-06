@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.CheminImpl;
-import src.v1.LieuImpl;
-import src.v1.TranconImpl;
-import src.v1.Plateforme;
-import src.v1.TypeCout;
-import src.v1.Tools;
+import src.CheminImpl;
+import src.LieuImpl;
+import src.Plateforme;
+import src.Tools;
+import src.TranconImpl;
+import src.TypeCout;
 
 
 public class ToolsTest {

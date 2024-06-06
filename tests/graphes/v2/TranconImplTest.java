@@ -8,9 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.CheminImpl;
-import src.v1.LieuImpl;
-import src.v1.TranconImpl;
+import src.CheminImpl;
+import src.LieuImpl;
+import src.TranconImpl;
 
 public class TranconImplTest {
     public Lieu A;

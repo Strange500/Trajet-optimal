@@ -1,17 +1,17 @@
-package src.v1;
+package src;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.ulille.but.sae_s2_2024.*;
-import src.v1.exception.CheminInexistantException;
+import src.exception.CheminInexistantException;
 
 
 public class VoyageurCorrespondance extends Voyageur{
 
-    public static final String path_default = "src/v2/csv/data.csv";
-    public static final String path_cor_default = "src/v2/csv/correspondance.csv";
+    public static final String path_default = "csv/data.csv";
+    public static final String path_cor_default = "csv/correspondance.csv";
 
     private  final ArrayList<String> DATA ;
     private  final ArrayList<String> CORRESPONDANCE ;

@@ -1,5 +1,4 @@
-package src.v2;
-
+package src;
 import fr.ulille.but.sae_s2_2024.Lieu;
 
 /**
@@ -10,7 +9,7 @@ public class LieuImpl implements Lieu {
 
     /**
      * @constructor LieuImpl
-     *              Crée un lieu avec un nom
+     * Crée un lieu avec un nom
      * @param nom le nom du lieu
      */
     public LieuImpl(String nom) {

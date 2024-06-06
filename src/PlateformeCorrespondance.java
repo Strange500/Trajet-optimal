@@ -1,4 +1,4 @@
-package src.v1;
+package src;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import fr.ulille.but.sae_s2_2024.Lieu;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.MultiGrapheOrienteValue;
 import fr.ulille.but.sae_s2_2024.Trancon;
-import src.v1.exception.CheminInexistantException;
+import src.exception.CheminInexistantException;
 
 public class PlateformeCorrespondance extends Plateforme {
 
