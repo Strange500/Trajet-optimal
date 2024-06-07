@@ -82,7 +82,7 @@ public class Plateforme {
         g.filterByModality(modalite);
         Lieu dep = this.getSommet(depart);
         Lieu arr = this.getSommet(arrivee);
-        return AlgorithmeKPCC.kpcc(g.g1, dep, arr, 1).isEmpty();
+        return !AlgorithmeKPCC.kpcc(g.g1, dep, arr, 1).isEmpty();
     }
 
     /**

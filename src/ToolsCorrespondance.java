@@ -200,16 +200,16 @@ public class ToolsCorrespondance extends Tools {
     public static String cheminWithCorre(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
-        che.aretes().removeFirst();
-        che.aretes().removeLast();
+        che.aretes().remove(0);
+        che.aretes().remove(che.aretes().size()-1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
-            r += cheModal.aretes().getFirst().getModalite() + " de " +
-                    cleanLieux(cheModal.aretes().getFirst().getDepart().toString()) + " à "
-                    + cleanLieux(cheModal.aretes().getLast().getArrivee().toString()) + " ";
+            r += cheModal.aretes().get(0).getModalite() + " de " +
+                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
+                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -242,16 +242,16 @@ public class ToolsCorrespondance extends Tools {
     public static String cheminWithCorreDEBUG(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
-        che.aretes().removeFirst();
-        che.aretes().removeLast();
+        che.aretes().remove(0);
+        che.aretes().remove(che.aretes().size()-1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
-            r += cheModal.aretes().getFirst().getModalite() + " de " +
-                    cheModal.aretes().getFirst().getDepart().toString() + " à "
-                    + cheModal.aretes().getLast().getArrivee().toString() + " ";
+            r += cheModal.aretes().get(0).getModalite() + " de " +
+                    cheModal.aretes().get(0).getDepart().toString() + " à "
+                    + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString() + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -343,16 +343,16 @@ public class ToolsCorrespondance extends Tools {
     public static String cheminWithCorreBis(Chemin che, TypeCout critere) {
         String r = "";
         // on enleve les arrete vers alpha et omega
-        che.aretes().removeFirst();
-        che.aretes().removeLast();
+        che.aretes().remove(0);
+        che.aretes().remove(che.aretes().size()-1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += "puis ";
             }
-            r += cheModal.aretes().getFirst().getModalite() + " de " +
-                    cleanLieux(cheModal.aretes().getFirst().getDepart().toString()) + " à "
-                    + cleanLieux(cheModal.aretes().getLast().getArrivee().toString()) + " ";
+            r += cheModal.aretes().get(0).getModalite() + " de " +
+                    cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
+                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
             // if (cheModal.aretes().size() > 1) {
             // r += "en passant par";
             // for (int i = 1; i < cheModal.aretes().size(); i++) {

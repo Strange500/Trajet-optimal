@@ -11,7 +11,9 @@ import fr.ulille.but.sae_s2_2024.*;
 import src.CheminImpl;
 import src.LieuImpl;
 import src.Plateforme;
+import src.PlateformeCorrespondance;
 import src.Tools;
+import src.ToolsCorrespondance;
 import src.TranconImpl;
 import src.TypeCout;
 
