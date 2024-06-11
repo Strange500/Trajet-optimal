@@ -206,4 +206,42 @@ public class Voyageur {
             }
         }
     }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setCritere(TypeCout critere) {
+        this.critere = critere;
+    }
+
+    public void setModalite(ModaliteTransport modalite) {
+        this.modalite = modalite;
+    }
+
+    public void setThresholdPrix(int thresholdPrix) {
+        this.thresholdPrix = thresholdPrix;
+    }
+
+    public void setThresholdCO2(double thresholdCO2) {
+        this.thresholdCO2 = thresholdCO2;
+    }
+
+    public void setThresholdTemps(int thresholdTemps) {
+        this.thresholdTemps = thresholdTemps;
+    }
+
+    public void setDepart(String depart) {
+        this.depart = depart;
+    }
+
+    public void setArrivee(String arrivee) {
+        this.arrivee = arrivee;
+    }
+
+    public void setNb_trajet(int nb_trajet) {
+        this.nb_trajet = nb_trajet;
+    }
+
+    
 }

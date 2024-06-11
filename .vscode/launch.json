@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "IhmInterfaceImpl",
+            "request": "launch",
+            "mainClass": "src.IhmInterfaceImpl",
+            "projectName": "B6_4619270f"
+        },
+        {
+            "type": "java",
             "name": "Accueildemo",
             "request": "launch",
             "mainClass": "src.ihm.Accueildemo",
