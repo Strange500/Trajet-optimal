@@ -10,10 +10,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.net.URL;
 import src.ihm.Search;
-
+import org.controlsfx.control.textfield.TextFields;
 import java.io.IOException;
 
 public class Accueildemo extends Application {
+  @FXML
+  TextField vDepart;
+
+  @FXML
+  TextField vArrivee;
 
   public void start(Stage stage) throws IOException {
     FXMLLoader loader = new FXMLLoader();
@@ -25,8 +30,10 @@ public class Accueildemo extends Application {
     }
 
     loader.setLocation(fxmlFileUrl);
+
     Parent root = loader.load();
-    
+
+
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.setTitle("Accueil demo");
