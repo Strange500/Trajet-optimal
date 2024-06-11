@@ -3,19 +3,26 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Accueildemo",
+            "request": "launch",
+            "mainClass": "src.ihm.Accueildemo",
+            "projectName": "B6_5e75d992",
+            "vmArgs": "--module-path C:/Users/Adrien/Documents/dev/lib/javafx-sdk-22.0.1/lib --add-modules=javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
             "name": "FXMLdemo",
             "request": "launch",
             "mainClass": "src.ihm.FXMLdemo",
             "projectName": "B6_4619270f",
-            "vmArgs": "--module-path /home/strange/Téléchargements/openjfx-22.0.1_linux-x64_bin-sdk/javafx-sdk-22.0.1/lib --add-modules=javafx.controls,javafx.fxml"
-
+            "vmArgs": "--module-path C:/Users/Adrien/Documents/dev/lib/javafx-sdk-22.0.1/lib --add-modules=javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
             "name": "Run SimpleScene",
             "request": "launch",
             "mainClass": "SimpleScene",
-            "vmArgs": "--module-path /home/strange/Téléchargements/openjfx-22.0.1_linux-x64_bin-sdk/javafx-sdk-22.0.1/lib --add-modules=javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path C:/Users/Adrien/Documents/dev/lib/javafx-sdk-22.0.1/lib --add-modules=javafx.controls,javafx.fxml"
         }
     ]
 }
