@@ -85,12 +85,12 @@
                   <Font name="Cantarell Regular" size="14.0" />
                </font>
             </Button>
-            <Label layoutX="323.0" layoutY="170.0" text="Faites une recherche pour avoir des résultats">
+            <Label fx:id="noResultLabel" layoutX="323.0" layoutY="170.0" text="Faites une recherche pour avoir des résultats">
                <font>
                   <Font name="Cantarell Regular" size="12.0" />
                </font>
             </Label>
-            <Pane layoutX="321.0" layoutY="184.0" prefHeight="154.0" prefWidth="258.0">
+            <Pane fx:id="resultContainer" layoutX="321.0" layoutY="184.0" prefHeight="154.0" prefWidth="258.0">
                <children>
                   <Label layoutX="64.0" layoutY="49.0" text="kg CO2">
                      <font>
@@ -255,12 +255,13 @@
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="322.0" layoutY="70.0" prefHeight="93.0" prefWidth="239.0">
+            <Pane fx:id="recomendedPath" layoutX="322.0" layoutY="70.0" prefHeight="93.0" prefWidth="239.0">
                <children>
                   <Label text="Trajets recommandés" />
-                  <Label layoutY="72.0" text="Pollution" />
-                  <Label alignment="CENTER" layoutX="107.0" layoutY="72.0" text="Prix" />
-                  <Label alignment="CENTER" layoutX="192.0" layoutY="72.0" text="Temps" />
+                  <Label fx:id="PollutionReco" layoutY="72.0" text="Pollution" />
+                  <Label fx:id="PrixReco" alignment="CENTER" layoutX="107.0" layoutY="72.0" text="Prix" />
+                  <Label fx:id="TempsReco" alignment="CENTER" layoutX="192.0" layoutY="72.0" text="Temps" />
+                  <Label fx:id="cheminRecoLabel" layoutX="11.0" layoutY="38.0" prefHeight="18.0" prefWidth="210.0" text="Label" />
                </children>
             </Pane>
             <TextField fx:id="vDepart" layoutX="58.0" layoutY="117.0" />
