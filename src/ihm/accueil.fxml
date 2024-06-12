@@ -92,12 +92,7 @@
             </Label>
             <Pane fx:id="resultContainer" layoutX="321.0" layoutY="184.0" prefHeight="154.0" prefWidth="258.0">
                <children>
-                  <Label layoutX="64.0" layoutY="49.0" text="kg CO2">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="43.0" layoutY="49.0" text="XX,X">
+                  <Label fx:id="t1CO2" layoutX="46.0" layoutY="49.0" text="XX,X">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
@@ -113,32 +108,22 @@
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="130.0" layoutY="49.0" text="XX">
+                  <Label fx:id="t1PRIX" layoutX="130.0" layoutY="49.0" prefHeight="13.0" prefWidth="36.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="143.0" layoutY="49.0" text="€">
+                  <Label layoutX="181.0" layoutY="48.0" text="Temps :">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="198.0" layoutY="48.0" text="Temps :">
+                  <Label fx:id="t1TEMPS" layoutX="214.0" layoutY="49.0" prefHeight="13.0" prefWidth="36.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="231.0" layoutY="49.0" text="XX">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="63.0" layoutY="68.0" text="kg CO2">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="42.0" layoutY="68.0" text="XX,X">
+                  <Label fx:id="t2CO2" layoutX="45.0" layoutY="68.0" text="XX,X">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
@@ -153,32 +138,22 @@
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="129.0" layoutY="68.0" text="XX">
+                  <Label fx:id="t2PRIX" layoutX="129.0" layoutY="68.0" prefHeight="13.0" prefWidth="36.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="142.0" layoutY="68.0" text="€">
+                  <Label layoutX="180.0" layoutY="67.0" text="Temps :">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="197.0" layoutY="67.0" text="Temps :">
+                  <Label fx:id="t2TEMPS" layoutX="213.0" layoutY="68.0" prefHeight="13.0" prefWidth="36.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="230.0" layoutY="68.0" text="XX">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="64.0" layoutY="87.0" text="kg CO2">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="43.0" layoutY="87.0" text="XX,X">
+                  <Label fx:id="t3CO2" layoutX="46.0" layoutY="87.0" text="XX,X">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
@@ -193,32 +168,22 @@
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="130.0" layoutY="87.0" text="XX">
+                  <Label fx:id="t3PRIX" layoutX="130.0" layoutY="87.0" prefHeight="13.0" prefWidth="36.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="143.0" layoutY="87.0" text="€">
+                  <Label layoutX="181.0" layoutY="86.0" text="Temps :">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="198.0" layoutY="86.0" text="Temps :">
+                  <Label fx:id="t3TEMPS" layoutX="214.0" layoutY="87.0" prefHeight="13.0" prefWidth="36.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="231.0" layoutY="87.0" text="XX">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="64.0" layoutY="107.0" text="kg CO2">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="43.0" layoutY="107.0" text="XX,X">
+                  <Label fx:id="t4CO2" layoutX="46.0" layoutY="107.0" text="XX,X">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
@@ -233,22 +198,17 @@
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="130.0" layoutY="107.0" text="XX">
+                  <Label fx:id="t4PRIX" layoutX="130.0" layoutY="107.0" prefHeight="13.0" prefWidth="42.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="143.0" layoutY="107.0" text="€">
+                  <Label layoutX="181.0" layoutY="106.0" text="Temps :">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
                   </Label>
-                  <Label layoutX="198.0" layoutY="106.0" text="Temps :">
-                     <font>
-                        <Font name="Cantarell Regular" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="231.0" layoutY="107.0" text="XX">
+                  <Label fx:id="t4TEMPS" layoutX="214.0" layoutY="107.0" prefHeight="13.0" prefWidth="36.0" text="XX">
                      <font>
                         <Font name="Cantarell Regular" size="9.0" />
                      </font>
@@ -261,7 +221,7 @@
                   <Label fx:id="PollutionReco" layoutY="72.0" text="Pollution" />
                   <Label fx:id="PrixReco" alignment="CENTER" layoutX="107.0" layoutY="72.0" text="Prix" />
                   <Label fx:id="TempsReco" alignment="CENTER" layoutX="192.0" layoutY="72.0" text="Temps" />
-                  <Label fx:id="cheminRecoLabel" layoutX="11.0" layoutY="38.0" prefHeight="18.0" prefWidth="210.0" text="Label" />
+                  <Label fx:id="cheminRecoLabel" alignment="CENTER" layoutX="-1.0" layoutY="38.0" prefHeight="18.0" prefWidth="240.0" text="Label" />
                </children>
             </Pane>
             <TextField fx:id="vDepart" layoutX="58.0" layoutY="117.0" />

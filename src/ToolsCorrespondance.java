@@ -376,6 +376,37 @@ public class ToolsCorrespondance extends Tools {
     }
 
     /**
+     * Retourne une chaîne de caractères représentant un chemin
+     * 
+     * @param che     Chemin
+     * @param critere Critère
+     * @return Chaîne de caractères
+     */
+    public static String cheminWithCorreArrow(Chemin che, TypeCout critere) {
+        String r = "";
+        // on enleve les arrete vers alpha et omega
+        che.aretes().remove(0);
+        che.aretes().remove(che.aretes().size()-1);
+
+        for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
+            if (!r.isEmpty()) {
+                r += "puis ";
+            }
+            r += cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + "  —— " + cheModal.aretes().get(0).getModalite().toString().toLowerCase() + " ——►  " +
+                cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
+
+        }
+        // if (critere == TypeCout.PRIX) {
+        //     r += "pour un prix total de : " + che.poids() + " €";
+        // } else if (critere == TypeCout.CO2) {
+        //     r += "pour une pollution totale de : " + che.poids() + " kgCO2e";
+        // } else if (critere == TypeCout.TEMPS) {
+        //     r += "pour une durée totale de : " + che.poids() + " minutes";
+        // }
+        return r;
+    }
+
+    /**
      * @param path
      * @return ArrayList de String contenant les données d'un fichier CSV
      */
