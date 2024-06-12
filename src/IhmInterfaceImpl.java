@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.gluonhq.impl.charm.a.b.b.a.c;
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.exception.CheminInexistantException;
@@ -25,7 +24,7 @@ public class IhmInterfaceImpl  implements IhmInterface {
     private static final Double MAX_PRIX = 750.0;
     private static final Double MAX_CO2 = 450.0;
 
-    IhmInterfaceImpl(String username) {
+    public IhmInterfaceImpl(String username) {
         voyageurCorrespondanceTemps = new VoyageurIHM(username, TypeCout.TEMPS);
         voyageurCorrespondancePrix = new VoyageurIHM(username, TypeCout.PRIX);
         voyageurCorrespondanceCO2 = new VoyageurIHM(username, TypeCout.CO2);
