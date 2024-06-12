@@ -1,5 +1,8 @@
 package src;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Podium<T> {
     private T first;
     private T second;
@@ -22,6 +25,14 @@ public class Podium<T> {
     }
     public void setThird(T third) {
         this.third = third;
+    }
+
+    public List<String> getAllString() {
+        List<String> list = new ArrayList<>();
+        list.add(first.toString());
+        list.add(second.toString());
+        list.add(third.toString());
+        return list;
     }
 
     

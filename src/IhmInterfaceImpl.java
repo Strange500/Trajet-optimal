@@ -111,6 +111,7 @@ public class IhmInterfaceImpl  implements IhmInterface {
         return poids;
     }
 
+
     public static void main(String[] args) {
         IhmInterfaceImpl ihm = new IhmInterfaceImpl("test");
         System.out.println(ihm.getStartCity());

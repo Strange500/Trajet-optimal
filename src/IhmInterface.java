@@ -22,4 +22,5 @@ public interface IhmInterface {
     public Map<Double, Chemin> getBestResults(Podium<TypeCout> podiumTypeCout, String dep, String arr, ModaliteTransport transp) throws CheminInexistantException;
     
     public Map<TypeCout, Double> getCheminPoids(Chemin ch);
+
 }

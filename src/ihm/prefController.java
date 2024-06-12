@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import src.IhmInterface;
 import src.TypeCout;
 
 public class prefController {
@@ -55,7 +56,13 @@ public class prefController {
 
 
     public void changeCritPref() {
-        //critFirst.getItems().addAll(loadCritere());
+        if (critFirst.getValue() == null || critSecond.getValue() == null || critThird.getValue() == null) {
+            return;
+        }
+        Search.podium.setFirst(TypeCout.valueOf(critFirst.getValue()));
+        Search.podium.setSecond(TypeCout.valueOf(critSecond.getValue()));
+        Search.podium.setThird(TypeCout.valueOf(critThird.getValue()));
+        Search.currentInstance.search();
         return;
     }
 
@@ -71,9 +78,9 @@ public class prefController {
         critList = loadCritere();
         transpList = loadTransp();
 
-        critFirst.setValue(critList.get(0));
-        critSecond.setValue(critList.get(1));
-        critThird.setValue(critList.get(2));
+        critFirst.setValue(Search.podium.getFirst().toString());
+        critSecond.setValue(Search.podium.getSecond().toString());
+        critThird.setValue(Search.podium.getThird().toString());
 
         transpFirst.setValue(transpList.get(0));
         transpSecond.setValue(transpList.get(1));

@@ -2,14 +2,20 @@ package src.ihm;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import src.VoyageurCorrespondance;
 import src.exception.CheminInexistantException;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalTime;
@@ -96,16 +102,22 @@ public class Search implements Initializable {
     @FXML
     Label t4TEMPS;
 
+    @FXML
+    Button openFilterBtn;
+
 
 
     private AutoCompletionBinding<String> autoCompletionBinding;
 
-    private IhmInterface ihmInterface;
+    static IhmInterface ihmInterface;
 
-    private Podium<TypeCout> podium;
+    static Podium<TypeCout> podium;
+
+    static Search currentInstance;
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
+        currentInstance = this;
         ihmInterface = new IhmInterfaceImpl("test");
 
         TextFields.bindAutoCompletion(vDepart, ihmInterface.getStartCity());
@@ -156,8 +168,8 @@ public class Search implements Initializable {
         Collections.sort(scores);
         cheminRecoLabel.setText(ToolsCorrespondance.cheminWithCorreArrow(bestResults.get(scores.get(0)), podium.getSecond()));
         Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(bestResults.get(scores.get(0)));
-        PollutionReco.setText(poids.get(TypeCout.CO2)+ "Kg de CO2");
-        PrixReco.setText(poids.get(TypeCout.PRIX) + "€");
+        PollutionReco.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg de CO2");
+        PrixReco.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
         TempsReco.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
     }
 
@@ -198,7 +210,7 @@ public class Search implements Initializable {
         }
     }
 
-    public void search(ActionEvent event) {
+    public void search() {
         try {
             Map<Double, Chemin> bestResults = ihmInterface.getBestResults(podium, vDepart.getText(), vArrivee.getText(), null);
             if (bestResults == null) {
@@ -216,5 +228,28 @@ public class Search implements Initializable {
             return;
         }
         
+    }
+
+    public void openFilter() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            URL fxmlFileUrl = getClass().getResource("pref.fxml");
+            if (fxmlFileUrl == null) {
+                System.out.println("Impossible de charger le fichier fxml");
+                System.exit(-1);
+            }
+            loader.setLocation(fxmlFileUrl);
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Préferences");
+            stage.setScene(new Scene(root, 700, 450));
+            stage.show();
+            // Hide this current window (if this is what you want)
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
