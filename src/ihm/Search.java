@@ -107,6 +107,7 @@ public class Search implements Initializable {
 
 
 
+
     private AutoCompletionBinding<String> autoCompletionBinding;
 
     static IhmInterface ihmInterface;
@@ -130,34 +131,16 @@ public class Search implements Initializable {
         recomendedPath.setVisible(false);
         resultContainer.setVisible(false);
 
-        // vDepart.setOnKeyPressed((KeyEvent e) -> {
-        //     switch (e.getCode()) {
-        //         case ENTER:
-        //             learnWord(vDepart.getText());
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        // });
-
-        // vArrivee.setOnKeyPressed((KeyEvent e) -> {
-        //     switch (e.getCode()) {
-        //         case ENTER:
-        //             learnWord(vArrivee.getText());
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        // });
     }
 
-    // private void learnWord(String word) {
-    //     villesSet.add(word);
-    //     if (autoCompletionBinding != null) {
-    //         autoCompletionBinding.dispose();
-    //     }
-    //     autoCompletionBinding = TextFields.bindAutoCompletion(vDepart, villesSet);
-    // }
+    public void setPreferredTransport(ModaliteTransport preferredTransport) {
+        Search.ihmInterface.setPreferredTransport(preferredTransport);
+    }
+
+    public ModaliteTransport getPreferredTransport() {
+        return Search.ihmInterface.getPreferredTransport();
+    }
+
 
     private String convertToTempsTarjet(Double temps) {
         return LocalTime.MIN.plus(Duration.ofMinutes(temps.longValue())).toString().replace(":", "h");
@@ -177,30 +160,32 @@ public class Search implements Initializable {
         return String.format("%.2f", d);
     }
 
+
+
     private void buildOtherPaths(Map<Double, Chemin> bestResults) {
         List<Double> scores = new ArrayList<>(bestResults.keySet());
         Collections.sort(scores);
-        int cpt = 0;
-        while (cpt < 4 && cpt < scores.size()) {
+        int cpt = 1;
+        while (cpt < 5 && cpt < scores.size()) {
             Chemin chemin = bestResults.get(scores.get(cpt));
             Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(chemin);
             switch (cpt) {
-                case 0:
+                case 1:
                     t1CO2.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg CO2");
                     t1PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t1TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
                     break;
-                case 1:
+                case 2:
                     t2CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
                     t2PRIX.setText(formatDouble(poids.get(TypeCout.PRIX))+ "€");
                     t2TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
                     break;
-                case 2:
+                case 3:
                     t3CO2.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg CO2");
                     t3PRIX.setText(formatDouble(poids.get(TypeCout.PRIX))+  "€");
                     t3TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
                     break;
-                case 3:
+                case 4:
                     t4CO2.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg CO2");
                     t4PRIX.setText(formatDouble(poids.get(TypeCout.PRIX))+ "€");
                     t4TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
@@ -212,9 +197,11 @@ public class Search implements Initializable {
 
     public void search() {
         try {
-            Map<Double, Chemin> bestResults = ihmInterface.getBestResults(podium, vDepart.getText(), vArrivee.getText(), null);
-            if (bestResults == null) {
+            Map<Double, Chemin> bestResults = ihmInterface.getBestResults(podium, vDepart.getText(), vArrivee.getText());
+            if (bestResults == null ) {
                 noResultLabel.setText("Aucun chemin trouvé pour les critères demandés");
+                recomendedPath.setVisible(false);
+                resultContainer.setVisible(false);
                 return;
             }else {
                 noResultLabel.setText("");
@@ -225,12 +212,14 @@ public class Search implements Initializable {
             }
         } catch (CheminInexistantException e) {
             noResultLabel.setText("Aucun chemin trouvé pour les critères demandés");
+            recomendedPath.setVisible(false);
+            resultContainer.setVisible(false);
             return;
         }
         
     }
 
-    public void openFilter() {
+    public void openPref() {
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -243,6 +232,29 @@ public class Search implements Initializable {
             root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Préferences");
+            stage.setScene(new Scene(root, 700, 450));
+            stage.show();
+            // Hide this current window (if this is what you want)
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openFilter() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            URL fxmlFileUrl = getClass().getResource("filter.fxml");
+            if (fxmlFileUrl == null) {
+                System.out.println("Impossible de charger le fichier fxml");
+                System.exit(-1);
+            }
+            loader.setLocation(fxmlFileUrl);
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Filtres");
             stage.setScene(new Scene(root, 700, 450));
             stage.show();
             // Hide this current window (if this is what you want)

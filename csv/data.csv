@@ -4,3 +4,5 @@ Lille;Dunkerque;Train;42;1.4;50
 Paris;Dunkerque;Train;14;1.4;60
 Dunkerque;Arras;Avion;110;150;22
 Dunkerque;Arras;Train;65;1.2;90
+Arras;Lyon;Avion;1;1.2;30
+Tokyo;Lyon;Bus;100;120;120

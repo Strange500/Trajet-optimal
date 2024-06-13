@@ -39,6 +39,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -91,21 +92,22 @@
                   <Font name="Cantarell Regular" size="17.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="transpFirst" layoutX="58.0" layoutY="103.0" onAction="#changeTranspPref" prefWidth="150.0" />
-            <ChoiceBox fx:id="transpSecond" layoutX="58.0" layoutY="176.0" onAction="#changeTranspPref" prefWidth="150.0" />
-            <ChoiceBox fx:id="transpThird" layoutX="58.0" layoutY="253.0" onAction="#changeTranspPref" prefWidth="150.0" />
+            <ChoiceBox fx:id="transp" layoutX="58.0" layoutY="103.0" onAction="#changeTranspPref" prefWidth="150.0" />
             <Label layoutX="32.0" layoutY="107.0" text="1." />
-            <Label layoutX="32.0" layoutY="180.0" text="2." />
-            <Label layoutX="32.0" layoutY="257.0" text="3." />
             <Label layoutX="58.0" layoutY="74.0" prefHeight="17.0" prefWidth="139.0" text="Préference Transport" />
             <Label layoutX="389.0" layoutY="75.0" prefHeight="17.0" prefWidth="139.0" text="Critère préferences" />
             <ChoiceBox fx:id="critFirst" layoutX="389.0" layoutY="103.0" onAction="#changeCritPref" prefWidth="150.0" />
-            <ChoiceBox fx:id="critSecond" layoutX="389.0" layoutY="173.0" onAction="#changeCritPref" prefWidth="150.0" />
-            <ChoiceBox fx:id="critThird" layoutX="389.0" layoutY="253.0" onAction="#changeCritPref" prefWidth="150.0" />
+            <AnchorPane fx:id="multiCritPane" layoutX="370.0" layoutY="174.0">
+               <children>
+                  <ChoiceBox fx:id="critSecond" layoutX="19.0" onAction="#changeCritPref" prefWidth="150.0" />
+                  <ChoiceBox fx:id="critThird" layoutX="19.0" layoutY="79.0" onAction="#changeCritPref" prefWidth="150.0" />
+                  <Label layoutY="6.0" text="2." />
+                  <Label layoutY="83.0" text="3." />
+               </children>
+            </AnchorPane>
             <Label layoutX="370.0" layoutY="107.0" text="1." />
-            <Label layoutX="370.0" layoutY="180.0" text="2." />
-            <Label layoutX="370.0" layoutY="257.0" text="3." />
             <Button fx:id="prefSaveBtn" layoutX="368.0" layoutY="317.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="192.0" text="Enregistrer" />
+            <ToggleButton fx:id="multiCritBtn" layoutX="528.0" layoutY="71.0" mnemonicParsing="false" onAction="#toggleMulticrit" text="Multi-critère" />
       </children>
     </AnchorPane>
   </children>

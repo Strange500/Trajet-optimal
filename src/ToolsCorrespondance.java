@@ -387,12 +387,16 @@ public class ToolsCorrespondance extends Tools {
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
         che.aretes().remove(che.aretes().size()-1);
-
+        boolean first = true;
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
-            if (!r.isEmpty()) {
-                r += "puis ";
+            // if (!r.isEmpty()) {
+            //     r += "puis ";
+            // }
+            if (first) {
+                first = false;
+                r += cleanLieux(cheModal.aretes().get(0).getDepart().toString());
             }
-            r += cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + "  —— " + cheModal.aretes().get(0).getModalite().toString().toLowerCase() + " ——►  " +
+            r += "  —— " + cheModal.aretes().get(0).getModalite().toString().toLowerCase() + " ——►  " +
                 cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
 
         }

@@ -19,8 +19,12 @@ public interface IhmInterface {
 
     public Set<String> getCriteria();
 
-    public Map<Double, Chemin> getBestResults(Podium<TypeCout> podiumTypeCout, String dep, String arr, ModaliteTransport transp) throws CheminInexistantException;
+    public Map<Double, Chemin> getBestResults(Podium<TypeCout> podiumTypeCout, String dep, String arr) throws CheminInexistantException;
     
     public Map<TypeCout, Double> getCheminPoids(Chemin ch);
+
+    public void setPreferredTransport(ModaliteTransport preferredTransport);
+
+    public ModaliteTransport getPreferredTransport();
 
 }

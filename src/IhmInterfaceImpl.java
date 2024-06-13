@@ -24,10 +24,13 @@ public class IhmInterfaceImpl  implements IhmInterface {
     private static final Double MAX_PRIX = 750.0;
     private static final Double MAX_CO2 = 450.0;
 
+    private ModaliteTransport preferredTransport;
+
     public IhmInterfaceImpl(String username) {
         voyageurCorrespondanceTemps = new VoyageurIHM(username, TypeCout.TEMPS);
         voyageurCorrespondancePrix = new VoyageurIHM(username, TypeCout.PRIX);
         voyageurCorrespondanceCO2 = new VoyageurIHM(username, TypeCout.CO2);
+        preferredTransport = null;
     }
     
     public Set<String> getStartCity() {
@@ -73,7 +76,7 @@ public class IhmInterfaceImpl  implements IhmInterface {
 
     private Double getScore(Chemin chemin, Podium<TypeCout> podiumTypeCout) {
         double c1, c2, c3;
-        double p1 = 0.5, p2 = 0.35, p3=0.15;
+        double p1 = 0.6, p2 = 0.35, p3=0.05;
         PlateformeCorrespondance p = voyageurCorrespondanceCO2.getPlateforme();
         c1 = processValue(podiumTypeCout.getFirst(), p.getPoidsByTypeCout(chemin, podiumTypeCout.getFirst()));
         c2 = processValue(podiumTypeCout.getSecond(), p.getPoidsByTypeCout(chemin, podiumTypeCout.getSecond()));
@@ -82,11 +85,11 @@ public class IhmInterfaceImpl  implements IhmInterface {
         return (p1 * c1) + (p2 * c2) + (p3 * c3);
     }
 
-    public Map<Double, Chemin> getBestResults(Podium<TypeCout> podiumTypeCout, String dep, String arr, ModaliteTransport transp) throws CheminInexistantException{
+    public Map<Double, Chemin> getBestResults(Podium<TypeCout> podiumTypeCout, String dep, String arr) throws CheminInexistantException{
         Map<Double, Chemin> bestResults = new HashMap<>();
         voyageurCorrespondanceCO2.setDepart(dep);
         voyageurCorrespondanceCO2.setArrivee(arr);
-        voyageurCorrespondanceCO2.setModalite(transp);
+        voyageurCorrespondanceCO2.setModalite(preferredTransport);
         voyageurCorrespondanceCO2.setNb_trajet(10);
         List<Chemin> r = null;
 
@@ -100,6 +103,14 @@ public class IhmInterfaceImpl  implements IhmInterface {
             bestResults.put(getScore(c, podiumTypeCout), c);
         }
         return bestResults;
+    }
+
+    public void setPreferredTransport(ModaliteTransport preferredTransport) {
+        this.preferredTransport = preferredTransport;
+    }
+
+    public ModaliteTransport getPreferredTransport() {
+        return this.preferredTransport;
     }
 
     public Map<TypeCout, Double> getCheminPoids(Chemin ch) {
@@ -126,7 +137,7 @@ public class IhmInterfaceImpl  implements IhmInterface {
 
         //System.out.println(ihm.getBestResults(podiumTypeCout, "Lille", "Paris", null));
         try {
-            Map<Double, Chemin> r = ihm.getBestResults(podiumTypeCout, "Lille", "Paris", null);
+            Map<Double, Chemin> r = ihm.getBestResults(podiumTypeCout, "Lille", "Paris");
         Set<Double> set = r.keySet();
         List<Double> list = new ArrayList<>(set);
         Collections.sort(list);

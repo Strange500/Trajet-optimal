@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
 import src.IhmInterface;
 import src.TypeCout;
 
@@ -23,13 +25,15 @@ public class prefController {
     ChoiceBox<String> critThird;
 
     @FXML
-    ChoiceBox<String> transpFirst;
+    ChoiceBox<String> transp;
+
+    
 
     @FXML
-    ChoiceBox<String> transpSecond;
+    AnchorPane multiCritPane;
 
     @FXML
-    ChoiceBox<String> transpThird;
+    ToggleButton multiCritBtn;
 
     @FXML
     Button prefSaveBtn;
@@ -67,6 +71,16 @@ public class prefController {
     }
 
     public void changeTranspPref() {
+        if (transp.getValue() == null) {
+            return;
+        }
+        if (transp.getValue().equals("Tous")) {
+            Search.currentInstance.setPreferredTransport(null);;
+        } else {
+            Search.currentInstance.setPreferredTransport(ModaliteTransport.valueOf(transp.getValue()));
+        }
+
+        Search.currentInstance.search();
         return;
     }
 
@@ -77,23 +91,36 @@ public class prefController {
 
         critList = loadCritere();
         transpList = loadTransp();
+        transpList.add("Tous");
 
         critFirst.setValue(Search.podium.getFirst().toString());
         critSecond.setValue(Search.podium.getSecond().toString());
         critThird.setValue(Search.podium.getThird().toString());
 
-        transpFirst.setValue(transpList.get(0));
-        transpSecond.setValue(transpList.get(1));
-        transpThird.setValue(transpList.get(2));
+        if (Search.currentInstance.getPreferredTransport() == null) {
+            transp.setValue("Tous");
+        }else {
+            transp.setValue(Search.currentInstance.getPreferredTransport().toString());
+        }
 
 
         critFirst.getItems().addAll(critList);
         critSecond.getItems().addAll(critList);
         critThird.getItems().addAll(critList);
 
-        transpFirst.getItems().addAll(transpList);
-        transpSecond.getItems().addAll(transpList);
-        transpThird.getItems().addAll(transpList);
+        transp.getItems().addAll(transpList);
+        
+    }
+
+    public void toggleMulticrit() {
+        if (multiCritBtn.isSelected()) {
+            multiCritPane.setVisible(true);
+            
+        } else {
+            multiCritPane.setVisible(false);
+            critSecond.setValue(critFirst.getValue());
+            critThird.setValue(critFirst.getValue());
+        }
     }
 
 }
