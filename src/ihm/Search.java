@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -232,6 +233,7 @@ public class Search implements Initializable {
             root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Préferences");
+            stage.getIcons().add(new Image("img/preferences.png"));
             stage.setScene(new Scene(root, 700, 450));
             stage.show();
             // Hide this current window (if this is what you want)

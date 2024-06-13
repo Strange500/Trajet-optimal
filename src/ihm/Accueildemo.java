@@ -12,6 +12,7 @@ import java.net.URL;
 import src.ihm.Search;
 import org.controlsfx.control.textfield.TextFields;
 import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class Accueildemo extends Application {
   @FXML
@@ -36,6 +37,7 @@ public class Accueildemo extends Application {
 
     Scene scene = new Scene(root);
     stage.setScene(scene);
+    stage.getIcons().add(new Image("img/bus.svg"));
     stage.setTitle("Accueil demo");
     stage.show();
 }
