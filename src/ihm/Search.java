@@ -234,7 +234,7 @@ public class Search implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Préferences");
             stage.getIcons().add(new Image("img/preferences.png"));
-            stage.setScene(new Scene(root, 700, 450));
+            stage.setScene(new Scene(root, 645, 400));
             stage.show();
             // Hide this current window (if this is what you want)
             //((Node)(event.getSource())).getScene().getWindow().hide();
@@ -257,7 +257,7 @@ public class Search implements Initializable {
             root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Filtres");
-            stage.setScene(new Scene(root, 700, 450));
+            stage.setScene(new Scene(root, 645, 400));
             stage.show();
             // Hide this current window (if this is what you want)
             //((Node)(event.getSource())).getScene().getWindow().hide();
@@ -265,5 +265,29 @@ public class Search implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public double getSeuilPrix() {
+        return ihmInterface.getSeuilPrix();
+    }
+
+    public double getSeuilCO2() {
+        return ihmInterface.getSeuilCO2();
+    }
+
+    public double getSeuilTemps() {
+        return ihmInterface.getSeuilTemps();
+    }
+
+    public void setSeuilPrix(double seuilPrix) {
+        ihmInterface.setSeuilPrix(seuilPrix);
+    }
+
+    public void setSeuilCO2(double seuilCO2) {
+        ihmInterface.setSeuilCO2(seuilCO2);
+    }
+
+    public void setSeuilTemps(double seuilTemps) {
+        ihmInterface.setSeuilTemps(seuilTemps);
     }
 }

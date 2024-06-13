@@ -39,8 +39,10 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -87,6 +89,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
+            <Pane layoutX="343.0" layoutY="64.0" prefHeight="309.0" prefWidth="302.0" style="-fx-background-color: #E7E7E7;" />
             <Label layoutX="39.0" layoutY="28.0" prefHeight="28.0" prefWidth="169.0" text="Préferences">
                <font>
                   <Font name="Cantarell Regular" size="17.0" />
@@ -94,8 +97,14 @@
             </Label>
             <ChoiceBox fx:id="transp" layoutX="58.0" layoutY="103.0" onAction="#changeTranspPref" prefWidth="150.0" />
             <Label layoutX="32.0" layoutY="107.0" text="1." />
-            <Label layoutX="58.0" layoutY="74.0" prefHeight="17.0" prefWidth="139.0" text="Préference Transport" />
-            <Label layoutX="389.0" layoutY="75.0" prefHeight="17.0" prefWidth="139.0" text="Critère préferences" />
+            <Label layoutX="58.0" layoutY="74.0" prefHeight="20.0" prefWidth="150.0" text="Préference Transport">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="389.0" layoutY="75.0" prefHeight="17.0" prefWidth="139.0" text="préferences Critère">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
             <ChoiceBox fx:id="critFirst" layoutX="389.0" layoutY="103.0" onAction="#changeCritPref" prefWidth="150.0" />
             <AnchorPane fx:id="multiCritPane" layoutX="370.0" layoutY="174.0">
                <children>
@@ -106,8 +115,27 @@
                </children>
             </AnchorPane>
             <Label layoutX="370.0" layoutY="107.0" text="1." />
-            <Button fx:id="prefSaveBtn" layoutX="368.0" layoutY="317.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="192.0" text="Enregistrer" />
+            <Button fx:id="prefSaveBtn" layoutX="368.0" layoutY="317.0" mnemonicParsing="false" onAction="#quit" prefHeight="29.0" prefWidth="192.0" text="Enregistrer" />
             <ToggleButton fx:id="multiCritBtn" layoutX="528.0" layoutY="71.0" mnemonicParsing="false" onAction="#toggleMulticrit" text="Multi-critère" />
+            <Pane layoutX="-26.0" layoutY="151.0" prefHeight="222.0" prefWidth="369.0" style="-fx-background-color: #CFCFCF;">
+               <children>
+                  <TextField fx:id="prixMax" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="46.0" onAction="#saveSeuil" prefHeight="26.0" prefWidth="87.0" />
+                  <TextField fx:id="CO2Max" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="103.0" onAction="#saveSeuil" prefHeight="26.0" prefWidth="87.0" />
+                  <TextField fx:id="TempsMax" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="158.0" onAction="#saveSeuil" prefHeight="26.0" prefWidth="87.0" />
+                  <Label layoutX="37.0" layoutY="11.0" text="Seuil maximum :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="98.0" layoutY="50.0" text="Prix maximum :" />
+                  <Label layoutX="97.0" layoutY="107.0" text="CO2 maximum :" />
+                  <Label layoutX="30.0" layoutY="162.0" text="Temps de trajet Maximum :" />
+                  <Label layoutX="299.0" layoutY="50.0" text="€" />
+                  <Label layoutX="290.0" layoutY="107.0" text="Kg de CO2" />
+                  <Label layoutX="218.0" layoutY="140.0" text="(hh:mm)" />
+                  <Label fx:id="seuilError" layoutX="182.0" layoutY="22.0" text="Erreur dans la saisie" textFill="RED" />
+               </children>
+            </Pane>
       </children>
     </AnchorPane>
   </children>

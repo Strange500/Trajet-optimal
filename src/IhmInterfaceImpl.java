@@ -20,9 +20,9 @@ public class IhmInterfaceImpl  implements IhmInterface {
     private VoyageurIHM voyageurCorrespondancePrix;
     private VoyageurIHM voyageurCorrespondanceCO2;
 
-    private static final Double MAX_TEMPS = 960.0;
-    private static final Double MAX_PRIX = 750.0;
-    private static final Double MAX_CO2 = 450.0;
+    private static  Double MAX_TEMPS = 960.0;
+    private static  Double MAX_PRIX = 750.0;
+    private static  Double MAX_CO2 = 450.0;
 
     private ModaliteTransport preferredTransport;
 
@@ -90,10 +90,16 @@ public class IhmInterfaceImpl  implements IhmInterface {
         voyageurCorrespondanceCO2.setDepart(dep);
         voyageurCorrespondanceCO2.setArrivee(arr);
         voyageurCorrespondanceCO2.setModalite(preferredTransport);
-        voyageurCorrespondanceCO2.setNb_trajet(10);
+        voyageurCorrespondanceCO2.setNb_trajet(20);
+        voyageurCorrespondanceCO2.thresholdCO2 = MAX_CO2;
+        voyageurCorrespondanceCO2.thresholdPrix = MAX_PRIX.intValue();
+        voyageurCorrespondanceCO2.thresholdTemps = MAX_TEMPS.intValue();
         List<Chemin> r = null;
 
         r = voyageurCorrespondanceCO2.computeBestPathTrigger();
+        ToolsCorrespondance.applyThreshold(voyageurCorrespondanceCO2.getPlateforme(), r, TypeCout.CO2, getSeuilCO2());
+        ToolsCorrespondance.applyThreshold(voyageurCorrespondanceCO2.getPlateforme(), r, TypeCout.PRIX, getSeuilPrix());
+        ToolsCorrespondance.applyThreshold(voyageurCorrespondanceCO2.getPlateforme(), r, TypeCout.TEMPS, getSeuilTemps());
         
         if (r == null) {
             throw new CheminInexistantException();
@@ -120,6 +126,30 @@ public class IhmInterfaceImpl  implements IhmInterface {
         poids.put(TypeCout.PRIX, p.getPoidsByTypeCout(ch, TypeCout.PRIX));
         poids.put(TypeCout.CO2, p.getPoidsByTypeCout(ch, TypeCout.CO2));
         return poids;
+    }
+
+    public double getSeuilPrix() {
+        return MAX_PRIX;
+    }
+
+    public double getSeuilCO2() {
+        return MAX_CO2;
+    }
+
+    public double getSeuilTemps() {
+        return MAX_TEMPS;
+    }
+
+    public void setSeuilPrix(double seuilPrix) {
+        MAX_PRIX = seuilPrix;
+    }
+
+    public void setSeuilCO2(double seuilCO2) {
+        MAX_CO2 = seuilCO2;
+    }
+
+    public void setSeuilTemps(double seuilTemps) {
+        MAX_TEMPS = seuilTemps;
     }
 
 

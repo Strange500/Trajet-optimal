@@ -68,7 +68,7 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="397.0" prefWidth="697.0" VBox.vgrow="ALWAYS">
          <children>
             <VBox layoutX="-49.0" prefHeight="650.0" prefWidth="459.0" style="-fx-background-color: #E7E7E7;" />
-            <Label layoutX="617.0" layoutY="17.0" prefHeight="57.0" prefWidth="143.0" text="Résultats">
+            <Label layoutX="617.0" layoutY="17.0" prefHeight="57.0" prefWidth="150.0" text="Résultats">
                <font>
                   <Font name="System Bold" size="32.0" />
                </font>

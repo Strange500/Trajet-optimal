@@ -8,8 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import src.IhmInterface;
 import src.TypeCout;
 
@@ -37,6 +40,18 @@ public class prefController {
 
     @FXML
     Button prefSaveBtn;
+
+    @FXML
+    TextField prixMax;
+
+    @FXML
+    TextField CO2Max;
+
+    @FXML
+    TextField TempsMax;
+
+    @FXML
+    Label seuilError;
 
     List<String> critList ;
     List<String> transpList ;
@@ -109,7 +124,21 @@ public class prefController {
         critThird.getItems().addAll(critList);
 
         transp.getItems().addAll(transpList);
-        
+        seuilError.setVisible(false);
+
+        if (critFirst.getValue().equals(critSecond.getValue()) && critFirst.getValue().equals(critThird.getValue())) {
+            multiCritBtn.setSelected(false);
+            multiCritPane.setVisible(false);
+        } else {
+            multiCritBtn.setSelected(true);
+            multiCritPane.setVisible(true);
+        }
+
+        this.prixMax.setText(String.valueOf(Search.currentInstance.getSeuilPrix()));
+        this.CO2Max.setText(String.valueOf(Search.currentInstance.getSeuilCO2()));
+        this.TempsMax.setText(formatToHour(Search.currentInstance.getSeuilTemps()));
+
+
     }
 
     public void toggleMulticrit() {
@@ -121,6 +150,35 @@ public class prefController {
             critSecond.setValue(critFirst.getValue());
             critThird.setValue(critFirst.getValue());
         }
+    }
+
+    public void quit() {
+        Stage stage = (Stage) prefSaveBtn.getScene().getWindow();
+        stage.close();
+    }
+
+    private int convertToMinutes(String time) {
+        int tps_heure = Integer.parseInt(time.split(":")[0]);
+        int tps_min = Integer.parseInt(time.split(":")[1]);
+        return tps_heure * 60 + tps_min;
+    }
+
+    private String formatToHour(double time) {
+        int tps_heure = (int)(time / 60);
+        int tps_min = (int)(time % 60);
+        return String.format("%02d:%02d", tps_heure, tps_min);
+    }
+
+    public void saveSeuil() {
+        try {
+            Search.currentInstance.setSeuilPrix(Double.parseDouble(prixMax.getText())); 
+            Search.currentInstance.setSeuilCO2(Double.parseDouble(CO2Max.getText()));
+            Search.currentInstance.setSeuilTemps(convertToMinutes(TempsMax.getText()));
+            seuilError.setVisible(false);
+        } catch (NumberFormatException e) {
+            seuilError.setVisible(true);
+        }
+        Search.currentInstance.search();
     }
 
 }

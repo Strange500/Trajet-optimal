@@ -27,4 +27,16 @@ public interface IhmInterface {
 
     public ModaliteTransport getPreferredTransport();
 
+    public double getSeuilPrix();
+    
+    public double getSeuilCO2();
+
+    public double getSeuilTemps();
+
+    public void setSeuilPrix(double seuilPrix);
+
+    public void setSeuilCO2(double seuilCO2);
+
+    public void setSeuilTemps(double seuilTemps);
+
 }
