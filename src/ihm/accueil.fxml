@@ -225,22 +225,22 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="415.0" layoutY="53.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="16.0" text="➔">
+                  <Button fx:id="addBtn2" layoutX="415.0" layoutY="53.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" text="➔">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="415.0" layoutY="200.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="16.0" text="➔">
+                  <Button fx:id="addBtn5" layoutX="415.0" layoutY="200.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" text="➔">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="415.0" layoutY="152.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="16.0" text="➔">
+                  <Button fx:id="addBtn4" layoutX="415.0" layoutY="152.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" text="➔">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="415.0" layoutY="99.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="16.0" text="➔">
+                  <Button fx:id="addBtn3" layoutX="415.0" layoutY="99.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" text="➔">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -274,7 +274,7 @@
                         <Image url="@../../img/favorite.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="436.0" layoutY="17.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="33.0" text="➔" />
+                  <Button fx:id="addBtn1" layoutX="436.0" layoutY="17.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="30.0" prefWidth="33.0" text="➔" />
                   <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="211.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../img/billet.png" />

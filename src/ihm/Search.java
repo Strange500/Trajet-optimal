@@ -113,6 +113,22 @@ public class Search implements Initializable {
     @FXML
     Button openFilterBtn;
 
+    @FXML
+    Button addBtn1;
+
+    @FXML
+    Button addBtn2;
+
+    @FXML
+    Button addBtn3;
+
+    @FXML
+    Button addBtn4;
+
+    @FXML
+    Button addBtn5;
+
+
     // @FXML
     // Menu historiqueBtn;
 
@@ -126,6 +142,10 @@ public class Search implements Initializable {
     static Podium<TypeCout> podium;
 
     static Search currentInstance;
+
+    private List<Chemin> bestResults;
+
+    private List<HistoriqueItem> historiqueItems = new ArrayList<>();
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
@@ -142,8 +162,22 @@ public class Search implements Initializable {
         recomendedPath.setVisible(false);
         resultContainer.setVisible(false);
 
-    }
+        if (!HistoriqueItem.saveExists()) {
+            HistoriqueItem.createSave();
+        }
+        try {
+            historiqueItems = HistoriqueItem.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
+    }
+    
+    public List<HistoriqueItem> getHistoriqueItems() {
+        return historiqueItems;
+    }
     public void setPreferredTransport(ModaliteTransport preferredTransport) {
         Search.ihmInterface.setPreferredTransport(preferredTransport);
     }
@@ -218,6 +252,7 @@ public class Search implements Initializable {
                 noResultLabel.setText("");
                 recomendedPath.setVisible(true);
                 resultContainer.setVisible(true);
+                this.bestResults = bestResults.values().stream().toList();
                 buildRecommendedPath(bestResults);
                 buildOtherPaths(bestResults);
             }
@@ -280,10 +315,12 @@ public class Search implements Initializable {
 
     public void resetHistorique() {
         Alert comfirm = new Alert(Alert.AlertType.CONFIRMATION);
+        comfirm.setContentText("Comfirmer la réinitialisation");
         Optional<ButtonType> result = comfirm.showAndWait();
         if (result.get() != ButtonType.OK) {
             return;
         }
+        this.historiqueItems.clear();
         if (!HistoriqueItem.saveExists()) {
             HistoriqueItem.createSave();
             return;
@@ -340,5 +377,45 @@ public class Search implements Initializable {
 
     public void setSeuilTemps(double seuilTemps) {
         ihmInterface.setSeuilTemps(seuilTemps);
+    }
+
+    private HistoriqueItem createHistoriqueItem(Chemin chemin) {
+        Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(chemin);
+        return new HistoriqueItem(ToolsCorrespondance.cheminWithCorreArrow(chemin, podium.getSecond()), poids.get(TypeCout.CO2), poids.get(TypeCout.PRIX), poids.get(TypeCout.TEMPS));
+    }
+
+    public void addToHistorique(ActionEvent e) {
+        Button addBtn = (Button) e.getSource();
+        if (addBtn == addBtn1) {
+            if (bestResults.size() < 1) {
+                return;
+            }
+            historiqueItems.add(createHistoriqueItem(bestResults.get(0)));
+        } else if (addBtn == addBtn2) {
+            if (bestResults.size() < 2) {
+                return;
+            }
+            historiqueItems.add(createHistoriqueItem(bestResults.get(1)));
+        } else if (addBtn == addBtn3) {
+            if (bestResults.size() < 3) {
+                return;
+            }
+            historiqueItems.add(createHistoriqueItem(bestResults.get(2)));
+        } else if (addBtn == addBtn4) {
+            if (bestResults.size() < 4) {
+                return;
+            }
+            historiqueItems.add(createHistoriqueItem(bestResults.get(3)));
+        } else if (addBtn == addBtn5) {
+            if (bestResults.size() < 5) {
+                return;
+            }
+            historiqueItems.add(createHistoriqueItem(bestResults.get(4)));
+        }
+        try {
+            HistoriqueItem.save(historiqueItems);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

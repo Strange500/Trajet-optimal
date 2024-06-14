@@ -21,11 +21,11 @@ public class HistoriqueItem implements Serializable {
     private double pollution;
     private int temps;
 
-    public HistoriqueItem(String che, double prix, double pollution, int temps) {
+    public HistoriqueItem(String che, double prix, double pollution, double temps) {
         this.che = che;
         this.prix = prix;
         this.pollution = pollution;
-        this.temps = temps;
+        this.temps = (int) temps;
         this.date = LocalDate.now();
     }
 
@@ -59,6 +59,10 @@ public class HistoriqueItem implements Serializable {
 
     public void setTemps(int temps) {
         this.temps = temps;
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 
     public static void save(List<HistoriqueItem> historique) throws IOException, FileNotFoundException {
@@ -97,20 +101,20 @@ public class HistoriqueItem implements Serializable {
     }
 
     public static void main(String[] args) {
-        HistoriqueItem h = new HistoriqueItem("chemin de test", 1.0, 2.0, 3);
-        System.out.println(h.getChe());
-        System.out.println(h.getPrix());
-        System.out.println(h.getPollution());
-        System.out.println(h.getTemps());
+        // HistoriqueItem h = new HistoriqueItem("chemin de test", 1.0, 2.0, 3);
+        // System.out.println(h.getChe());
+        // System.out.println(h.getPrix());
+        // System.out.println(h.getPollution());
+        // System.out.println(h.getTemps());
 
-        Serializable s = h;
+        // Serializable s = h;
 
-        List<HistoriqueItem> historique = new ArrayList<>();
-        historique.add(h);
+        // List<HistoriqueItem> historique = new ArrayList<>();
+        // historique.add(h);
         try {
-            HistoriqueItem.save(historique);
+            // HistoriqueItem.save(historique);
             List<HistoriqueItem> historique2 = HistoriqueItem.load();
-            System.out.println(historique2.get(0).getChe());
+            System.out.println(historique2.get(0) + " " + historique2.get(1));
         } catch(Exception e) {
             e.printStackTrace();
         }
