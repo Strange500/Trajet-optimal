@@ -233,7 +233,7 @@ public class Search implements Initializable {
             root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Préferences");
-            stage.getIcons().add(new Image("img/preferences.png"));
+            //stage.getIcons().add(new Image("img/preferences.png"));
             stage.setScene(new Scene(root, 645, 400));
             stage.show();
             // Hide this current window (if this is what you want)
