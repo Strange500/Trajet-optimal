@@ -33,4 +33,5 @@
 ## Execution du .jar
 
 Pour executer le .jar, voici la ligne de commande à taper :
+
 java --module-path CHEMIN-VERS/javafx-sdk-22.0.1/lib --add-modules javafx.controls,javafx.fxml --add-exports javafx.base/com.sun.javafx.event=ALL-UNNAMED -jar B6.jar
