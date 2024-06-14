@@ -6,16 +6,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import src.VoyageurCorrespondance;
 import src.exception.CheminInexistantException;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -25,6 +30,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -32,6 +38,7 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import fr.ulille.but.sae_s2_2024.*;
+import src.HistoriqueItem;
 import src.IhmInterface;
 import src.IhmInterfaceImpl;
 import src.Podium;
@@ -105,6 +112,9 @@ public class Search implements Initializable {
 
     @FXML
     Button openFilterBtn;
+
+    // @FXML
+    // Menu historiqueBtn;
 
 
 
@@ -234,12 +244,57 @@ public class Search implements Initializable {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setTitle("Préferences");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(vDepart.getScene().getWindow());
             stage.setScene(new Scene(root, 645, 400));
             stage.show();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void openHistorique() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            URL fxmlFileUrl = getClass().getResource("historique.fxml");
+            if (fxmlFileUrl == null) {
+                System.out.println("Impossible de charger le fichier fxml");
+                System.exit(-1);
+            }
+            loader.setLocation(fxmlFileUrl);
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setTitle("Historique");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(vDepart.getScene().getWindow());
+            stage.setScene(new Scene(root, 645, 400));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void resetHistorique() {
+        Alert comfirm = new Alert(Alert.AlertType.CONFIRMATION);
+        Optional<ButtonType> result = comfirm.showAndWait();
+        if (result.get() != ButtonType.OK) {
+            return;
+        }
+        if (!HistoriqueItem.saveExists()) {
+            HistoriqueItem.createSave();
+            return;
+        }
+        try {
+            HistoriqueItem.save(new ArrayList<>());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
     }
 
     public void openFilter() {

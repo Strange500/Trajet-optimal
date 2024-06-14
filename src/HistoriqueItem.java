@@ -82,8 +82,18 @@ public class HistoriqueItem implements Serializable {
             return null;
         }
         
-        
-        
+    }
+
+    public static boolean saveExists() {
+        return new java.io.File(FILENAME).exists();
+    }
+
+    public static void createSave() {
+        try {
+            new FileOutputStream(FILENAME).close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

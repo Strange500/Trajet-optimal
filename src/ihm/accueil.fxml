@@ -63,6 +63,12 @@
             <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="Historique">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#openHistorique" text="Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#resetHistorique" text="Reset" />
+              </items>
+            </Menu>
       </menus>
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="397.0" prefWidth="697.0" VBox.vgrow="ALWAYS">
