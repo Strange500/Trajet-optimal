@@ -13,6 +13,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ulille.but.sae_s2_2024.Chemin;
+
 public class HistoriqueItem implements Serializable {
     private static final String FILENAME = "historique.ser";
     private LocalDate date;
@@ -20,6 +22,10 @@ public class HistoriqueItem implements Serializable {
     private double prix;
     private double pollution;
     private int temps;
+
+    public HistoriqueItem(Chemin che, double prix, double pollution, double temps) {
+        this(ToolsCorrespondance.cheminWithCorreArrow(che, null), prix, pollution, temps);
+    }
 
     public HistoriqueItem(String che, double prix, double pollution, double temps) {
         this.che = che;
@@ -94,7 +100,11 @@ public class HistoriqueItem implements Serializable {
 
     public static void createSave() {
         try {
-            new FileOutputStream(FILENAME).close();
+            FileOutputStream tmp = new FileOutputStream(FILENAME);
+            ObjectOutputStream out = new ObjectOutputStream(tmp);
+            out.writeObject(new ArrayList<HistoriqueItem>());
+            out.flush();
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

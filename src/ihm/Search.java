@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.controlsfx.control.textfield.AutoCompletionBinding;
@@ -143,8 +144,8 @@ public class Search implements Initializable {
 
     static Search currentInstance;
 
-    private List<Chemin> bestResults;
-
+    private Map<Double, Chemin> bestResults;
+    private List<Double> scores;
     private List<HistoriqueItem> historiqueItems = new ArrayList<>();
 
     @FXML
@@ -249,10 +250,12 @@ public class Search implements Initializable {
                 resultContainer.setVisible(false);
                 return;
             }else {
+                this.scores = new ArrayList<>(bestResults.keySet());
+                this.bestResults = bestResults;
+
                 noResultLabel.setText("");
                 recomendedPath.setVisible(true);
                 resultContainer.setVisible(true);
-                this.bestResults = bestResults.values().stream().toList();
                 buildRecommendedPath(bestResults);
                 buildOtherPaths(bestResults);
             }
@@ -381,36 +384,48 @@ public class Search implements Initializable {
 
     private HistoriqueItem createHistoriqueItem(Chemin chemin) {
         Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(chemin);
-        return new HistoriqueItem(ToolsCorrespondance.cheminWithCorreArrow(chemin, podium.getSecond()), poids.get(TypeCout.CO2), poids.get(TypeCout.PRIX), poids.get(TypeCout.TEMPS));
+        return new HistoriqueItem(chemin, poids.get(TypeCout.CO2), poids.get(TypeCout.PRIX), poids.get(TypeCout.TEMPS));
+    }
+
+    private double parseDouble(String s) {
+        Scanner sc = new Scanner(s);
+        sc.useDelimiter(",");
+        double res = sc.nextDouble();
+        String tmp = sc.next();
+        res += Double.parseDouble(tmp) / 100;
+        return res;
     }
 
     public void addToHistorique(ActionEvent e) {
         Button addBtn = (Button) e.getSource();
+        
         if (addBtn == addBtn1) {
             if (bestResults.size() < 1) {
                 return;
             }
-            historiqueItems.add(createHistoriqueItem(bestResults.get(0)));
+            historiqueItems.add(
+                new HistoriqueItem(cheminRecoLabel.getText(), parseDouble(PrixReco.getText().replace("€", "")), parseDouble(PollutionReco.getText().split("Kg")[0]), (double) prefController.convertToMinutes(TempsReco.getText().replace("h", ":")) )
+            );
         } else if (addBtn == addBtn2) {
             if (bestResults.size() < 2) {
                 return;
             }
-            historiqueItems.add(createHistoriqueItem(bestResults.get(1)));
+            historiqueItems.add(createHistoriqueItem(bestResults.get(scores.get(1))));
         } else if (addBtn == addBtn3) {
             if (bestResults.size() < 3) {
                 return;
             }
-            historiqueItems.add(createHistoriqueItem(bestResults.get(2)));
+            historiqueItems.add(createHistoriqueItem(bestResults.get(scores.get(2))));
         } else if (addBtn == addBtn4) {
             if (bestResults.size() < 4) {
                 return;
             }
-            historiqueItems.add(createHistoriqueItem(bestResults.get(3)));
+            historiqueItems.add(createHistoriqueItem(bestResults.get(scores.get(3))));
         } else if (addBtn == addBtn5) {
             if (bestResults.size() < 5) {
                 return;
             }
-            historiqueItems.add(createHistoriqueItem(bestResults.get(4)));
+            historiqueItems.add(createHistoriqueItem(bestResults.get(scores.get(4))));
         }
         try {
             HistoriqueItem.save(historiqueItems);

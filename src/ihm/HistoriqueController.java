@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import src.HistoriqueItem;
 import src.IhmInterface;
+import src.ToolsCorrespondance;
 import src.TypeCout;
 
 public class HistoriqueController {
@@ -34,11 +35,12 @@ public class HistoriqueController {
         pane.getStyleClass().add("historic-item");
         pane.setPrefHeight(50);
         pane.setPrefWidth(200);
+        
         pane.getChildren().add(new Text(h.getDate().toString()));
         pane.getChildren().add(new Text(h.getChe()));
-        pane.getChildren().add(new Text(h.getPrix() + ""));
-        pane.getChildren().add(new Text(h.getPollution() + ""));
-        pane.getChildren().add(new Text(h.getTemps() + ""));
+        pane.getChildren().add(new Text(h.getPrix() + " "));
+        pane.getChildren().add(new Text(h.getPollution() + " " ));
+        pane.getChildren().add(new Text(h.getTemps() + " "));
         return pane;
     }
     @FXML
