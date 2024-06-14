@@ -30,8 +30,6 @@ public class prefController {
     @FXML
     ChoiceBox<String> transp;
 
-    
-
     @FXML
     AnchorPane multiCritPane;
 
@@ -54,7 +52,9 @@ public class prefController {
     Label seuilError;
 
     List<String> critList ;
+
     List<String> transpList ;
+    
     String tmp;
 
     private static List<String> loadCritere() {

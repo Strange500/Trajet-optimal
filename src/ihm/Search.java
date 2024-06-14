@@ -232,12 +232,10 @@ public class Search implements Initializable {
             loader.setLocation(fxmlFileUrl);
             root = loader.load();
             Stage stage = new Stage();
+            stage.setResizable(false);
             stage.setTitle("Préferences");
-            //stage.getIcons().add(new Image("img/preferences.png"));
             stage.setScene(new Scene(root, 645, 400));
             stage.show();
-            // Hide this current window (if this is what you want)
-            //((Node)(event.getSource())).getScene().getWindow().hide();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -259,8 +257,6 @@ public class Search implements Initializable {
             stage.setTitle("Filtres");
             stage.setScene(new Scene(root, 645, 400));
             stage.show();
-            // Hide this current window (if this is what you want)
-            //((Node)(event.getSource())).getScene().getWindow().hide();
         }
         catch (IOException e) {
             e.printStackTrace();
