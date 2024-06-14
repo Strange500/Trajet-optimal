@@ -37,7 +37,7 @@ public class Accueildemo extends Application {
 
     Scene scene = new Scene(root);
     stage.setScene(scene);
-    stage.getIcons().add(new Image("img/bus.svg"));
+    //stage.getIcons().add(new Image("img/bus.svg"));
     stage.setTitle("Accueil demo");
     stage.show();
 }
