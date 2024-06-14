@@ -53,14 +53,8 @@
         <Menu mnemonicParsing="false" text="Fichier">
           <items>
             <Menu mnemonicParsing="false" text="Ouvrir un CSV" />
-                  <Menu mnemonicParsing="false" text="Historique" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Parametres">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#quit" text="Quit" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Historique">
@@ -89,7 +83,7 @@
                   <Font name="Cantarell Regular" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="recherche" layoutX="160.0" layoutY="405.0" mnemonicParsing="false" onAction="#search" style="-fx-background-color: #282828;" text="On y va !" textFill="WHITE">
+            <Button fx:id="recherche" layoutX="160.0" layoutY="405.0" mnemonicParsing="false" onAction="#search" stylesheets="@css/style.css" text="On y va !" textFill="WHITE">
                <font>
                   <Font name="Cantarell Regular" size="14.0" />
                </font>
@@ -112,12 +106,12 @@
                      </font></Label>
                   <Label layoutX="24.0" layoutY="56.0" text="Pollution : ">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="183.0" layoutY="56.0" text="Prix :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t1PRIX" layoutX="221.0" layoutY="56.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -127,7 +121,7 @@
                   </Label>
                   <Label layoutX="286.0" layoutY="58.0" text="Temps :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t1TEMPS" layoutX="353.0" layoutY="58.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -142,12 +136,12 @@
                   </Label>
                   <Label layoutX="24.0" layoutY="106.0" text="Pollution : ">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="183.0" layoutY="106.0" text="Prix :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t2PRIX" layoutX="221.0" layoutY="104.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -157,7 +151,7 @@
                   </Label>
                   <Label layoutX="286.0" layoutY="106.0" text="Temps :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t2TEMPS" layoutX="353.0" layoutY="106.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -172,12 +166,12 @@
                   </Label>
                   <Label layoutX="24.0" layoutY="156.0" text="Pollution : ">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="183.0" layoutY="156.0" text="Prix :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t3PRIX" layoutX="221.0" layoutY="157.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -187,7 +181,7 @@
                   </Label>
                   <Label layoutX="286.0" layoutY="157.0" text="Temps :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t3TEMPS" layoutX="353.0" layoutY="156.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -202,12 +196,12 @@
                   </Label>
                   <Label layoutX="24.0" layoutY="205.0" text="Pollution : ">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="183.0" layoutY="205.0" prefHeight="20.0" prefWidth="33.0" text="Prix :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t4PRIX" layoutX="221.0" layoutY="205.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -217,7 +211,7 @@
                   </Label>
                   <Label layoutX="286.0" layoutY="205.0" text="Temps :">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="t4TEMPS" layoutX="353.0" layoutY="205.0" prefHeight="20.0" prefWidth="62.0" text="XX">
@@ -225,22 +219,22 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="addBtn2" layoutX="415.0" layoutY="53.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" style="-fx-background-color: #282828;" text="+" textFill="WHITE">
+                  <Button fx:id="addBtn2" layoutX="415.0" layoutY="53.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="addBtn5" layoutX="415.0" layoutY="200.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" style="-fx-background-color: #282828;" text="+" textFill="WHITE">
+                  <Button fx:id="addBtn5" layoutX="415.0" layoutY="200.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="addBtn4" layoutX="415.0" layoutY="152.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" style="-fx-background-color: #282828;" text="+" textFill="WHITE">
+                  <Button fx:id="addBtn4" layoutX="415.0" layoutY="152.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="addBtn3" layoutX="415.0" layoutY="102.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" style="-fx-background-color: #282828;" text="+" textFill="WHITE">
+                  <Button fx:id="addBtn3" layoutX="415.0" layoutY="102.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -289,7 +283,7 @@
                         <Image url="@../../img/pollution.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="addBtn1" layoutX="432.0" layoutY="14.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" style="-fx-background-color: #282828;" text="+" textFill="WHITE">
+                  <Button fx:id="addBtn1" layoutX="432.0" layoutY="14.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -298,8 +292,8 @@
             </Pane>
             <TextField fx:id="vDepart" layoutX="124.0" layoutY="233.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
             <TextField fx:id="vArrivee" layoutX="124.0" layoutY="340.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
-            <Button fx:id="openPrefBtn" layoutX="29.0" layoutY="28.0" mnemonicParsing="false" onAction="#openPref" style="-fx-background-color: #282828;" text="Préférence" textFill="WHITE" />
-            <Button fx:id="OpenFilterBtn" layoutX="453.0" layoutY="78.0" mnemonicParsing="false" style="-fx-background-color: #282828;" text="Filtrer" textFill="WHITE" />
+            <Button fx:id="openPrefBtn" layoutX="29.0" layoutY="28.0" mnemonicParsing="false" onAction="#openPref" stylesheets="@css/style.css" text="Préférence" textFill="WHITE" />
+            <Button fx:id="OpenFilterBtn" layoutX="453.0" layoutY="78.0" mnemonicParsing="false" stylesheets="@css/style.css" text="Filtrer" textFill="WHITE" />
          </children>
     </AnchorPane>
   </children>

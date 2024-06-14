@@ -1,0 +1,10 @@
+.button {
+    -fx-background-color: #282828;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: lightgray;
+    -fx-text-fill: #282828;
+} 

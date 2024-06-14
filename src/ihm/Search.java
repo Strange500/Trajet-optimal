@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -128,6 +129,9 @@ public class Search implements Initializable {
 
     @FXML
     Button addBtn5;
+
+    @FXML
+    MenuItem quit;
 
 
     // @FXML
@@ -432,5 +436,9 @@ public class Search implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void quit() {
+        System.exit(0);
     }
 }
