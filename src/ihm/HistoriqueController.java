@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import src.HistoriqueItem;
 import src.IhmInterface;
+import src.ToolsCorrespondance;
 import src.TypeCout;
 
 public class HistoriqueController {

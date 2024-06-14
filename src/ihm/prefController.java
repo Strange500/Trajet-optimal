@@ -157,13 +157,13 @@ public class prefController {
         stage.close();
     }
 
-    private int convertToMinutes(String time) {
+    public static  int convertToMinutes(String time) {
         int tps_heure = Integer.parseInt(time.split(":")[0]);
         int tps_min = Integer.parseInt(time.split(":")[1]);
         return tps_heure * 60 + tps_min;
     }
 
-    private String formatToHour(double time) {
+    public static  String formatToHour(double time) {
         int tps_heure = (int)(time / 60);
         int tps_min = (int)(time % 60);
         return String.format("%02d:%02d", tps_heure, tps_min);

@@ -383,9 +383,13 @@ public class ToolsCorrespondance extends Tools {
      * @return Chaîne de caractères
      */
     public static String cheminWithCorreArrow(Chemin che, TypeCout critere) {
+        if (che.aretes().size() == 0) {
+            return "";
+        }
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
+        
         che.aretes().remove(che.aretes().size()-1);
         boolean first = true;
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
