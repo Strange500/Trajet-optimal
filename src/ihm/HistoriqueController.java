@@ -33,12 +33,22 @@ public class HistoriqueController {
         HBox pane = new HBox();
         pane.getStyleClass().add("historic-item");
         pane.setPrefHeight(50);
-        pane.setPrefWidth(200);
-        pane.getChildren().add(new Text(h.getDate().toString()));
-        pane.getChildren().add(new Text(h.getChe()));
-        pane.getChildren().add(new Text(h.getPrix() + ""));
-        pane.getChildren().add(new Text(h.getPollution() + ""));
-        pane.getChildren().add(new Text(h.getTemps() + ""));
+        pane.setPrefWidth(300);
+        Text date = new Text(h.getDate().toString()+"\t");
+        date.styleProperty().set("-fx-font-weight: bold; -fx-font-size: 13px;");
+        pane.getChildren().add(date);
+        Text chemin = new Text(h.getChe()+'\t');
+        chemin.styleProperty().set("-fx-font-weight: bold; -fx-font-size: 13px;");
+        pane.getChildren().add(chemin);
+        Text prix = new Text(h.getPrix() + "€ ");
+        prix.styleProperty().set("-fx-font-size: 13px;");
+        pane.getChildren().add(prix);
+        Text pollution = new Text(h.getPollution() + "kgCO2 ");
+        pollution.styleProperty().set("-fx-font-size: 13px;");
+        pane.getChildren().add(pollution);
+        Text temps = new Text(h.getTemps() + "min");
+        temps.styleProperty().set("-fx-font-size: 13px;");
+        pane.getChildren().add(temps);
         return pane;
     }
     @FXML
