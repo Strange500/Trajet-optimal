@@ -10,35 +10,25 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import src.VoyageurCorrespondance;
 import src.exception.CheminInexistantException;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import java.util.Set;
-
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
-
 import fr.ulille.but.sae_s2_2024.*;
 import src.HistoriqueItem;
 import src.IhmInterface;
@@ -46,7 +36,6 @@ import src.IhmInterfaceImpl;
 import src.Podium;
 import src.ToolsCorrespondance;
 import src.TypeCout;
-
 
 public class Search implements Initializable {
     @FXML
@@ -64,7 +53,7 @@ public class Search implements Initializable {
     @FXML
     Label noResultLabel;
 
-    @FXML 
+    @FXML
     Label cheminRecoLabel;
 
     @FXML
@@ -133,12 +122,8 @@ public class Search implements Initializable {
     @FXML
     MenuItem quit;
 
-
     // @FXML
     // Menu historiqueBtn;
-
-
-
 
     private AutoCompletionBinding<String> autoCompletionBinding;
 
@@ -179,10 +164,11 @@ public class Search implements Initializable {
         }
 
     }
-    
+
     public List<HistoriqueItem> getHistoriqueItems() {
         return historiqueItems;
     }
+
     public void setPreferredTransport(ModaliteTransport preferredTransport) {
         Search.ihmInterface.setPreferredTransport(preferredTransport);
     }
@@ -191,7 +177,6 @@ public class Search implements Initializable {
         return Search.ihmInterface.getPreferredTransport();
     }
 
-
     private String convertToTempsTarjet(Double temps) {
         return LocalTime.MIN.plus(Duration.ofMinutes(temps.longValue())).toString().replace(":", "h");
     }
@@ -199,9 +184,10 @@ public class Search implements Initializable {
     private void buildRecommendedPath(Map<Double, Chemin> bestResults) {
         List<Double> scores = new ArrayList<>(bestResults.keySet());
         Collections.sort(scores);
-        cheminRecoLabel.setText(ToolsCorrespondance.cheminWithCorreArrow(bestResults.get(scores.get(0)), podium.getSecond()));
+        cheminRecoLabel
+                .setText(ToolsCorrespondance.cheminWithCorreArrow(bestResults.get(scores.get(0)), podium.getSecond()));
         Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(bestResults.get(scores.get(0)));
-        PollutionReco.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg de CO2");
+        PollutionReco.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg de CO2");
         PrixReco.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
         TempsReco.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
     }
@@ -209,8 +195,6 @@ public class Search implements Initializable {
     String formatDouble(Double d) {
         return String.format("%.2f", d);
     }
-
-
 
     private void buildOtherPaths(Map<Double, Chemin> bestResults) {
         List<Double> scores = new ArrayList<>(bestResults.keySet());
@@ -221,23 +205,23 @@ public class Search implements Initializable {
             Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(chemin);
             switch (cpt) {
                 case 1:
-                    t1CO2.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg CO2");
+                    t1CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
                     t1PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t1TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
                     break;
                 case 2:
                     t2CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
-                    t2PRIX.setText(formatDouble(poids.get(TypeCout.PRIX))+ "€");
+                    t2PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t2TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
                     break;
                 case 3:
-                    t3CO2.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg CO2");
-                    t3PRIX.setText(formatDouble(poids.get(TypeCout.PRIX))+  "€");
+                    t3CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
+                    t3PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t3TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
                     break;
                 case 4:
-                    t4CO2.setText(formatDouble(poids.get(TypeCout.CO2))+ "Kg CO2");
-                    t4PRIX.setText(formatDouble(poids.get(TypeCout.PRIX))+ "€");
+                    t4CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
+                    t4PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t4TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
                     break;
             }
@@ -247,13 +231,14 @@ public class Search implements Initializable {
 
     public void search() {
         try {
-            Map<Double, Chemin> bestResults = ihmInterface.getBestResults(podium, vDepart.getText(), vArrivee.getText());
-            if (bestResults == null ) {
+            Map<Double, Chemin> bestResults = ihmInterface.getBestResults(podium, vDepart.getText(),
+                    vArrivee.getText());
+            if (bestResults == null) {
                 noResultLabel.setText("Aucun chemin trouvé pour les critères demandés");
                 recomendedPath.setVisible(false);
                 resultContainer.setVisible(false);
                 return;
-            }else {
+            } else {
                 this.scores = new ArrayList<>(bestResults.keySet());
                 this.bestResults = bestResults;
 
@@ -269,7 +254,7 @@ public class Search implements Initializable {
             resultContainer.setVisible(false);
             return;
         }
-        
+
     }
 
     public void openPref() {
@@ -290,8 +275,7 @@ public class Search implements Initializable {
             stage.initOwner(vDepart.getScene().getWindow());
             stage.setScene(new Scene(root, 645, 400));
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -314,8 +298,7 @@ public class Search implements Initializable {
             stage.initOwner(vDepart.getScene().getWindow());
             stage.setScene(new Scene(root, 645, 400));
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -337,8 +320,7 @@ public class Search implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        
+
     }
 
     public void openFilter() {
@@ -356,8 +338,7 @@ public class Search implements Initializable {
             stage.setTitle("Filtres");
             stage.setScene(new Scene(root, 645, 400));
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -402,14 +383,15 @@ public class Search implements Initializable {
 
     public void addToHistorique(ActionEvent e) {
         Button addBtn = (Button) e.getSource();
-        
+
         if (addBtn == addBtn1) {
             if (bestResults.size() < 1) {
                 return;
             }
             historiqueItems.add(
-                new HistoriqueItem(cheminRecoLabel.getText(), parseDouble(PrixReco.getText().replace("€", "")), parseDouble(PollutionReco.getText().split("Kg")[0]), (double) prefController.convertToMinutes(TempsReco.getText().replace("h", ":")) )
-            );
+                    new HistoriqueItem(cheminRecoLabel.getText(), parseDouble(PrixReco.getText().replace("€", "")),
+                            parseDouble(PollutionReco.getText().split("Kg")[0]),
+                            (double) prefController.convertToMinutes(TempsReco.getText().replace("h", ":"))));
         } else if (addBtn == addBtn2) {
             if (bestResults.size() < 2) {
                 return;

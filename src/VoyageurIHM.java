@@ -6,7 +6,7 @@ import fr.ulille.but.sae_s2_2024.Chemin;
 import src.exception.CheminInexistantException;
 
 public class VoyageurIHM extends VoyageurCorrespondance {
-    
+
     private PlateformeCorrespondance g;
 
     VoyageurIHM(String username, TypeCout typeCout) {
@@ -14,12 +14,11 @@ public class VoyageurIHM extends VoyageurCorrespondance {
         g = ToolsCorrespondance.initPlateforme(getDATA(), getCORRESPONDANCE());
     }
 
-    
-
     @Override
     public List<Chemin> computeBestPathTrigger() throws CheminInexistantException {
         if (ToolsCorrespondance.donneesValides(this.getDATA())) {
-            // PlateformeCorrespondance g = ToolsCorrespondance.initPlateforme(this.getDATA(), this.getCORRESPONDANCE());
+            // PlateformeCorrespondance g =
+            // ToolsCorrespondance.initPlateforme(this.getDATA(), this.getCORRESPONDANCE());
             // System.out.println(g.get);
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
 
@@ -53,8 +52,6 @@ public class VoyageurIHM extends VoyageurCorrespondance {
         }
 
     }
-
-
 
     public PlateformeCorrespondance getPlateforme() {
         return g;

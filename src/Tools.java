@@ -3,7 +3,6 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;
@@ -323,14 +322,15 @@ public class Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().remove(che.aretes().size() - 1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
                 r += " puis ";
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
-                    cheModal.aretes().get(0).getDepart() + " à " + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee() + " ";
+                    cheModal.aretes().get(0).getDepart() + " à "
+                    + cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee() + " ";
             if (cheModal.aretes().size() > 1) {
                 r += "en passant par";
                 for (int i = 1; i < cheModal.aretes().size(); i++) {

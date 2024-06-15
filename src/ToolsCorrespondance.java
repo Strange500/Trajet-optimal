@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.Trancon;
@@ -201,7 +200,7 @@ public class ToolsCorrespondance extends Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().remove(che.aretes().size() - 1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
@@ -209,7 +208,7 @@ public class ToolsCorrespondance extends Tools {
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
                     cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
-                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
+                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString()) + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -243,7 +242,7 @@ public class ToolsCorrespondance extends Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().remove(che.aretes().size() - 1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
@@ -251,7 +250,7 @@ public class ToolsCorrespondance extends Tools {
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
                     cheModal.aretes().get(0).getDepart().toString() + " à "
-                    + cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString() + " ";
+                    + cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString() + " ";
             if (cheModal.aretes().size() > 1) {
                 boolean first = true;
                 for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -344,7 +343,7 @@ public class ToolsCorrespondance extends Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        che.aretes().remove(che.aretes().size()-1);
+        che.aretes().remove(che.aretes().size() - 1);
 
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             if (!r.isEmpty()) {
@@ -352,7 +351,7 @@ public class ToolsCorrespondance extends Tools {
             }
             r += cheModal.aretes().get(0).getModalite() + " de " +
                     cleanLieux(cheModal.aretes().get(0).getDepart().toString()) + " à "
-                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
+                    + cleanLieux(cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString()) + " ";
             // if (cheModal.aretes().size() > 1) {
             // r += "en passant par";
             // for (int i = 1; i < cheModal.aretes().size(); i++) {
@@ -389,27 +388,27 @@ public class ToolsCorrespondance extends Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-        
-        che.aretes().remove(che.aretes().size()-1);
+
+        che.aretes().remove(che.aretes().size() - 1);
         boolean first = true;
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {
             // if (!r.isEmpty()) {
-            //     r += "puis ";
+            // r += "puis ";
             // }
             if (first) {
                 first = false;
                 r += cleanLieux(cheModal.aretes().get(0).getDepart().toString());
             }
             r += "  —— " + cheModal.aretes().get(0).getModalite().toString().toLowerCase() + " ——►  " +
-                cleanLieux(cheModal.aretes().get(cheModal.aretes().size()-1).getArrivee().toString()) + " ";
+                    cleanLieux(cheModal.aretes().get(cheModal.aretes().size() - 1).getArrivee().toString()) + " ";
 
         }
         // if (critere == TypeCout.PRIX) {
-        //     r += "pour un prix total de : " + che.poids() + " €";
+        // r += "pour un prix total de : " + che.poids() + " €";
         // } else if (critere == TypeCout.CO2) {
-        //     r += "pour une pollution totale de : " + che.poids() + " kgCO2e";
+        // r += "pour une pollution totale de : " + che.poids() + " kgCO2e";
         // } else if (critere == TypeCout.TEMPS) {
-        //     r += "pour une durée totale de : " + che.poids() + " minutes";
+        // r += "pour une durée totale de : " + che.poids() + " minutes";
         // }
         return r;
     }

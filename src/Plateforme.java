@@ -2,7 +2,6 @@ package src;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.ulille.but.sae_s2_2024.AlgorithmeKPCC;
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;

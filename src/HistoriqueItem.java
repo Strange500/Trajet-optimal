@@ -3,7 +3,6 @@ package src;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
@@ -79,19 +78,19 @@ public class HistoriqueItem implements Serializable {
         out.close();
     }
 
-    //@SuppressWarnings("unchecked")
-    public static List<HistoriqueItem> load() throws IOException, FileNotFoundException, ClassNotFoundException{
+    // @SuppressWarnings("unchecked")
+    public static List<HistoriqueItem> load() throws IOException, FileNotFoundException, ClassNotFoundException {
         FileInputStream fileOut = new FileInputStream(FILENAME);
         ObjectInput out = new ObjectInputStream(fileOut);
-        Object obj =  out.readObject();
+        Object obj = out.readObject();
         if (obj instanceof List) {
             out.close();
             return (List<HistoriqueItem>) obj;
-        }else {
+        } else {
             out.close();
             return null;
         }
-        
+
     }
 
     public static boolean saveExists() {
@@ -125,13 +124,10 @@ public class HistoriqueItem implements Serializable {
             // HistoriqueItem.save(historique);
             List<HistoriqueItem> historique2 = HistoriqueItem.load();
             System.out.println(historique2.get(0) + " " + historique2.get(1));
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
 
     }
-
-    
 
 }

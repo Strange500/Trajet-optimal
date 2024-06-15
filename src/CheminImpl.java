@@ -2,7 +2,6 @@ package src;
 
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Trancon;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

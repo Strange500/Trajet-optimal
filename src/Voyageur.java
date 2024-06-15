@@ -243,5 +243,4 @@ public class Voyageur {
         this.nb_trajet = nb_trajet;
     }
 
-    
 }

@@ -11,9 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import src.IhmInterface;
 import src.TypeCout;
 
 public class prefController {
@@ -51,10 +49,10 @@ public class prefController {
     @FXML
     Label seuilError;
 
-    List<String> critList ;
+    List<String> critList;
 
-    List<String> transpList ;
-    
+    List<String> transpList;
+
     String tmp;
 
     private static List<String> loadCritere() {
@@ -73,7 +71,6 @@ public class prefController {
         return transpList;
     }
 
-
     public void changeCritPref() {
         if (critFirst.getValue() == null || critSecond.getValue() == null || critThird.getValue() == null) {
             return;
@@ -90,7 +87,8 @@ public class prefController {
             return;
         }
         if (transp.getValue().equals("Tous")) {
-            Search.currentInstance.setPreferredTransport(null);;
+            Search.currentInstance.setPreferredTransport(null);
+            ;
         } else {
             Search.currentInstance.setPreferredTransport(ModaliteTransport.valueOf(transp.getValue()));
         }
@@ -98,8 +96,6 @@ public class prefController {
         Search.currentInstance.search();
         return;
     }
-
-    
 
     @FXML
     public void initialize() {
@@ -114,10 +110,9 @@ public class prefController {
 
         if (Search.currentInstance.getPreferredTransport() == null) {
             transp.setValue("Tous");
-        }else {
+        } else {
             transp.setValue(Search.currentInstance.getPreferredTransport().toString());
         }
-
 
         critFirst.getItems().addAll(critList);
         critSecond.getItems().addAll(critList);
@@ -138,13 +133,12 @@ public class prefController {
         this.CO2Max.setText(String.valueOf(Search.currentInstance.getSeuilCO2()));
         this.TempsMax.setText(formatToHour(Search.currentInstance.getSeuilTemps()));
 
-
     }
 
     public void toggleMulticrit() {
         if (multiCritBtn.isSelected()) {
             multiCritPane.setVisible(true);
-            
+
         } else {
             multiCritPane.setVisible(false);
             critSecond.setValue(critFirst.getValue());
@@ -157,21 +151,21 @@ public class prefController {
         stage.close();
     }
 
-    public static  int convertToMinutes(String time) {
+    public static int convertToMinutes(String time) {
         int tps_heure = Integer.parseInt(time.split(":")[0]);
         int tps_min = Integer.parseInt(time.split(":")[1]);
         return tps_heure * 60 + tps_min;
     }
 
-    public static  String formatToHour(double time) {
-        int tps_heure = (int)(time / 60);
-        int tps_min = (int)(time % 60);
+    public static String formatToHour(double time) {
+        int tps_heure = (int) (time / 60);
+        int tps_min = (int) (time % 60);
         return String.format("%02d:%02d", tps_heure, tps_min);
     }
 
     public void saveSeuil() {
         try {
-            Search.currentInstance.setSeuilPrix(Double.parseDouble(prixMax.getText())); 
+            Search.currentInstance.setSeuilPrix(Double.parseDouble(prixMax.getText()));
             Search.currentInstance.setSeuilCO2(Double.parseDouble(CO2Max.getText()));
             Search.currentInstance.setSeuilTemps(convertToMinutes(TempsMax.getText()));
             seuilError.setVisible(false);

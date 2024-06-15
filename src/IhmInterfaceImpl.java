@@ -1,28 +1,25 @@
 package src;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
-
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.exception.CheminInexistantException;
 
-public class IhmInterfaceImpl  implements IhmInterface {
+public class IhmInterfaceImpl implements IhmInterface {
 
     private VoyageurIHM voyageurCorrespondanceTemps;
     private VoyageurIHM voyageurCorrespondancePrix;
     private VoyageurIHM voyageurCorrespondanceCO2;
 
-    private static  Double MAX_TEMPS = 960.0;
-    private static  Double MAX_PRIX = 750.0;
-    private static  Double MAX_CO2 = 450.0;
+    private static Double MAX_TEMPS = 960.0;
+    private static Double MAX_PRIX = 750.0;
+    private static Double MAX_CO2 = 450.0;
 
     private ModaliteTransport preferredTransport;
 
@@ -32,7 +29,7 @@ public class IhmInterfaceImpl  implements IhmInterface {
         voyageurCorrespondanceCO2 = new VoyageurIHM(username, TypeCout.CO2);
         preferredTransport = null;
     }
-    
+
     public Set<String> getStartCity() {
         voyageurCorrespondanceCO2.getPlateforme().getLieux();
         Set<String> startCity = new HashSet<>();
@@ -76,7 +73,7 @@ public class IhmInterfaceImpl  implements IhmInterface {
 
     private Double getScore(Chemin chemin, Podium<TypeCout> podiumTypeCout) {
         double c1, c2, c3;
-        double p1 = 0.6, p2 = 0.35, p3=0.05;
+        double p1 = 0.6, p2 = 0.35, p3 = 0.05;
         PlateformeCorrespondance p = voyageurCorrespondanceCO2.getPlateforme();
         c1 = processValue(podiumTypeCout.getFirst(), p.getPoidsByTypeCout(chemin, podiumTypeCout.getFirst()));
         c2 = processValue(podiumTypeCout.getSecond(), p.getPoidsByTypeCout(chemin, podiumTypeCout.getSecond()));
@@ -85,7 +82,8 @@ public class IhmInterfaceImpl  implements IhmInterface {
         return (p1 * c1) + (p2 * c2) + (p3 * c3);
     }
 
-    public Map<Double, Chemin> getBestResults(Podium<TypeCout> podiumTypeCout, String dep, String arr) throws CheminInexistantException{
+    public Map<Double, Chemin> getBestResults(Podium<TypeCout> podiumTypeCout, String dep, String arr)
+            throws CheminInexistantException {
         Map<Double, Chemin> bestResults = new HashMap<>();
         voyageurCorrespondanceCO2.setDepart(dep);
         voyageurCorrespondanceCO2.setArrivee(arr);
@@ -99,8 +97,9 @@ public class IhmInterfaceImpl  implements IhmInterface {
         r = voyageurCorrespondanceCO2.computeBestPathTrigger();
         ToolsCorrespondance.applyThreshold(voyageurCorrespondanceCO2.getPlateforme(), r, TypeCout.CO2, getSeuilCO2());
         ToolsCorrespondance.applyThreshold(voyageurCorrespondanceCO2.getPlateforme(), r, TypeCout.PRIX, getSeuilPrix());
-        ToolsCorrespondance.applyThreshold(voyageurCorrespondanceCO2.getPlateforme(), r, TypeCout.TEMPS, getSeuilTemps());
-        
+        ToolsCorrespondance.applyThreshold(voyageurCorrespondanceCO2.getPlateforme(), r, TypeCout.TEMPS,
+                getSeuilTemps());
+
         if (r == null) {
             throw new CheminInexistantException();
         }
@@ -152,7 +151,6 @@ public class IhmInterfaceImpl  implements IhmInterface {
         MAX_TEMPS = seuilTemps;
     }
 
-
     public static void main(String[] args) {
         IhmInterfaceImpl ihm = new IhmInterfaceImpl("test");
         System.out.println(ihm.getStartCity());
@@ -165,39 +163,39 @@ public class IhmInterfaceImpl  implements IhmInterface {
         podiumTypeCout.setSecond(TypeCout.PRIX);
         podiumTypeCout.setThird(TypeCout.CO2);
 
-        //System.out.println(ihm.getBestResults(podiumTypeCout, "Lille", "Paris", null));
+        // System.out.println(ihm.getBestResults(podiumTypeCout, "Lille", "Paris",
+        // null));
         try {
             Map<Double, Chemin> r = ihm.getBestResults(podiumTypeCout, "Lille", "Paris");
-        Set<Double> set = r.keySet();
-        List<Double> list = new ArrayList<>(set);
-        Collections.sort(list);
-        System.out.println("NOUVEAU CLASSEMENT : ");
-        for (Double key : list) {
-            System.out.println(key + " : " + ToolsCorrespondance.cheminWithCorreBis(r.get(key), podiumTypeCout.getSecond()));
-        }
-        System.out.println("\n\nANCIEN CLASSEMNT :");
-        try {
-            List<Chemin> chemins = ihm.voyageurCorrespondanceCO2.computeBestPathTrigger();
-            if (chemins != null) {
-                System.out.println("Les trajets recommandés de " + ihm.voyageurCorrespondanceCO2.depart + " à " + ihm.voyageurCorrespondanceCO2.arrivee + " sont :");
-                for (int i = 0; i < chemins.size(); i++) {
-                    System.out
-                            .println(i + 1 + ") " + ToolsCorrespondance.cheminWithCorreBis(chemins.get(i), ihm.voyageurCorrespondanceCO2.critere));
-                }
-            } else {
-                System.out.println("Aucun chemin trouvé pour les critères demandés");
+            Set<Double> set = r.keySet();
+            List<Double> list = new ArrayList<>(set);
+            Collections.sort(list);
+            System.out.println("NOUVEAU CLASSEMENT : ");
+            for (Double key : list) {
+                System.out.println(
+                        key + " : " + ToolsCorrespondance.cheminWithCorreBis(r.get(key), podiumTypeCout.getSecond()));
             }
-            
+            System.out.println("\n\nANCIEN CLASSEMNT :");
+            try {
+                List<Chemin> chemins = ihm.voyageurCorrespondanceCO2.computeBestPathTrigger();
+                if (chemins != null) {
+                    System.out.println("Les trajets recommandés de " + ihm.voyageurCorrespondanceCO2.depart + " à "
+                            + ihm.voyageurCorrespondanceCO2.arrivee + " sont :");
+                    for (int i = 0; i < chemins.size(); i++) {
+                        System.out
+                                .println(i + 1 + ") " + ToolsCorrespondance.cheminWithCorreBis(chemins.get(i),
+                                        ihm.voyageurCorrespondanceCO2.critere));
+                    }
+                } else {
+                    System.out.println("Aucun chemin trouvé pour les critères demandés");
+                }
+
+            } catch (CheminInexistantException e) {
+                e.printStackTrace();
+            }
         } catch (CheminInexistantException e) {
             e.printStackTrace();
         }
-        } catch (CheminInexistantException e) {
-            e.printStackTrace();
-        }
-        
-        
-        
-        
 
     }
 }
