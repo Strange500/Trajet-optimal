@@ -36,7 +36,9 @@ import fr.ulille.but.sae_s2_2024.*;
 import src.HistoriqueItem;
 import src.IhmInterface;
 import src.IhmInterfaceImpl;
+import src.PlateformeCorrespondance;
 import src.Podium;
+import src.Tools;
 import src.ToolsCorrespondance;
 import src.TypeCout;
 
@@ -423,7 +425,7 @@ public class Search implements Initializable {
         }
     }
 
-        public void openCSV() {
+    public void openCSV() {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Ouvrir un fichier CSV");
@@ -431,7 +433,14 @@ public class Search implements Initializable {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
             File file = fileChooser.showOpenDialog(vDepart.getScene().getWindow());
-            System.out.println(file.getAbsolutePath());
+
+            ArrayList<String> data = ToolsCorrespondance.getCSV(file.getAbsolutePath());
+
+            if (ToolsCorrespondance.donneesValides(data)) {
+                // TODO
+            } else {
+                System.out.println("Données invalides");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
