@@ -13,9 +13,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import src.exception.CheminInexistantException;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -417,6 +420,20 @@ public class Search implements Initializable {
             HistoriqueItem.save(historiqueItems);
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+        public void openCSV() {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Ouvrir un fichier CSV");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers CSV", "*.csv"));
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+            File file = fileChooser.showOpenDialog(vDepart.getScene().getWindow());
+            System.out.println(file.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

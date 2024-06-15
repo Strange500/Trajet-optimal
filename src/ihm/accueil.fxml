@@ -52,7 +52,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="Fichier">
           <items>
-            <Menu mnemonicParsing="false" text="Ouvrir un CSV" />
+                  <MenuItem fx:id="openCSV" mnemonicParsing="false" onAction="#openCSV" text="Ouvrir CSV" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#quit" text="Quit" />
           </items>
