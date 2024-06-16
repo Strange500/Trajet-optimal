@@ -1,5 +1,6 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.ulille.but.sae_s2_2024.Chemin;
@@ -9,9 +10,14 @@ public class VoyageurIHM extends VoyageurCorrespondance {
 
     private PlateformeCorrespondance g;
 
-    VoyageurIHM(String username, TypeCout typeCout) {
+    public VoyageurIHM(String username, TypeCout typeCout) {
         super(username, typeCout);
         g = ToolsCorrespondance.initPlateforme(getDATA(), getCORRESPONDANCE());
+    }
+
+    public VoyageurIHM(String username, TypeCout typeCout, ArrayList<String> csvData, ArrayList<String> csvCorrespondance) {
+        super(username, typeCout, csvData, csvCorrespondance);
+        g = ToolsCorrespondance.initPlateforme(csvData, csvCorrespondance);
     }
 
     @Override

@@ -26,6 +26,15 @@ public class VoyageurCorrespondance extends Voyageur {
 
     public VoyageurCorrespondance(String nom, String prenom, TypeCout critere, ModaliteTransport modalite,
             int thresholdPrix,
+            double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet, ArrayList<String> dataPath,
+            ArrayList<String> corPath) {
+        super(nom, prenom, critere, modalite, thresholdPrix, thresholdCO2, thresholdTemps, depart, arrivee, nb_trajet);
+        this.DATA = dataPath;
+        this.CORRESPONDANCE = corPath;
+    }
+
+    public VoyageurCorrespondance(String nom, String prenom, TypeCout critere, ModaliteTransport modalite,
+            int thresholdPrix,
             double thresholdCO2, int thresholdTemps, String depart, String arrivee, int nb_trajet, String dataPath,
             String corPath) {
         super(nom, prenom, critere, modalite, thresholdPrix, thresholdCO2, thresholdTemps, depart, arrivee, nb_trajet);
@@ -36,6 +45,11 @@ public class VoyageurCorrespondance extends Voyageur {
     public VoyageurCorrespondance(String nom, TypeCout critere) {
         this(nom, "", critere, null, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS,
                 DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET, path_default, path_cor_default);
+    }
+
+    public VoyageurCorrespondance(String nom, TypeCout critere, ArrayList<String> data, ArrayList<String> correspondance) {
+        this(nom, "", critere, null, DEFAULT_THRESHOLD_PRIX, DEFAULT_THRESHOLD_CO2, DEFAULT_THRESHOLD_TEMPS,
+                DEFAULT_DEPART, DEFAULT_ARRIVEE, DEFAULT_NB_TRAJET, data, correspondance);
     }
 
     public ArrayList<String> getDATA() {

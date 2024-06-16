@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -33,6 +34,8 @@ import java.util.Scanner;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import fr.ulille.but.sae_s2_2024.*;
+import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import src.HistoriqueItem;
 import src.IhmInterface;
 import src.IhmInterfaceImpl;
@@ -42,7 +45,7 @@ import src.Tools;
 import src.ToolsCorrespondance;
 import src.TypeCout;
 
-public class Search implements Initializable {
+public class Search  {
     @FXML
     TextField vDepart;
 
@@ -130,8 +133,6 @@ public class Search implements Initializable {
     // @FXML
     // Menu historiqueBtn;
 
-    private AutoCompletionBinding<String> autoCompletionBinding;
-
     static IhmInterface ihmInterface;
 
     static Podium<TypeCout> podium;
@@ -141,14 +142,19 @@ public class Search implements Initializable {
     private Map<Double, Chemin> bestResults;
     private List<Double> scores;
     private List<HistoriqueItem> historiqueItems = new ArrayList<>();
+    private SuggestionProvider<String> suggestionProviderDepart;
+    private SuggestionProvider<String> suggestionProviderArrivee;
 
     @FXML
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         currentInstance = this;
         ihmInterface = new IhmInterfaceImpl("test");
-
-        TextFields.bindAutoCompletion(vDepart, ihmInterface.getStartCity());
-        TextFields.bindAutoCompletion(vArrivee, ihmInterface.getDestinationCity());
+        suggestionProviderDepart = SuggestionProvider.create(ihmInterface.getStartCity());
+        suggestionProviderArrivee = SuggestionProvider.create(ihmInterface.getDestinationCity());
+        new AutoCompletionTextFieldBinding<>(vDepart, suggestionProviderDepart);
+        new AutoCompletionTextFieldBinding<>(vArrivee, suggestionProviderArrivee);
+        // TextFields.bindAutoCompletion(vDepart, ihmInterface.getStartCity());
+        // TextFields.bindAutoCompletion(vArrivee, ihmInterface.getDestinationCity());
         podium = new Podium<>();
         podium.setFirst(TypeCout.CO2);
         podium.setSecond(TypeCout.PRIX);
@@ -156,6 +162,33 @@ public class Search implements Initializable {
 
         recomendedPath.setVisible(false);
         resultContainer.setVisible(false);
+        noResultLabel.setText("Aucun chemin trouvé pour les critères demandés");
+
+        if (!HistoriqueItem.saveExists()) {
+            HistoriqueItem.createSave();
+        }
+        try {
+            historiqueItems = HistoriqueItem.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void reload() {
+        suggestionProviderDepart.clearSuggestions();
+        suggestionProviderArrivee.clearSuggestions();
+
+        suggestionProviderDepart.addPossibleSuggestions(ihmInterface.getStartCity());
+        suggestionProviderArrivee.addPossibleSuggestions(ihmInterface.getDestinationCity());
+        // TextFields.bindAutoCompletion(vDepart, ihmInterface.getStartCity());
+        // TextFields.bindAutoCompletion(vArrivee, ihmInterface.getDestinationCity());
+
+        recomendedPath.setVisible(false);
+        resultContainer.setVisible(false);
+        
 
         if (!HistoriqueItem.saveExists()) {
             HistoriqueItem.createSave();
@@ -424,6 +457,31 @@ public class Search implements Initializable {
             ex.printStackTrace();
         }
     }
+    private ArrayList<String> askCorrespondance() {
+        Alert comfirm = new Alert(Alert.AlertType.CONFIRMATION);
+        comfirm.setContentText("Voulez-vous charger un fichier de correspondance ?");
+        Optional<ButtonType> result = comfirm.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Ouvrir un fichier CSV");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers CSV", "*.csv"));
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+            File file = fileChooser.showOpenDialog(vDepart.getScene().getWindow());
+            if (file == null) {
+                return new ArrayList<>();
+            }
+
+            ArrayList<String> data = ToolsCorrespondance.getCSV(file.getAbsolutePath());
+
+            if (ToolsCorrespondance.donneesValides(data)) {
+                return data;
+            } else {
+                System.out.println("Données invalides");
+            }
+        }
+        return new ArrayList<>();
+    }
 
     public void openCSV() {
         try {
@@ -433,11 +491,17 @@ public class Search implements Initializable {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
             File file = fileChooser.showOpenDialog(vDepart.getScene().getWindow());
+            if (file == null) {
+                return;
+            }
 
             ArrayList<String> data = ToolsCorrespondance.getCSV(file.getAbsolutePath());
 
             if (ToolsCorrespondance.donneesValides(data)) {
-                // TODO
+                ArrayList<String> correspondance = askCorrespondance();
+                ihmInterface = new IhmInterfaceImpl("test", data, correspondance);
+                System.out.println(ihmInterface.getStartCity());
+                reload();
             } else {
                 System.out.println("Données invalides");
             }
