@@ -24,7 +24,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -376,7 +378,7 @@ public class Search  {
             stage.setTitle("Historique");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(vDepart.getScene().getWindow());
-            stage.setScene(new Scene(root, 645, 400));
+            stage.setScene(new Scene(root, 1315, 715));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -557,4 +559,28 @@ public class Search  {
     public void quit() {
         System.exit(0);
     }
+
+    public static void main(String[] args) throws Exception{
+        // create multiple fake historiqueItems
+
+        if (!HistoriqueItem.saveExists()) {
+            HistoriqueItem.createSave();
+        }
+        List<HistoriqueItem> historiqueItems = HistoriqueItem.load();
+        for (int i = 0; i < 10; i++) {
+            historiqueItems.add(new HistoriqueItem("Chemin " + i, i * 10, i * 20, i * 30));
+        }
+        // mets differente date pour simuler en utilisant des localdate
+        for (int i = 0; i < 10; i++) {
+            // format like 2021-01-01
+            historiqueItems.get(i).setDate(LocalDate.parse("2021-01-" + String.format("%02d", i + 1) , DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        }
+
+
+        try {
+            HistoriqueItem.save(historiqueItems);
+        } catch (IOException e) {
+            e.printStackTrace();
+    }
+}
 }

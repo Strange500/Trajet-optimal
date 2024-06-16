@@ -1,22 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.HistoriqueController">
-   <children>
-      <HBox prefHeight="29.0" prefWidth="600.0">
+
+<BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.HistoriqueController">
+   <center>
+      <ScrollPane fx:id="scrollContainer" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="890.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="893.0" text="Historique" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </top>
+   <right>
+      <VBox prefHeight="668.0" prefWidth="425.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="893.0" text="Historique" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
+            <LineChart fx:id="chartCo2" title="évolution du CO2 émis">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart fx:id="chartPrix" title="évolution du prix de vos trajet">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart fx:id="chartTemps" title="évolutioj du temps de trasnport">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
          </children>
-      </HBox>
-      <ScrollPane fx:id="scrollContainer" prefHeight="668.0" prefWidth="890.0" />
-   </children>
-</VBox>
+      </VBox>
+   </right>
+   <bottom>
+      <Label fx:id="labelRemainingCo2" text="Il vous reste XXkg de CO2 avant de depasser les 2 tonne annuel recommande" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

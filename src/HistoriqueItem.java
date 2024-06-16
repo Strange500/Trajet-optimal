@@ -70,6 +70,10 @@ public class HistoriqueItem implements Serializable {
         return date;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public static void save(List<HistoriqueItem> historique) throws IOException, FileNotFoundException {
         FileOutputStream fileOut = new FileOutputStream(FILENAME);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
