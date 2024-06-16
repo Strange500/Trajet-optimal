@@ -95,150 +95,166 @@
             </Label>
             <Pane fx:id="resultContainer" layoutX="449.0" layoutY="336.0" prefHeight="257.0" prefWidth="482.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;">
                <children>
-                  <Label fx:id="t1CO2" layoutX="95.0" layoutY="56.0" text="XX,X">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
+                  <AnchorPane fx:id="rPane1" layoutX="24.0" layoutY="53.0">
+                     <children>
+                        <Label fx:id="t1CO2" layoutX="71.0" layoutY="3.0" text="XX,X">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutY="3.0" text="Pollution : ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="159.0" layoutY="3.0" text="Prix :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t1PRIX" layoutX="197.0" layoutY="3.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="262.0" layoutY="5.0" text="Temps :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t1TEMPS" layoutX="329.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="addBtn2" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                   <Label layoutX="14.0" layoutY="8.0" text="Autres trajets">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font></Label>
-                  <Label layoutX="24.0" layoutY="56.0" text="Pollution : ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="183.0" layoutY="56.0" text="Prix :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t1PRIX" layoutX="221.0" layoutY="57.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="286.0" layoutY="58.0" text="Temps :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t1TEMPS" layoutX="353.0" layoutY="58.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t2CO2" layoutX="95.0" layoutY="106.0" text="XX,X">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="24.0" layoutY="106.0" text="Pollution : ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="183.0" layoutY="106.0" text="Prix :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t2PRIX" layoutX="221.0" layoutY="106.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="286.0" layoutY="106.0" text="Temps :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t2TEMPS" layoutX="353.0" layoutY="106.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t3CO2" layoutX="95.0" layoutY="157.0" text="XX,X">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="24.0" layoutY="156.0" text="Pollution : ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="183.0" layoutY="156.0" text="Prix :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t3PRIX" layoutX="221.0" layoutY="157.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="286.0" layoutY="157.0" text="Temps :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t3TEMPS" layoutX="353.0" layoutY="157.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t4CO2" layoutX="95.0" layoutY="205.0" text="XX,X">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="24.0" layoutY="205.0" text="Pollution : ">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="183.0" layoutY="205.0" prefHeight="20.0" prefWidth="33.0" text="Prix :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t4PRIX" layoutX="221.0" layoutY="205.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="286.0" layoutY="205.0" text="Temps :">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="t4TEMPS" layoutX="353.0" layoutY="206.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="addBtn2" layoutX="415.0" layoutY="53.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="addBtn5" layoutX="415.0" layoutY="200.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="addBtn4" layoutX="415.0" layoutY="152.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="addBtn3" layoutX="415.0" layoutY="102.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
+                  <AnchorPane fx:id="rPane2" layoutX="24.0" layoutY="102.0">
+                     <children>
+                        <Label fx:id="t2CO2" layoutX="71.0" layoutY="4.0" text="XX,X">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutY="4.0" text="Pollution : ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="159.0" layoutY="4.0" text="Prix :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t2PRIX" layoutX="197.0" layoutY="2.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="262.0" layoutY="4.0" text="Temps :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t2TEMPS" layoutX="329.0" layoutY="4.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="addBtn3" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="rPane3" layoutX="24.0" layoutY="152.0">
+                     <children>
+                        <Label fx:id="t3CO2" layoutX="71.0" layoutY="5.0" text="XX,X">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutY="4.0" text="Pollution : ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="159.0" layoutY="4.0" text="Prix :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t3PRIX" layoutX="197.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="262.0" layoutY="5.0" text="Temps :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t3TEMPS" layoutX="329.0" layoutY="4.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="addBtn4" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="rPane4" layoutX="24.0" layoutY="200.0">
+                     <children>
+                        <Label fx:id="t4CO2" layoutX="71.0" layoutY="5.0" text="XX,X">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutY="5.0" text="Pollution : ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="159.0" layoutY="5.0" prefHeight="20.0" prefWidth="33.0" text="Prix :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t4PRIX" layoutX="197.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="262.0" layoutY="5.0" text="Temps :">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="t4TEMPS" layoutX="329.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="addBtn5" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
             </Pane>
             <Pane fx:id="recomendedPath" layoutX="449.0" layoutY="122.0" prefHeight="153.0" prefWidth="481.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;">

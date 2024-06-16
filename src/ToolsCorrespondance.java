@@ -442,14 +442,21 @@ public class ToolsCorrespondance extends Tools {
         if (args.isEmpty()) {
             return false;
         }
+        ArrayList<String> toRemove = new ArrayList<>();
         for (String arg : args) {
             String[] elements = arg.split(";");
             if (elements.length != 6 || !estNombre(elements[3]) || !estNombre(elements[4]) || !estNombre(elements[5]) ||
                     elements[0].isEmpty() || elements[1].isEmpty() || elements[2].isEmpty()
                     || elements[3].isEmpty() || elements[4].isEmpty() || elements[5].isEmpty()) {
-                return false;
+                        if (arg.equals("")) {
+                            toRemove.add(arg);
+                        }else {
+                            return false;
+                        }
+                
             }
         }
+        args.removeAll(toRemove);
         return true;
     }
 

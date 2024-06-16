@@ -13,6 +13,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -31,6 +32,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+
+import javax.tools.Tool;
+
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import fr.ulille.but.sae_s2_2024.*;
@@ -129,6 +133,18 @@ public class Search  {
 
     @FXML
     MenuItem quit;
+
+    @FXML
+    AnchorPane rPane1;
+
+    @FXML
+    AnchorPane rPane2;
+
+    @FXML
+    AnchorPane rPane3;
+
+    @FXML
+    AnchorPane rPane4;
 
     // @FXML
     // Menu historiqueBtn;
@@ -238,6 +254,8 @@ public class Search  {
         List<Double> scores = new ArrayList<>(bestResults.keySet());
         Collections.sort(scores);
         int cpt = 1;
+        List<Integer> notDone = new ArrayList<>();
+        notDone.addAll(List.of(1, 2, 3, 4));
         while (cpt < 5 && cpt < scores.size()) {
             Chemin chemin = bestResults.get(scores.get(cpt));
             Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(chemin);
@@ -246,24 +264,48 @@ public class Search  {
                     t1CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
                     t1PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t1TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
+                    rPane1.setVisible(true);
+                    notDone.remove(Integer.valueOf(1));
                     break;
                 case 2:
                     t2CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
                     t2PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t2TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
+                    rPane2.setVisible(true);
+                    notDone.remove(Integer.valueOf(2));
                     break;
                 case 3:
                     t3CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
                     t3PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t3TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
+                    rPane3.setVisible(true);
+                    notDone.remove(Integer.valueOf(3));
                     break;
                 case 4:
                     t4CO2.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg CO2");
                     t4PRIX.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
                     t4TEMPS.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
+                    rPane4.setVisible(true);
+                    notDone.remove(Integer.valueOf(4));
                     break;
             }
             cpt++;
+        }
+        for (Integer i : notDone) {
+            switch (i) {
+                case 1:
+                    rPane1.setVisible(false);
+                    break;
+                case 2:
+                    rPane2.setVisible(false);
+                    break;
+                case 3:
+                    rPane3.setVisible(false);
+                    break;
+                case 4:
+                    rPane4.setVisible(false);
+                    break;
+            }
         }
     }
 
@@ -499,8 +541,10 @@ public class Search  {
 
             if (ToolsCorrespondance.donneesValides(data)) {
                 ArrayList<String> correspondance = askCorrespondance();
+                // if (!ToolsCorrespondance.donneesValides(correspondance)) {
+                //     return;
+                // }
                 ihmInterface = new IhmInterfaceImpl("test", data, correspondance);
-                System.out.println(ihmInterface.getStartCity());
                 reload();
             } else {
                 System.out.println("Données invalides");
