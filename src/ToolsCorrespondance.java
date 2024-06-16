@@ -388,7 +388,9 @@ public class ToolsCorrespondance extends Tools {
         String r = "";
         // on enleve les arrete vers alpha et omega
         che.aretes().remove(0);
-
+        if (che.aretes().size() == 0) {
+            return "";
+        }
         che.aretes().remove(che.aretes().size() - 1);
         boolean first = true;
         for (Chemin cheModal : CheminImpl.splitByModalite(che)) {

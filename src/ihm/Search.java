@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import src.exception.CheminInexistantException;
 
@@ -463,6 +464,17 @@ public class Search  {
         return res;
     }
 
+    public void showPopupCheminAdded() {
+        Popup popup = new Popup();
+        Label label = new Label("Chemin ajouté à l'historique");
+        label.setStyle("-fx-background-color: white; -fx-padding: 10px; -fx-border-color: black; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-font-color: green; -fx-font-size: 20px;");
+        popup.getContent().add(label);
+        popup.setAutoHide(true);
+        popup.setX(vDepart.getScene().getWindow().getX() + vDepart.getScene().getWindow().getWidth() -287);
+        popup.setY(vDepart.getScene().getWindow().getY() + 60);
+        popup.show(vDepart.getScene().getWindow());
+    }
+
     public void addToHistorique(ActionEvent e) {
         Button addBtn = (Button) e.getSource();
 
@@ -500,6 +512,7 @@ public class Search  {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        showPopupCheminAdded();
     }
     private ArrayList<String> askCorrespondance() {
         Alert comfirm = new Alert(Alert.AlertType.CONFIRMATION);
