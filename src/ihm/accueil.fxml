@@ -32,6 +32,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -42,17 +43,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="670.0" prefWidth="971.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.Search">
-  <children>
-    <MenuBar VBox.vgrow="NEVER">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.Search">
+   <top>
+    <MenuBar BorderPane.alignment="CENTER">
       <menus>
         <Menu mnemonicParsing="false" text="Fichier">
           <items>
-                  <MenuItem fx:id="openCSV" mnemonicParsing="false" onAction="#openCSV" text="Ouvrir CSV" />
+            <Menu mnemonicParsing="false" text="Ouvrir un CSV" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#quit" text="Quit" />
           </items>
@@ -65,35 +66,46 @@
             </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="397.0" prefWidth="697.0" VBox.vgrow="ALWAYS">
+   </top>
+   <left>
+      <AnchorPane prefHeight="651.0" prefWidth="408.0" style="-fx-background-color: #E7E7E7;" BorderPane.alignment="CENTER">
          <children>
-            <VBox layoutX="-49.0" prefHeight="650.0" prefWidth="459.0" style="-fx-background-color: #E7E7E7;" />
-            <Label layoutX="617.0" layoutY="17.0" prefHeight="57.0" prefWidth="150.0" text="Résultats">
-               <font>
-                  <Font name="System Bold" size="32.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="112.0" layoutY="197.0" prefHeight="27.0" prefWidth="171.0" text="Ville de départ" textAlignment="CENTER">
+            <TextField fx:id="vArrivee" layoutX="122.0" layoutY="342.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
+            <TextField fx:id="vDepart" layoutX="122.0" layoutY="239.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
+            <Label alignment="CENTER" layoutX="102.0" layoutY="196.0" prefHeight="27.0" prefWidth="171.0" text="Ville de départ" textAlignment="CENTER">
                <font>
                   <Font name="Cantarell Regular" size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="109.0" layoutY="298.0" prefHeight="27.0" prefWidth="171.0" text="Ville d'arrivée">
+            <Label alignment="CENTER" layoutX="121.0" layoutY="299.0" prefHeight="27.0" prefWidth="171.0" text="Ville d'arrivée">
                <font>
                   <Font name="Cantarell Regular" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="recherche" layoutX="160.0" layoutY="405.0" mnemonicParsing="false" onAction="#search" stylesheets="@css/style.css" text="On y va !" textFill="WHITE">
+            <Button fx:id="openPrefBtn" layoutX="23.0" layoutY="25.0" mnemonicParsing="false" onAction="#openPref" stylesheets="@css/style.css" text="Préférence" textFill="WHITE" />
+            <Button fx:id="recherche" layoutX="167.0" layoutY="407.0" mnemonicParsing="false" onAction="#search" stylesheets="@css/style.css" text="On y va !" textFill="WHITE">
                <font>
                   <Font name="Cantarell Regular" size="14.0" />
                </font>
             </Button>
-            <Label fx:id="noResultLabel" layoutX="520.0" layoutY="290.0" text="Faites une recherche pour avoir des résultats">
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+    <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="581.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="OpenFilterBtn" alignment="CENTER" layoutX="46.0" layoutY="78.0" maxWidth="-Infinity" mnemonicParsing="false" stylesheets="@css/style.css" text="Filtrer" textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="21.0" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="156.0" text="Résultats" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="218.0">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
+            <Label fx:id="noResultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="290.0" maxWidth="1.7976931348623157E308" text="Faites une recherche pour avoir des résultats" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="140.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Pane fx:id="resultContainer" layoutX="449.0" layoutY="336.0" prefHeight="257.0" prefWidth="482.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;">
+            <Pane fx:id="resultContainer" layoutX="42.0" layoutY="336.0" maxWidth="1.7976931348623157E308" prefHeight="257.0" prefWidth="482.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <children>
                   <AnchorPane fx:id="rPane1" layoutX="24.0" layoutY="53.0">
                      <children>
@@ -137,7 +149,8 @@
                   <Label layoutX="14.0" layoutY="8.0" text="Autres trajets">
                      <font>
                         <Font name="System Bold" size="16.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <AnchorPane fx:id="rPane2" layoutX="24.0" layoutY="102.0">
                      <children>
                         <Label fx:id="t2CO2" layoutX="71.0" layoutY="4.0" text="XX,X">
@@ -228,7 +241,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="159.0" layoutY="5.0" prefHeight="20.0" prefWidth="33.0" text="Prix :">
+                        <Label layoutX="159.0" layoutY="5.0" prefHeight="20.0" prefWidth="42.0" text="Prix :">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -256,29 +269,37 @@
                      </children>
                   </AnchorPane>
                </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
             </Pane>
-            <Pane fx:id="recomendedPath" layoutX="449.0" layoutY="122.0" prefHeight="153.0" prefWidth="481.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;">
+            <Pane fx:id="recomendedPath" layoutX="42.0" layoutY="122.0" maxWidth="1.7976931348623157E308" prefHeight="153.0" prefWidth="481.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <children>
                   <Label layoutX="35.0" layoutY="4.0" text="Trajets recommandés">
                      <font>
                         <Font name="System Bold" size="16.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="PollutionReco" layoutX="59.0" layoutY="103.0" text="Pollution">
                      <font>
                         <Font size="18.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="PrixReco" alignment="CENTER" layoutX="244.0" layoutY="103.0" text="Prix">
                      <font>
                         <Font size="18.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="TempsReco" alignment="CENTER" layoutX="394.0" layoutY="103.0" text="Temps">
                      <font>
                         <Font size="18.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="cheminRecoLabel" alignment="CENTER" layoutX="-2.0" layoutY="59.0" prefHeight="18.0" prefWidth="481.0" text="Label">
                      <font>
                         <Font size="10.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <ImageView fitHeight="18.0" fitWidth="20.0" layoutX="10.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../img/favorite.png" />
@@ -306,11 +327,7 @@
                   </Button>
                </children>
             </Pane>
-            <TextField fx:id="vDepart" layoutX="124.0" layoutY="233.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
-            <TextField fx:id="vArrivee" layoutX="124.0" layoutY="340.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
-            <Button fx:id="openPrefBtn" layoutX="29.0" layoutY="28.0" mnemonicParsing="false" onAction="#openPref" stylesheets="@css/style.css" text="Préférence" textFill="WHITE" />
-            <Button fx:id="OpenFilterBtn" layoutX="453.0" layoutY="78.0" mnemonicParsing="false" stylesheets="@css/style.css" text="Filtrer" textFill="WHITE" />
          </children>
     </AnchorPane>
-  </children>
-</VBox>
+   </center>
+</BorderPane>
