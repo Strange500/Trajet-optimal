@@ -44,10 +44,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.Search">
+<BorderPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.Search">
    <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
@@ -70,9 +71,14 @@
    <left>
       <AnchorPane prefHeight="651.0" prefWidth="408.0" style="-fx-background-color: #E7E7E7;" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="vArrivee" layoutX="122.0" layoutY="342.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
             <TextField fx:id="vDepart" layoutX="122.0" layoutY="239.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
-            <Label alignment="CENTER" layoutX="102.0" layoutY="196.0" prefHeight="27.0" prefWidth="171.0" text="Ville de départ" textAlignment="CENTER">
+            <TextField fx:id="vArrivee" layoutX="122.0" layoutY="342.0" style="-fx-border-color: #282828; -fx-border-radius: 5;" />
+            <Button fx:id="recherche" layoutX="167.0" layoutY="407.0" mnemonicParsing="false" onAction="#search" stylesheets="@css/style.css" text="On y va !" textFill="WHITE">
+               <font>
+                  <Font name="Cantarell Regular" size="14.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutX="119.0" layoutY="193.0" prefHeight="27.0" prefWidth="171.0" text="Ville de départ" textAlignment="CENTER">
                <font>
                   <Font name="Cantarell Regular" size="20.0" />
                </font>
@@ -83,11 +89,6 @@
                </font>
             </Label>
             <Button fx:id="openPrefBtn" layoutX="23.0" layoutY="25.0" mnemonicParsing="false" onAction="#openPref" stylesheets="@css/style.css" text="Préférence" textFill="WHITE" />
-            <Button fx:id="recherche" layoutX="167.0" layoutY="407.0" mnemonicParsing="false" onAction="#search" stylesheets="@css/style.css" text="On y va !" textFill="WHITE">
-               <font>
-                  <Font name="Cantarell Regular" size="14.0" />
-               </font>
-            </Button>
          </children>
       </AnchorPane>
    </left>
@@ -95,238 +96,278 @@
     <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="581.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="OpenFilterBtn" alignment="CENTER" layoutX="46.0" layoutY="78.0" maxWidth="-Infinity" mnemonicParsing="false" stylesheets="@css/style.css" text="Filtrer" textFill="WHITE" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="21.0" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="156.0" text="Résultats" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="218.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="21.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="57.0" prefWidth="156.0" text="Résultats" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="218.0">
                <font>
                   <Font name="System Bold" size="32.0" />
                </font>
             </Label>
-            <Label fx:id="noResultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="290.0" maxWidth="1.7976931348623157E308" text="Faites une recherche pour avoir des résultats" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="140.0">
+            <Label fx:id="noResultLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="290.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" text="Faites une recherche pour avoir des résultats" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="140.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Pane fx:id="resultContainer" layoutX="42.0" layoutY="336.0" maxWidth="1.7976931348623157E308" prefHeight="257.0" prefWidth="482.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+            <AnchorPane fx:id="resultContainer" layoutX="12.0" layoutY="344.0" prefHeight="227.0" prefWidth="566.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
                <children>
-                  <AnchorPane fx:id="rPane1" layoutX="24.0" layoutY="53.0">
-                     <children>
-                        <Label fx:id="t1CO2" layoutX="71.0" layoutY="3.0" text="XX,X">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutY="3.0" text="Pollution : ">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="159.0" layoutY="3.0" text="Prix :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t1PRIX" layoutX="197.0" layoutY="3.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="262.0" layoutY="5.0" text="Temps :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t1TEMPS" layoutX="329.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="addBtn2" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-                  <Label layoutX="14.0" layoutY="8.0" text="Autres trajets">
+                  <Label layoutX="14.0" layoutY="14.0" text="Autres trajets">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <AnchorPane fx:id="rPane2" layoutX="24.0" layoutY="102.0">
+                  <VBox layoutX="515.0" layoutY="43.0" spacing="10.0" AnchorPane.rightAnchor="15.0">
                      <children>
-                        <Label fx:id="t2CO2" layoutX="71.0" layoutY="4.0" text="XX,X">
+                        <Button fx:id="addBtn2" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </Label>
-                        <Label layoutY="4.0" text="Pollution : ">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="159.0" layoutY="4.0" text="Prix :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t2PRIX" layoutX="197.0" layoutY="2.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                        </Button>
+                        <Button fx:id="addBtn3" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </Label>
-                        <Label layoutX="262.0" layoutY="4.0" text="Temps :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t2TEMPS" layoutX="329.0" layoutY="4.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                        </Button>
+                        <Button fx:id="addBtn4" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </Label>
-                        <Button fx:id="addBtn3" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
+                        </Button>
+                        <Button fx:id="addBtn5" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
                      </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="rPane3" layoutX="24.0" layoutY="152.0">
+                  </VBox>
+                  <VBox alignment="CENTER" fillWidth="false" layoutX="59.0" layoutY="43.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.leftAnchor="59.0" AnchorPane.rightAnchor="90.0">
                      <children>
-                        <Label fx:id="t3CO2" layoutX="71.0" layoutY="5.0" text="XX,X">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutY="4.0" text="Pollution : ">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="159.0" layoutY="4.0" text="Prix :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t3PRIX" layoutX="197.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="262.0" layoutY="5.0" text="Temps :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t3TEMPS" layoutX="329.0" layoutY="4.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="addBtn4" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
+                        <AnchorPane fx:id="rPane1">
+                           <children>
+                              <Label fx:id="t1CO2" layoutX="71.0" layoutY="3.0" text="XX,X">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutY="3.0" text="Pollution : ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="159.0" layoutY="3.0" text="Prix :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t1PRIX" layoutX="197.0" layoutY="3.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="262.0" layoutY="5.0" text="Temps :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t1TEMPS" layoutX="329.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane fx:id="rPane2" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label fx:id="t2CO2" layoutX="71.0" layoutY="4.0" text="XX,X">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutY="4.0" text="Pollution : ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="159.0" layoutY="4.0" text="Prix :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t2PRIX" layoutX="197.0" layoutY="2.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="262.0" layoutY="4.0" text="Temps :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t2TEMPS" layoutX="329.0" layoutY="4.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane fx:id="rPane3">
+                           <children>
+                              <Label fx:id="t3CO2" layoutX="71.0" layoutY="5.0" text="XX,X">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutY="4.0" text="Pollution : ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="159.0" layoutY="4.0" text="Prix :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t3PRIX" layoutX="197.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="262.0" layoutY="5.0" text="Temps :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t3TEMPS" layoutX="329.0" layoutY="4.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane fx:id="rPane4">
+                           <children>
+                              <Label fx:id="t4CO2" layoutX="71.0" layoutY="5.0" text="XX,X">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutY="5.0" text="Pollution : ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="159.0" layoutY="5.0" prefHeight="20.0" prefWidth="42.0" text="Prix :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t4PRIX" layoutX="197.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="262.0" layoutY="5.0" text="Temps :">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="t4TEMPS" layoutX="329.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" />
+                           </padding>
+                        </AnchorPane>
                      </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="rPane4" layoutX="24.0" layoutY="200.0">
-                     <children>
-                        <Label fx:id="t4CO2" layoutX="71.0" layoutY="5.0" text="XX,X">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutY="5.0" text="Pollution : ">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="159.0" layoutY="5.0" prefHeight="20.0" prefWidth="42.0" text="Prix :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t4PRIX" layoutX="197.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="262.0" layoutY="5.0" text="Temps :">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="t4TEMPS" layoutX="329.0" layoutY="5.0" prefHeight="20.0" prefWidth="62.0" text="XX">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="addBtn5" layoutX="391.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
+                  </VBox>
                </children>
-               <padding>
-                  <Insets top="15.0" />
-               </padding>
-            </Pane>
-            <Pane fx:id="recomendedPath" layoutX="42.0" layoutY="122.0" maxWidth="1.7976931348623157E308" prefHeight="153.0" prefWidth="481.0" style="-fx-border-color: #282828; -fx-border-radius: 10px;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+            </AnchorPane>
+            <AnchorPane fx:id="recomendedPath" layoutX="15.0" layoutY="122.0" style="-fx-border-color: #282828; -fx-border-radius: 10;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <children>
-                  <Label layoutX="35.0" layoutY="4.0" text="Trajets recommandés">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="PollutionReco" layoutX="59.0" layoutY="103.0" text="Pollution">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="PrixReco" alignment="CENTER" layoutX="244.0" layoutY="103.0" text="Prix">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="TempsReco" alignment="CENTER" layoutX="394.0" layoutY="103.0" text="Temps">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="cheminRecoLabel" alignment="CENTER" layoutX="-2.0" layoutY="59.0" prefHeight="18.0" prefWidth="481.0" text="Label">
+                  <HBox layoutX="14.0" layoutY="11.0">
+                     <children>
+                        <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../img/favorite.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label text="Trajets recommandés">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" fillHeight="false" layoutX="65.0" layoutY="103.0" spacing="70.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="89.0">
+                     <children>
+                        <AnchorPane>
+                           <children>
+                              <Label fx:id="PollutionReco" layoutX="33.0" text="Pollution">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../img/pollution.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <Label fx:id="PrixReco" alignment="CENTER" layoutX="33.0" text="Prix">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="25.0" fitWidth="28.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../img/billet.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <Label fx:id="TempsReco" alignment="CENTER" layoutX="35.0" text="Temps">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="25.0" fitWidth="28.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../img/horloge.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+                  <Label fx:id="cheminRecoLabel" alignment="CENTER" layoutX="37.0" layoutY="59.0" prefHeight="18.0" prefWidth="481.0" text="Label" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="18.0" fitWidth="20.0" layoutX="10.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/favorite.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="211.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/billet.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="28.0" layoutX="359.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/horloge.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="27.0" fitWidth="29.0" layoutX="26.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/pollution.png" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="addBtn1" layoutX="432.0" layoutY="14.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE">
+                  <Button fx:id="addBtn1" layoutX="518.0" layoutY="11.0" mnemonicParsing="false" onAction="#addToHistorique" prefHeight="15.0" prefWidth="16.0" stylesheets="@css/style.css" text="+" textFill="WHITE" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="11.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
                </children>
-            </Pane>
+            </AnchorPane>
          </children>
     </AnchorPane>
    </center>
