@@ -3,6 +3,7 @@ package tests.graphes;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -180,7 +181,7 @@ public class PlateformeTest {
         assertEquals(12, g.getG1().aretes().size());
         assertEquals(12, g.getG2().aretes().size());
         assertEquals(12, g.getG3().aretes().size());
-        g.ajouterArrete("villeA", "villeE", ModaliteTransport.TRAIN, 10, 10, 10);
+        g.ajouterArrete("villeA", "villeE", Map.of(TypeCout.CO2, 10.0, TypeCout.PRIX, 10.0, TypeCout.TEMPS, 10.0),ModaliteTransport.TRAIN);
         assertEquals(13, g.getG1().aretes().size());
         assertEquals(13, g.getG2().aretes().size());
         assertEquals(13, g.getG3().aretes().size());

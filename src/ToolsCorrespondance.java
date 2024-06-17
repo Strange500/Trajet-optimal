@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import fr.ulille.but.sae_s2_2024.Chemin;
@@ -109,8 +110,8 @@ public class ToolsCorrespondance extends Tools {
                 if (villeDonne.equals(villeBis) && modarr.equals(arrMod) && moddep.equals(depMod)) {
                     String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod),
                             ModaliteTransport.valueOf(depMod));
-                    g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), prix, pollution,
-                            temp);
+                    g.ajouterArrete(nomVille, nomVille + SUFFIXE, Map.of(TypeCout.PRIX, (double) prix, TypeCout.CO2, (double) pollution,
+                            TypeCout.TEMPS, (double) temp) ,ModaliteTransport.valueOf(depMod));
                     correspondanceNonRenseigne.remove(s);
                 }
                 cpt++;
@@ -125,7 +126,7 @@ public class ToolsCorrespondance extends Tools {
             // String villeBis = elt[0];
             String nomVille = buildLieuname(ville, ModaliteTransport.valueOf(arrMod),
                     ModaliteTransport.valueOf(depMod));
-            g.ajouterArrete(nomVille, nomVille + SUFFIXE, ModaliteTransport.valueOf(depMod), 0, 0, 0);
+            g.ajouterArrete(nomVille, nomVille + SUFFIXE, Plateforme.coutsNul ,ModaliteTransport.valueOf(depMod));
         }
     }
 
@@ -157,7 +158,7 @@ public class ToolsCorrespondance extends Tools {
                 for (String destLieu : destLieux) {
                     if (depLieu.split("_")[2].equals(destLieu.split("_")[1])) {
 
-                        g.ajouterArrete(depLieu + SUFFIXE, destLieu, modalite, prix, pollution, Duree);
+                        g.ajouterArrete(depLieu + SUFFIXE, destLieu, Map.of(TypeCout.PRIX, prix, TypeCout.CO2, pollution, TypeCout.TEMPS, (double) Duree), modalite);
                         // g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution,
                         // Duree);
                     }
@@ -171,7 +172,7 @@ public class ToolsCorrespondance extends Tools {
             for (String depLieu : depLieux) {
                 for (String destLieu : destLieux) {
                     if (depLieu.split("_")[2].equals(destLieu.split("_")[1])) {
-                        g.ajouterArrete(depLieu + SUFFIXE, destLieu, modalite, prix, pollution, Duree);
+                        g.ajouterArrete(depLieu + SUFFIXE, destLieu, Map.of(TypeCout.PRIX, (double) prix, TypeCout.CO2, (double) pollution, TypeCout.TEMPS,  (double) Duree), modalite);
                         // g.ajouterArrete(destLieu + SUFFIXE , depLieu, modalite, prix, pollution,
                         // Duree);
                     }

@@ -96,11 +96,11 @@ public class PlateformeCorrespondance extends Plateforme {
         // Lieu depart = this.getSommet(dep);
         // Lieu arrivee = this.getSommet(arr);
         for (String names : ToolsCorrespondance.buildLieuxNames(dep)) {
-            g.ajouterArrete(ALPHA, names + ToolsCorrespondance.SUFFIXE, ModaliteTransport.TRAIN, 0, 0, 0);
+            g.ajouterArrete(ALPHA, names + ToolsCorrespondance.SUFFIXE, Plateforme.coutsNul ,ModaliteTransport.TRAIN);
         }
 
         for (String names : ToolsCorrespondance.buildLieuxNames(arr)) {
-            g.ajouterArrete(names, OMEGA, ModaliteTransport.TRAIN, 0, 0, 0);
+            g.ajouterArrete(names, OMEGA, Plateforme.coutsNul ,ModaliteTransport.TRAIN);
         }
         // g.ajouterArrete(ALPHA, dep, ModaliteTransport.TRAIN, 0, 0, 0);
         // g.ajouterArrete(arr, OMEGA, ModaliteTransport.TRAIN, 0, 0, 0);
