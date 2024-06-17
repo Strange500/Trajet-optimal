@@ -197,7 +197,7 @@ Nous avons, dans l'ordre d'importance des critères pour le CO2, p1 = 1 / 450, p
 Nous avons alors C = 0.6*(1/450) + 0.35*(12/750) + 0.05*(55/960) = 0.00979.
 
 Le score du meilleur chemin est donc de 0.00979.
-Le score du deuxième chemin est de 0.0217.
+Le score du deuxième chemin est de 0,0231.
 Nous avons donc bien le score du premier chemin inférieur au second, ce qui nous permet d'arriver aux mêmes conclusions que dans l'exemple.
 
 ### Implémentation de la Version 3

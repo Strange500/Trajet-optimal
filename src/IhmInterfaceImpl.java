@@ -79,7 +79,6 @@ public class IhmInterfaceImpl implements IhmInterface {
         c1 = processValue(podiumTypeCout.getFirst(), p.getPoidsByTypeCout(chemin, podiumTypeCout.getFirst()));
         c2 = processValue(podiumTypeCout.getSecond(), p.getPoidsByTypeCout(chemin, podiumTypeCout.getSecond()));
         c3 = processValue(podiumTypeCout.getThird(), p.getPoidsByTypeCout(chemin, podiumTypeCout.getThird()));
-
         return (p1 * c1) + (p2 * c2) + (p3 * c3);
     }
 
