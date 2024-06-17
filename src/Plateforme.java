@@ -2,6 +2,8 @@ package src;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import fr.ulille.but.sae_s2_2024.AlgorithmeKPCC;
 import fr.ulille.but.sae_s2_2024.Chemin;
 import fr.ulille.but.sae_s2_2024.Lieu;
@@ -20,6 +22,9 @@ public class Plateforme {
     protected MultiGrapheOrienteValue g1;
     protected MultiGrapheOrienteValue g2;
     protected MultiGrapheOrienteValue g3;
+
+    public static Map<TypeCout, Double> coutsNul = Map.of(TypeCout.PRIX, 0.0, TypeCout.CO2, 0.0, TypeCout.TEMPS, 0.0);
+    
 
     /**
      * @constructor Plateforme
@@ -112,8 +117,8 @@ public class Plateforme {
         // Lieu depart = this.getSommet(dep);
         // Lieu arrivee = this.getSommet(arr);
 
-        g.ajouterArrete(ALPHA, dep, ModaliteTransport.TRAIN, 0, 0, 0);
-        g.ajouterArrete(arr, OMEGA, ModaliteTransport.TRAIN, 0, 0, 0);
+        g.ajouterArrete(ALPHA, dep,  coutsNul, ModaliteTransport.TRAIN);
+        g.ajouterArrete(arr, OMEGA, coutsNul, ModaliteTransport.TRAIN);
 
         Lieu alpha = g.getSommet(ALPHA);
         Lieu omega = g.getSommet(OMEGA);
@@ -268,8 +273,7 @@ public class Plateforme {
      * @param duree     la durée de l'arrête
      * @return vrai si l'arrête a été ajoutée
      */
-    public boolean ajouterArrete(String depart, String arrivee, ModaliteTransport modalite, double prix,
-            double pollution, double duree) {
+    public boolean ajouterArrete(String depart, String arrivee, Map<TypeCout, Double> couts, ModaliteTransport modalite) {
         // Lieu lDepart = new LieuImpl(depart);
         // Lieu lArrivee = new LieuImpl(arrivee);
         this.ajouterLieux(arrivee);
@@ -277,8 +281,8 @@ public class Plateforme {
         Lieu g1Depart = this.getSommet(depart);
         Lieu g1Arrivee = this.getSommet(arrivee);
         Trancon t = new TranconImpl(g1Depart, g1Arrivee, modalite);
-        return this.ajouterArreteGraph(g1, t, prix) && this.ajouterArreteGraph(g2, t, pollution)
-                && this.ajouterArreteGraph(g3, t, duree);
+        return this.ajouterArreteGraph(g1, t, couts.get(TypeCout.PRIX)) && this.ajouterArreteGraph(g2, t, couts.get(TypeCout.CO2))
+                && this.ajouterArreteGraph(g3, t, couts.get(TypeCout.TEMPS));
     }
 
     /**
@@ -292,6 +296,12 @@ public class Plateforme {
             }
         }
         return null;
+    }
+
+    public List<Trancon> getTrancons() {
+        List<Trancon> trancons = new ArrayList<Trancon>();
+        trancons.addAll(g1.aretes());
+        return trancons;
     }
 
     /**
@@ -335,6 +345,8 @@ public class Plateforme {
         }
         return false;
     }
+
+
 
     /**
      * @return une chaîne de caractères représentant la plateforme

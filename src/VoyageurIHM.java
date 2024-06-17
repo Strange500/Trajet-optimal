@@ -23,9 +23,6 @@ public class VoyageurIHM extends VoyageurCorrespondance {
     @Override
     public List<Chemin> computeBestPathTrigger() throws CheminInexistantException {
         if (ToolsCorrespondance.donneesValides(this.getDATA())) {
-            // PlateformeCorrespondance g =
-            // ToolsCorrespondance.initPlateforme(this.getDATA(), this.getCORRESPONDANCE());
-            // System.out.println(g.get);
             if (g.hasPathByModalite(this.depart, this.arrivee, this.modalite)) {
 
                 List<Chemin> chemins = g.getPathByModaliteAndTypeCout(this.depart, this.arrivee, this.modalite,

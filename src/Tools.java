@@ -2,6 +2,7 @@ package src;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import fr.ulille.but.sae_s2_2024.ModaliteTransport;
 import fr.ulille.but.sae_s2_2024.Chemin;
@@ -38,8 +39,8 @@ public class Tools {
             double pollution = Double.parseDouble(elements[CO2_IDX]);
             int Duree = Integer.parseInt(elements[TEMPS_IDX]);
 
-            g.ajouterArrete(depart, destination, modalite, prix, pollution, Duree);
-            g.ajouterArrete(destination, depart, modalite, prix, pollution, Duree);
+            g.ajouterArrete(depart, destination, Map.of(TypeCout.PRIX, (double) prix,TypeCout.CO2, (double) pollution,TypeCout.TEMPS, (double) Duree), modalite);
+            g.ajouterArrete(destination, depart, Map.of(TypeCout.PRIX, (double) prix,TypeCout.CO2, (double) pollution,TypeCout.TEMPS, (double) Duree), modalite);
         }
         return g;
 
