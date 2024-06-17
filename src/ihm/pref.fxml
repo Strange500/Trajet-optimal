@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.prefController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.prefController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -78,7 +78,7 @@
                <children>
                   <TextField fx:id="prixMax" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="46.0" onAction="#saveSeuil" prefHeight="26.0" prefWidth="87.0" />
                   <TextField fx:id="CO2Max" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="103.0" onAction="#saveSeuil" prefHeight="26.0" prefWidth="87.0" />
-                  <TextField fx:id="TempsMax" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="158.0" onAction="#saveSeuil" prefHeight="26.0" prefWidth="87.0" />
+                  <TextField fx:id="tempsMax" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="158.0" onAction="#saveSeuil" prefHeight="26.0" prefWidth="87.0" />
                   <Label layoutX="37.0" layoutY="11.0" text="Seuil maximum :">
                      <font>
                         <Font size="14.0" />

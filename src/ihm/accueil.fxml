@@ -54,7 +54,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="Fichier">
           <items>
-            <Menu mnemonicParsing="false" text="Ouvrir un CSV" />
+            <Menu mnemonicParsing="false" onAction="#openCSV" text="Ouvrir un CSV" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#quit" text="Quit" />
           </items>
@@ -313,7 +313,7 @@
                      <children>
                         <AnchorPane>
                            <children>
-                              <Label fx:id="PollutionReco" layoutX="33.0" text="Pollution">
+                              <Label fx:id="pollutionReco" layoutX="33.0" text="Pollution">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -327,7 +327,7 @@
                         </AnchorPane>
                         <AnchorPane>
                            <children>
-                              <Label fx:id="PrixReco" alignment="CENTER" layoutX="33.0" text="Prix">
+                              <Label fx:id="prixReco" alignment="CENTER" layoutX="33.0" text="Prix">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -341,7 +341,7 @@
                         </AnchorPane>
                         <AnchorPane>
                            <children>
-                              <Label fx:id="TempsReco" alignment="CENTER" layoutX="35.0" text="Temps">
+                              <Label fx:id="tempsReco" alignment="CENTER" layoutX="35.0" text="Temps">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
