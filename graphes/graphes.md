@@ -101,7 +101,7 @@ Version 2 : multimodalité et prise en compte des correspondances
 *Donner la solution du problème du point de vue de l'utilisatrice (quels sont les itinéraires possibles, lesquels sont optimaux et pourquoi).*
 *Il est possible d'utiliser le même exemple que pour la Version 1 ou le modifier si pertinent.*
 ![illustration des chemins possible](./img/image.png)
-Dans cet exemple, l'utilisateur n'est intéressé que par un seul critère et est capable de prendre n'importe quel moyen de transport. Il cherche à se rendre de la ville 1 à la ville 2. Sachant qu'il y a une correspondance à la ville 3 donnant un malus de 3, le meilleur chemin est 1 -> 3 -> 4 (6). Ce chemin permet d'optimiser le trajet, peu importe le moyen de transport.Le deuxieme meilleur chemin implique de faire des allez retour entre 1 et 3, ce qui donnerait : 1 -> 3 -> 1 -> 3 -> 4 (8).
+Dans cet exemple, l'utilisateur n'est intéressé que par un seul critère et est capable de prendre n'importe quel moyen de transport. Il cherche à se rendre de la ville 1 à la ville 4. Sachant qu'il y a une correspondance à la ville 3 donnant un malus de 3, le meilleur chemin est 1 -> 3 -> 4 (6). Ce chemin permet d'optimiser le trajet, peu importe le moyen de transport.Le deuxieme meilleur chemin implique de faire des allez retour entre 1 et 3, ce qui donnerait : 1 -> 3 -> 1 -> 3 -> 4 (8).
    L'autre chemin passant par la ville 2 n'a pas de malus de correspondance, mais il est le plus long (poids de 9) parmi les chemins possibles (sans compter les chemin qui ont une boucle).
 
 ### Modèle pour l'exemple
@@ -154,6 +154,58 @@ Enfin, pour résoudre le problème, il ne reste plus qu'à lier le sommet ALPHA 
 
 Version 3 : optimisation multi-critères
 ---
+### Présentation d'un exemple
+
+![illustration des chemins possible](./img/exempleV3.png)
+Dans cet exemple, l'utilisateur est intéressé par plusieurs critères et est capable de prendre n'importe quel moyen de transport. Il cherche à se rendre de la ville 1 à la ville 4. Sachant qu'il y a une correspondance à la ville 3 donnant un malus de 3 dans tous les critères. Admettons que l'utilisateur ait un ordre de préférence : (CO2 > prix > temps).
+
+Alors, une bonne solution serait le chemin 1 -> 2 -> 4 car il permet de minimiser à la fois le premier et le second critère (1 kg de CO2, 55 min et 12 €). L'autre chemin 1 -> 3 -> 4 correspond beaucoup moins bien aux critères de l'utilisateur (8,5 kg de CO2, 48 min et 20 €). Si l'utilisateur avait donné une plus grande importance au temps de trajet, alors sans doute que le second chemin aurait été le meilleur.
+
+![modeliasation graphe V2](./img/graphev2.png)
+
+
+
+Pour modéliser ce problème, nous avons décidé de représenter les correspondances par des arêtes entre deux sommets précis. Ainsi, chaque correspondance se trouve entre un sommet et un autre ayant le suffixe '_BIS'. Ici, l'utilisateur partant de ALPHA devra suivre le chemin suivant pour obtenir le plus court trajet en optimisant les critere suivant cette ordre (Co2 > prix > temps):
+
+```ALPHA -> 1_TRAIN_TRAIN_BIS -> 2_TRAIN_TRAIN -> 2_TRAIN_TRAIN_BIS -> 4_TRAIN_TRAIN -> OMEGA```
+
+Ce trajet emets 1kg de Co2, prend 55mn et coute 12€.
+
+Le dernier meilleur chemin est :
+
+```ALPHA -> 1_TRAIN_AVION_BIS -> 3_AVION_TRAIN -> 3_AVION_TRAIN_BIS -> 4_TRAIN_TRAIN -> OMEGA```
+avec une emission de 8.5kg de Co2, 48mn et 17€.
+
+Ce modèle permet de bien représenter les correspondances et d'optimiser le trajet en fonction des critères donnés.
+
+À noter qu'ALPHA est directement lié aux '_BIS' pour éviter les coûts de correspondance de la ville de départ. OMEGA esquive également les '_BIS' pour les mêmes raisons. Donc, dans les chemins ci-dessus, la modalité d'arrivée du premier sommet que l'on atteint en partant d'ALPHA n'a aucune importance et pourrait donc être BUS, TRAIN, ou encore AVION. Le même principe s'applique pour OMEGA, mais concernant les modalités de départ des sommets le précédant.
+
+Chaque nom de lieu suit ce format : NOM_ModArr_ModDep(_BIS), où ModArr est le moyen de transport permettant d'atteindre ce lieu et ModDep est le moyen de transport quittant ce lieu.
+
+Pour hiérarchiser les chemins entre eux du meilleur selon les critères donnés au pire, nous avons opté pour un système de score.
+
+Pour calculer le score, nous suivons cette formule : c = (p1c1) + (p2c2) + (p3c3) où c est le score attribué au chemin, p1, p2 et p3 sont les poids pondérés du chemin suivant les différents critères, et c1, c2 et c3 sont les coefficients que l'on donne à chaque critère avec c1 + c2 + c3 = 1.
+
+Pour calculer les p, on suit cette formule : p = v/pmax, où p est le poids pondéré, v est la valeur du poids, et pmax est une constante représentant le poids maximum. Cette valeur est arbitraire et doit être choisie judicieusement pour pouvoir avoir un classement cohérent.
+
+Si l'on reprend notre exemple, disons que le temps maximum est de 960 min, le prix maximum 750 € et les émissions maximales de 450 kg.
+
+Pour les coefficients, nous décidons de leur donner ces valeurs : c1 = 0.6, c2 = 0.35 et c3 = 0.05.
+
+Calculons le score du premier chemin de l'exemple :
+Nous avons, dans l'ordre d'importance des critères pour le CO2, p1 = 1 / 450, p2 = 12 / 750 et p3 = 55 / 960.
+Nous avons alors C = 0.6*(1/450) + 0.35*(12/750) + 0.05*(55/960) = 0.00979.
+
+Le score du meilleur chemin est donc de 0.00979.
+Le score du deuxième chemin est de 0.0217.
+Nous avons donc bien le score du premier chemin inférieur au second, ce qui nous permet d'arriver aux mêmes conclusions que dans l'exemple.
+
+### Implémentation de la Version 3
+
+*Écrire une classe de test qui reprend l'exemple, définit toutes les données de la plateforme, construit le graphe et calcule la solution.*
+*Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
+*Donner ici le **nom complet de la classe**, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
+*En particulier, il peut s'agir de la même classe que celle donnée pour la Version 1, mais un commit différent.*
 
 *Suivre le même plan que pour les deux autres sections.*
 *Pour l'exemple, veillez à spécifier toutes les données des problèmes. En particulier, on ajoute ici l'expression des préférences d'optimisation de l'utilisatrice.*
