@@ -40,7 +40,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-            <LineChart fx:id="chartTemps" title="évolutioj du temps de trasnport">
+            <LineChart fx:id="chartTemps" title="évolution du temps de transport">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
