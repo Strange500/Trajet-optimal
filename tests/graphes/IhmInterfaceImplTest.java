@@ -46,6 +46,9 @@ public class IhmInterfaceImplTest {
         p.setFirst(TypeCout.CO2);
         p.setSecond(TypeCout.PRIX);
         p.setThird(TypeCout.TEMPS); 
+        i.setSeuilCO2(450);
+        i.setSeuilPrix(750);
+        i.setSeuilTemps(960);
     }
 
     @Test
@@ -90,13 +93,13 @@ public class IhmInterfaceImplTest {
 
     @Test
     void testGetTransport() {
-        Set<ModaliteTransport> transp = Set.of(ModaliteTransport.values());
+        Set<String> transp = Set.of(ModaliteTransport.AVION.toString(), ModaliteTransport.BUS.toString(), ModaliteTransport.TRAIN.toString());
         assertEquals(transp, i.getTransport());
     }
 
     @Test
     void testGetCriteria() {
-        Set<TypeCout> crit = Set.of(TypeCout.values());
+        Set<String> crit = Set.of(TypeCout.CO2.toString(), TypeCout.PRIX.toString(), TypeCout.TEMPS.toString());
         assertEquals(crit, i.getCriteria());
     }
 

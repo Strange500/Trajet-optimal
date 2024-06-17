@@ -15,7 +15,7 @@ import java.util.List;
 import fr.ulille.but.sae_s2_2024.Chemin;
 
 public class HistoriqueItem implements Serializable {
-    private static final String FILENAME = "historique.ser";
+    public static final String FILENAME = "historique.ser";
     private LocalDate date;
     private String che;
     private double prix;
@@ -111,6 +111,51 @@ public class HistoriqueItem implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((date == null) ? 0 : date.hashCode());
+        result = prime * result + ((che == null) ? 0 : che.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(prix);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(pollution);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        result = prime * result + temps;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        HistoriqueItem other = (HistoriqueItem) obj;
+        if (date == null) {
+            if (other.date != null)
+                return false;
+        } else if (!date.equals(other.date))
+            return false;
+        if (che == null) {
+            if (other.che != null)
+                return false;
+        } else if (!che.equals(other.che))
+            return false;
+        if (Double.doubleToLongBits(prix) != Double.doubleToLongBits(other.prix))
+            return false;
+        if (Double.doubleToLongBits(pollution) != Double.doubleToLongBits(other.pollution))
+            return false;
+        if (temps != other.temps)
+            return false;
+        return true;
     }
 
     public static void main(String[] args) {
