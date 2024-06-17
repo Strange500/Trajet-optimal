@@ -10,10 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.exception.CheminInexistantException;
+import src.CheminImpl;
+import src.LieuImpl;
 import src.PlateformeCorrespondance;
 import src.TypeCout;
 import src.Tools;
 import src.ToolsCorrespondance;
+import src.TranconImpl;
 
 public class ToolsTest {
 
@@ -180,6 +183,151 @@ public class ToolsTest {
         } catch (CheminInexistantException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testGetLieuxWithDepModality() {
+        ModaliteTransport m = ModaliteTransport.TRAIN;
+        List<String> res = ToolsCorrespondance.getLieuxWithDepModality("test", m);
+        for (String l : res) {
+            assertEquals(l.split("_")[2], m.toString());
+        }
+    }
+
+    @Test
+    public void testGetLieuxWithArrModality() {
+        ModaliteTransport m = ModaliteTransport.TRAIN;
+        List<String> res = ToolsCorrespondance.getLieuxWithArrModality("test", m);
+        for (String l : res) {
+            assertEquals(l.split("_")[1], m.toString());
+        }
+    }
+
+    @Test
+    public void testCleanLieux() {
+        String res = "test_toto";
+        assertEquals(ToolsCorrespondance.cleanLieux(res), "test");
+    }
+
+    @Test
+    public void testEqualsArrete() {
+        Lieu l1 = new LieuImpl("villeA_test_test");
+        Lieu l11 = new LieuImpl("villeA_test_toto");
+        Lieu l12 = new LieuImpl("villeA_toto_test");
+        Lieu l2 = new LieuImpl("villeB_test_test");
+        Lieu l21 = new LieuImpl("villeB_test_toto");
+        Lieu l22 = new LieuImpl("villeB_toto_test");
+        Lieu l3 = new LieuImpl("villeC_test_test");
+
+        Trancon a1 = new TranconImpl(l1, l2, ModaliteTransport.TRAIN);
+        Trancon a11 = new TranconImpl(l11, l21, ModaliteTransport.TRAIN);
+        Trancon a12 = new TranconImpl(l12, l22, ModaliteTransport.TRAIN);
+
+        Trancon a2 = new TranconImpl(l1, l2, ModaliteTransport.TRAIN);
+        Trancon a21 = new TranconImpl(l12, l21, ModaliteTransport.TRAIN);
+        Trancon a22 = new TranconImpl(l11, l22, ModaliteTransport.TRAIN);
+
+        Trancon a3 = new TranconImpl(l1, l3, ModaliteTransport.TRAIN);
+        
+
+        assertTrue(ToolsCorrespondance.equalsArrete(a1, a2));
+        assertTrue(ToolsCorrespondance.equalsArrete(a11, a2));
+        assertTrue(ToolsCorrespondance.equalsArrete(a12, a2));
+        assertTrue(ToolsCorrespondance.equalsArrete(a1, a21));
+        assertTrue(ToolsCorrespondance.equalsArrete(a1, a22));
+        assertTrue(ToolsCorrespondance.equalsArrete(a11, a21));
+        assertTrue(ToolsCorrespondance.equalsArrete(a12, a22));
+        assertFalse(ToolsCorrespondance.equalsArrete(a1, a3));
+
+    }
+
+    @Test
+    public void testEqualsChemin() {
+        Lieu l1 = new LieuImpl("villeA_test_test");
+        Lieu l11 = new LieuImpl("villeA_test_toto");
+        Lieu l12 = new LieuImpl("villeA_toto_test");
+        Lieu l2 = new LieuImpl("villeB_test_test");
+        Lieu l21 = new LieuImpl("villeB_test_toto");
+        Lieu l22 = new LieuImpl("villeB_toto_test");
+        Lieu l3 = new LieuImpl("villeC_test_test");
+
+        Trancon a1 = new TranconImpl(l1, l2, ModaliteTransport.TRAIN);
+        Trancon a11 = new TranconImpl(l11, l21, ModaliteTransport.TRAIN);
+        Trancon a12 = new TranconImpl(l12, l22, ModaliteTransport.TRAIN);
+
+        Trancon a2 = new TranconImpl(l1, l2, ModaliteTransport.TRAIN);
+        Trancon a21 = new TranconImpl(l12, l21, ModaliteTransport.TRAIN);
+        Trancon a22 = new TranconImpl(l11, l22, ModaliteTransport.TRAIN);
+
+        Trancon a3 = new TranconImpl(l1, l3, ModaliteTransport.TRAIN);
+
+        Chemin c1 = new CheminImpl();
+        c1.aretes().add(a1);
+        c1.aretes().add(a11);
+        c1.aretes().add(a12);
+
+        Chemin c2 = new CheminImpl();
+        c2.aretes().add(a2);
+        c2.aretes().add(a21);
+        c2.aretes().add(a22);
+
+        Chemin c3 = new CheminImpl();
+        c3.aretes().add(a1);
+        c3.aretes().add(a11);
+        c3.aretes().add(a12);
+
+        assertTrue(ToolsCorrespondance.equalsChemin(c1, c2));
+        assertTrue(ToolsCorrespondance.equalsChemin(c1, c3));
+        assertTrue(ToolsCorrespondance.equalsChemin(c2, c3));
+        assertFalse(ToolsCorrespondance.equalsChemin(c1, new CheminImpl()));
+
+    }
+
+    @Test
+    public void testRemoveDuplicates() {
+        Lieu l1 = new LieuImpl("villeA_test_test");
+        Lieu l11 = new LieuImpl("villeA_test_toto");
+        Lieu l12 = new LieuImpl("villeA_toto_test");
+        Lieu l2 = new LieuImpl("villeB_test_test");
+        Lieu l21 = new LieuImpl("villeB_test_toto");
+        Lieu l22 = new LieuImpl("villeB_toto_test");
+        Lieu l3 = new LieuImpl("villeC_test_test");
+
+        Trancon a1 = new TranconImpl(l1, l2, ModaliteTransport.TRAIN);
+        Trancon a11 = new TranconImpl(l11, l21, ModaliteTransport.TRAIN);
+        Trancon a12 = new TranconImpl(l12, l22, ModaliteTransport.TRAIN);
+
+        Trancon a2 = new TranconImpl(l1, l2, ModaliteTransport.TRAIN);
+        Trancon a21 = new TranconImpl(l12, l21, ModaliteTransport.TRAIN);
+        Trancon a22 = new TranconImpl(l11, l22, ModaliteTransport.TRAIN);
+
+        Trancon a3 = new TranconImpl(l1, l3, ModaliteTransport.TRAIN);
+
+        Chemin c1 = new CheminImpl();
+        c1.aretes().add(a1);
+        c1.aretes().add(a11);
+        c1.aretes().add(a12);
+
+        Chemin c2 = new CheminImpl();
+        c2.aretes().add(a2);
+        c2.aretes().add(a21);
+        c2.aretes().add(a22);
+
+        Chemin c3 = new CheminImpl();
+        c3.aretes().add(a1);
+        c3.aretes().add(a11);
+        c3.aretes().add(a3);
+
+        List<Chemin> ch = new ArrayList<Chemin>();
+        ch.add(c1);
+        ch.add(c2);
+        ch.add(c3);
+        ch.add(c1);
+        ch.add(c2);
+        ch.add(c3);
+
+        List<Chemin> res = ToolsCorrespondance.removeDuplicates(ch, 3);
+        assertEquals(2, res.size());
     }
 
     // Tools.applyThreshold(p, ch1, TypeCout.PRIX, 20);

@@ -85,7 +85,7 @@ public class ToolsCorrespondance extends Tools {
         for (String s : buildLieuxNames(ville)) {
 
             correspondanceNonRenseigne.add(s);
-            // on recupere le nom de la ville ainsi qie les modalités de départ et d'arrivée
+            // on recupere le nom de la ville ainsi que les modalités de départ et d'arrivée
             String[] elt = s.split("_");
             String arrMod = elt[1].toUpperCase();
             String depMod = elt[2].toUpperCase();
