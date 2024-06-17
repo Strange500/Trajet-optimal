@@ -95,7 +95,6 @@
    <center>
     <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="581.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="OpenFilterBtn" alignment="CENTER" layoutX="46.0" layoutY="78.0" maxWidth="-Infinity" mnemonicParsing="false" stylesheets="@css/style.css" text="Filtrer" textFill="WHITE" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="21.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="57.0" prefWidth="156.0" text="Résultats" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="218.0">
                <font>
                   <Font name="System Bold" size="32.0" />

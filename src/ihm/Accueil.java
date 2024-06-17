@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.io.IOException;
 
-public class Accueildemo extends Application {
+public class Accueil extends Application {
   @FXML
   TextField vDepart;
 

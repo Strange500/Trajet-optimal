@@ -72,13 +72,13 @@ public class Search  {
     Label cheminRecoLabel;
 
     @FXML
-    Label PollutionReco;
+    Label pollutionReco;
 
     @FXML
-    Label PrixReco;
+    Label prixReco;
 
     @FXML
-    Label TempsReco;
+    Label tempsReco;
 
     @FXML
     Label t1CO2;
@@ -115,9 +115,6 @@ public class Search  {
 
     @FXML
     Label t4TEMPS;
-
-    @FXML
-    Button openFilterBtn;
 
     @FXML
     Button addBtn1;
@@ -244,9 +241,9 @@ public class Search  {
         cheminRecoLabel
                 .setText(ToolsCorrespondance.cheminWithCorreArrow(bestResults.get(scores.get(0)), podium.getSecond()));
         Map<TypeCout, Double> poids = ihmInterface.getCheminPoids(bestResults.get(scores.get(0)));
-        PollutionReco.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg de CO2");
-        PrixReco.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
-        TempsReco.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
+        pollutionReco.setText(formatDouble(poids.get(TypeCout.CO2)) + "Kg de CO2");
+        prixReco.setText(formatDouble(poids.get(TypeCout.PRIX)) + "€");
+        tempsReco.setText(convertToTempsTarjet(poids.get(TypeCout.TEMPS)));
     }
 
     String formatDouble(Double d) {
@@ -483,9 +480,9 @@ public class Search  {
                 return;
             }
             historiqueItems.add(
-                    new HistoriqueItem(cheminRecoLabel.getText(), parseDouble(PrixReco.getText().replace("€", "")),
-                            parseDouble(PollutionReco.getText().split("Kg")[0]),
-                            (double) prefController.convertToMinutes(TempsReco.getText().replace("h", ":"))));
+                    new HistoriqueItem(cheminRecoLabel.getText(), parseDouble(prixReco.getText().replace("€", "")),
+                            parseDouble(pollutionReco.getText().split("Kg")[0]),
+                            (double) prefController.convertToMinutes(tempsReco.getText().replace("h", ":"))));
         } else if (addBtn == addBtn2) {
             if (bestResults.size() < 2) {
                 return;

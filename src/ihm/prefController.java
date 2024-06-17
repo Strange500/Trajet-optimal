@@ -44,7 +44,7 @@ public class prefController {
     TextField CO2Max;
 
     @FXML
-    TextField TempsMax;
+    TextField tempsMax;
 
     @FXML
     Label seuilError;
@@ -131,7 +131,7 @@ public class prefController {
 
         this.prixMax.setText(String.valueOf(Search.currentInstance.getSeuilPrix()));
         this.CO2Max.setText(String.valueOf(Search.currentInstance.getSeuilCO2()));
-        this.TempsMax.setText(formatToHour(Search.currentInstance.getSeuilTemps()));
+        this.tempsMax.setText(formatToHour(Search.currentInstance.getSeuilTemps()));
 
     }
 
@@ -167,7 +167,7 @@ public class prefController {
         try {
             Search.currentInstance.setSeuilPrix(Double.parseDouble(prixMax.getText()));
             Search.currentInstance.setSeuilCO2(Double.parseDouble(CO2Max.getText()));
-            Search.currentInstance.setSeuilTemps(convertToMinutes(TempsMax.getText()));
+            Search.currentInstance.setSeuilTemps(convertToMinutes(tempsMax.getText()));
             seuilError.setVisible(false);
         } catch (NumberFormatException e) {
             seuilError.setVisible(true);
