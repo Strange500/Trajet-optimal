@@ -60,7 +60,7 @@ public class IhmInterfaceImpl implements IhmInterface {
         return criteria;
     }
 
-    private Double processValue(TypeCout critere, double value) {
+    public Double processValue(TypeCout critere, double value) {
         switch (critere) {
             case TEMPS:
                 return value / MAX_TEMPS;
@@ -72,7 +72,7 @@ public class IhmInterfaceImpl implements IhmInterface {
         return Double.valueOf(0);
     }
 
-    private Double getScore(Chemin chemin, Podium<TypeCout> podiumTypeCout) {
+    public Double getScore(Chemin chemin, Podium<TypeCout> podiumTypeCout) {
         double c1, c2, c3;
         double p1 = 0.6, p2 = 0.35, p3 = 0.05;
         PlateformeCorrespondance p = voyageur.getPlateforme();

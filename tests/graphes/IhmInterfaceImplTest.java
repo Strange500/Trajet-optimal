@@ -6,16 +6,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.ulille.but.sae_s2_2024.*;
 import src.exception.CheminInexistantException;
+import src.CheminImpl;
 import src.IhmInterfaceImpl;
+import src.LieuImpl;
 import src.PlateformeCorrespondance;
 import src.Podium;
 import src.ToolsCorrespondance;
+import src.TranconImpl;
 import src.TypeCout;
 import src.VoyageurCorrespondance;
 
@@ -46,6 +50,7 @@ public class IhmInterfaceImplTest {
 
     @Test
     void testComputeBestPath() {
+        // test du systeme de score et des meilleurs chemins
         try {
             Map<Double, Chemin> ch1 = i.getBestResults(p, "1", "4");
             List<Double> keys = new ArrayList<Double>(ch1.keySet());
@@ -67,5 +72,64 @@ public class IhmInterfaceImplTest {
             assertFalse(true);
         }
     }
+
+    @Test
+    void testGetStartCity() {
+        Set<String> cities = Set.of("1", "2", "3", "4");
+
+        assertEquals(cities, i.getStartCity());
+        assertEquals(cities, i.getDestinationCity());
+    }
+
+    @Test
+    void testGetDestinationCity() {
+        Set<String> cities = Set.of("1", "2", "3", "4");
+
+        assertEquals(cities, i.getDestinationCity());
+    }
+
+    @Test
+    void testGetTransport() {
+        Set<ModaliteTransport> transp = Set.of(ModaliteTransport.values());
+        assertEquals(transp, i.getTransport());
+    }
+
+    @Test
+    void testGetCriteria() {
+        Set<TypeCout> crit = Set.of(TypeCout.values());
+        assertEquals(crit, i.getCriteria());
+    }
+
+    @Test
+    void processValueTest() {
+        i.setSeuilCO2(0.1);
+        i.setSeuilPrix(0.1);
+        i.setSeuilTemps(0.1);
+
+        assertEquals(0.1, i.getSeuilCO2());
+        assertEquals(0.1, i.getSeuilPrix());
+        assertEquals(0.1, i.getSeuilTemps());
+
+        assertEquals(1, i.processValue(TypeCout.CO2, 0.1));
+        assertEquals(1, i.processValue(TypeCout.PRIX, 0.1));
+        assertEquals(1, i.processValue(TypeCout.TEMPS, 0.1));
+
+        assertEquals(0.5, i.processValue(TypeCout.CO2, 0.05));
+        assertEquals(0.5, i.processValue(TypeCout.PRIX, 0.05));
+        assertEquals(0.5, i.processValue(TypeCout.TEMPS, 0.05));
+    }
+
+    @Test
+    void testSetPreferredTransport() {
+        i.setPreferredTransport(ModaliteTransport.AVION);
+        assertEquals(ModaliteTransport.AVION, i.getPreferredTransport());
+    }
+
+    
+
+    
+
+
+
 
 }
