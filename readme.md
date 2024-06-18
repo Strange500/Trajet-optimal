@@ -7,10 +7,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Accueildemo",
+            "name": "Accueil",
             "request": "launch",
-            "mainClass": "src.ihm.Accueildemo",
-            "projectName": "B6_e071b73",
+            "mainClass": "src.ihm.Accueil",
             "vmArgs" : "--module-path "JAVAFX/LIB" --add-modules=javafx.controls,javafx.fxml --add-exports javafx.base/com.sun.javafx.event=ALL-UNNAMED",
         }
     ]
