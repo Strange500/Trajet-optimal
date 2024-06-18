@@ -147,7 +147,7 @@ Nous avons donc bien le score du premier chemin inférieur au second, ce qui nou
 
 
 
-*Donner ici le **nom complet de la classe**, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
+*Donner ici le **IhmInterfaceImplTest**, **17/06/2024 cb5e9e081c92e64f76ff4bbba25974003689e91c** et un **https://gitlab.univ-lille.fr/sae2.01-2.02/2024/B6/-/blob/cb5e9e081c92e64f76ff4bbba25974003689e91c/tests/graphes/IhmInterfaceImplTest.java***.
 
 
 ----------------------------------------------------
