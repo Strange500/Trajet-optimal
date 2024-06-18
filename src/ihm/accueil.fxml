@@ -88,7 +88,7 @@
                   <Font name="Cantarell Regular" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="openPrefBtn" layoutX="23.0" layoutY="25.0" mnemonicParsing="false" onAction="#openPref" stylesheets="@css/style.css" text="Préférence" textFill="WHITE" />
+            <Button fx:id="openPrefBtn" layoutX="23.0" layoutY="25.0" mnemonicParsing="false" onAction="#openPref" stylesheets="@css/style.css" text="Préférences" textFill="WHITE" />
          </children>
       </AnchorPane>
    </left>
@@ -302,7 +302,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Label text="Trajets recommandés">
+                        <Label text="Trajet recommandé">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>

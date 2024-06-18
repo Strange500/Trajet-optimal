@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.ihm.HistoriqueController">
    <center>
       <ScrollPane fx:id="scrollContainer" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="890.0" BorderPane.alignment="CENTER" />
@@ -32,7 +31,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-            <LineChart fx:id="chartPrix" title="évolution du prix de vos trajet">
+            <LineChart fx:id="chartPrix" title="évolution du prix de vos trajets">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
