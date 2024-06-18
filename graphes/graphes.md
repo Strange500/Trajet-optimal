@@ -110,16 +110,16 @@ Alors, une bonne solution serait le chemin 1 -> 2 -> 4 car il permet de minimise
 
 
 
-Pour modéliser ce problème, nous avons décidé de représenter les correspondances par des arêtes entre deux sommets précis. Ainsi, chaque correspondance se trouve entre un sommet et un autre ayant le suffixe '_BIS'. Ici, l'utilisateur partant de ALPHA devra suivre le chemin suivant pour obtenir le plus court trajet en optimisant les critere suivant cette ordre (Co2 > prix > temps):
+Pour modéliser ce problème, nous avons décidé de représenter les correspondances par des arêtes entre deux sommets précis. Ainsi, chaque correspondance se trouve entre un sommet et un autre ayant le suffixe '_BIS'. Ici, l'utilisateur partant de ALPHA devra suivre le chemin suivant pour obtenir le plus court trajet en optimisant les criteres suivants cet ordre (Co2 > prix > temps):
 
 ```ALPHA -> 1_TRAIN_TRAIN_BIS -> 2_TRAIN_TRAIN -> 2_TRAIN_TRAIN_BIS -> 4_TRAIN_TRAIN -> OMEGA```
 
-Ce trajet emets 1kg de Co2, prend 55mn et coute 12€.
+Ce trajet émet 1kg de Co2, prend 55min et coûte 12€.
 
 Le dernier meilleur chemin est :
 
 ```ALPHA -> 1_TRAIN_AVION_BIS -> 3_AVION_TRAIN -> 3_AVION_TRAIN_BIS -> 4_TRAIN_TRAIN -> OMEGA```
-avec une emission de 8.5kg de Co2, 48mn et 17€.
+avec une emission de 8.5kg de Co2, 48min et coûte 17€.
 
 Ce modèle permet de bien représenter les correspondances et d'optimiser le trajet en fonction des critères donnés.
 
