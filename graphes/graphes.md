@@ -13,10 +13,6 @@ Version 1 : un seul moyen de transport
 
 ### Présentation d'un exemple
 
-*Présenter un exemple concret de problème (données complètes pour la plateforme avec tous les moyens de transport, préférences de l'utilisatrices qui comprennent le moyen de transport choisi, le critère d'optimisation, et nombre d'itinéraires demandés).*
-*Donner la solution du problème du point de vue de l'utilisatrice, càd quels sont les itinéraires possibles, quels sont les meilleurs itinéraires et pourquoi.*
-*Pour l'instant on ne parle pas de graphes; on peut éventuellement faire des schémas.*
-
 Prenons comme exemple un utilisateur pressé, car sa voiture vient de tomber en panne. Il souhaite atteindre le plus rapidement possible la ville D où se trouve son lieu de travail. Il se trouve actuellement dans la ville A. De plus, l'utilisateur a peur de l'avion, il ne peut donc emprunter que le train.
 
 Les choix à sa disposition peuvent être illustrés comme suit :
@@ -28,10 +24,8 @@ On pourrait imaginer passer par un chemin avec 3 étapes, mais les deux choix di
 
 ### Modèle pour l'exemple
 
-*Donner le graphe modélisant l'exemple ci-dessus.*
 ![illustration des chemins possible](./Capture.PNG)
 
-*Donner la solution du problème (càd les meilleurs itinéraires) en tant que chemins dans le graphe.*
 Les quatres itinéraire possible sont :
 1) TRAIN de villeA à villeD en passant par villeB totale: 120.0 min         [A,B,D]
 2) TRAIN de villeA à villeD en passant par villeC totale: 140.0 min         [A,C,D]
@@ -39,13 +33,6 @@ Les quatres itinéraire possible sont :
 4) TRAIN de villeA à villeD en passant par villeB, villeC totale: 230.0 min [A,B,C,D]
 ### Modélisation pour la Version 1 dans le cas général
 
-*Expliquer de manière abstraite comment, étant donné un problème de recherche d'itinéraire (plateforme avec tous types de lignes, moyen de transport choisi, critère d'optimisation, nombre d'itinéraires demandés) on peut construire un graphe permettant de résoudre le problème de recherche d'itinéraire. C'est à dire:*
-- *quels sont les sommets du graphe par rapport aux données du problème*, 
-- *quelles sont ses arêtes, par rapport aux données du problème*, 
-- *comment sont définis les poids des arêtes*,
-- *quel algorithme sur les graphes permet de résoudre le problème d'itinéraire (nom de l'algorithme, arguments).*
-
-*Utiliser un vocabulaire précis sur les graphes.*
 
 Les sommets inclus dans le graphe sont les mêmes que dans les données, et les arêtes sont initialement les mêmes que dans les données. Lorsque l'utilisateur indique qu'il ne souhaite utiliser que le train, le graphe est recréé pour n'inclure que les arêtes utilisant ce moyen de transport. 
   Pour modéliser ce problème, nous simulons un unique graphe qui utilise trois autres graphes pour résoudre les problèmes. Chaque sous-graphe représente un critère, ce qui permet que le poids des arêtes reste fidèle aux données initiales.
@@ -54,12 +41,7 @@ L'algorithme qui doit être utilisé pour résoudre ce problème est l'algorithm
 
 ### Implémentation de la Version 1
 
-*Écrire une classe de test qui reprend l'exemple, définit toutes les données de la plateforme, construit le graphe et calcule la solution.*
-*Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
 *Donner ici le VoyageurTest.java, **VoyageurTest.java**, **18/05/2024** **b2d69ddab6a21c695e3e3c46b06dad4157fdb7d2** et un **https://gitlab.univ-lille.fr/sae2.01-2.02/2024/B6/-/blob/b2d69ddab6a21c695e3e3c46b06dad4157fdb7d2/tests/graphes/v1/VoyageurTest.java***.
-
-*On insiste sur l'importance de spécifier le commit. En effet, quand vous commencerez la Version 2, le code utilisé pour le test de la Version 1 sera modifié. Il se peut que vous n'ayez pas le temps de finaliser la Version 2 et vous retrouver avec un code qui ne marche pas même pour la Version 1. C'est pourquoi il est important de rédiger le rapport au fur et à mesure et de donner ici un lien vers la version de votre code qui marche pour la Version 1 du projet.*
-
 
 Version 2 : multimodalité et prise en compte des correspondances
 ---
@@ -68,19 +50,13 @@ Version 2 : multimodalité et prise en compte des correspondances
 
 ### Présentation d'un exemple
 
-*Présenter un exemple concret (plateforme, couts de correspondance, critère d'optimalité).*
-*Donner la solution du problème du point de vue de l'utilisatrice (quels sont les itinéraires possibles, lesquels sont optimaux et pourquoi).*
-*Il est possible d'utiliser le même exemple que pour la Version 1 ou le modifier si pertinent.*
 ![illustration des chemins possible](./img/image.png)
 Dans cet exemple, l'utilisateur n'est intéressé que par un seul critère et est capable de prendre n'importe quel moyen de transport. Il cherche à se rendre de la ville 1 à la ville 4. Sachant qu'il y a une correspondance à la ville 3 donnant un malus de 3, le meilleur chemin est 1 -> 3 -> 4 (6). Ce chemin permet d'optimiser le trajet, peu importe le moyen de transport.Le deuxieme meilleur chemin implique de faire des allez retour entre 1 et 3, ce qui donnerait : 1 -> 3 -> 1 -> 3 -> 4 (8).
    L'autre chemin passant par la ville 2 n'a pas de malus de correspondance, mais il est le plus long (poids de 9) parmi les chemins possibles (sans compter les chemin qui ont une boucle).
 
 ### Modèle pour l'exemple
 
-*Donner le graphe modélisant l'exemple ci-dessus.*
-*Donner la solution du problème (càd les meilleurs itinéraires) en tant que chemins dans le graphe.*
 ![modeliasation graphe V2](./img/graphev2.png)
-
 
 
 Pour modéliser ce problème, nous avons décidé de représenter les correspondances par des arêtes entre deux sommets précis. Ainsi, chaque correspondance se trouve entre un sommet et un autre ayant le suffixe '_BIS'. Ici, l'utilisateur partant de ALPHA devra suivre le chemin suivant pour obtenir le plus court trajet :
@@ -104,9 +80,6 @@ Chaque nom de lieu suit ce format : NOM_ModArr_ModDep(_BIS), où ModArr est le m
 
 ### Modélisation pour la Version 2 dans le cas général
 
-*Mêmes questions que pour la section correspondante de la Version 1, mais cette fois-ci les données d'entrée contiennent aussi des couts de correspondance.*
-*Vous pouvez expliquer l'entièreté de la solution pour la Version 2, ou bien indiquer **clairement** les différences par rapport à la solution proposée pour la Version 1.*
-
 D'abord, pour construire notre graphe, nous commençons par construire les correspondances. Pour cela, nous créons d'abord, pour chaque correspondance renseignée, un premier lieu nommé suivant le format expliqué ci-dessus, que nous lions à un autre sommet portant le même nom suivi du suffixe _BIS. Nous donnons a cette arrete le poids correspondant au critère demandé. Le moyen de transport de cette arête n'a pas d'importance.
 
 Après avoir créé toutes les correspondances renseignées, nous créons toutes les correspondances non renseignées avec tous les moyens de transport possibles en attribuant un poids nul.
@@ -117,14 +90,14 @@ Enfin, pour résoudre le problème, il ne reste plus qu'à lier le sommet ALPHA 
 
 ### Implémentation de la Version 2
 
-*Écrire une classe de test qui reprend l'exemple, définit toutes les données de la plateforme, construit le graphe et calcule la solution.*
-*Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
 *Donner ici le **VoyageurTestReadMe.java**, **06/06/2024** **6edb7bbf481c3f304eb5a45ff5be5d48a7310751** et un **https://gitlab.univ-lille.fr/sae2.01-2.02/2024/B6/-/blob/6edb7bbf481c3f304eb5a45ff5be5d48a7310751/tests/graphes/VoyageurTestReadMe.java***.
 *En particulier, il peut s'agir de la même classe que celle donnée pour la Version 1, mais un commit différent.*
 
 
 Version 3 : optimisation multi-critères
 ---
+*Cette section traite uniquement de la Version 3 du projet.*
+
 
 ### Présentation d'un exemple
 
@@ -174,7 +147,6 @@ Nous avons donc bien le score du premier chemin inférieur au second, ce qui nou
 
 
 
-*Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
 *Donner ici le **nom complet de la classe**, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
 
 
