@@ -1,36 +1,7 @@
-# s201-02
-
-Votre rapport doit suivre le plan donné dans ce document.
-
-Contraintes à respecter pour le rapport
-
-- [ ] format: Markdown qu'on peut lire sur gitlab, ou pdf, ou html
-- [ ] rapport dans un répertoire `graphes` à la racine du dépôt git
-- [ ] rapport prêt le 21/06/2024; aucun délai supplémentaire ne sera accordé quelle que soit la raison donnée. Concrètement, on va récupérer la dernier daté au plus tard le 21/06/2024 et on ne verra même pas de version ultérieure du rapport, si elles existent. Minuit et une minute du 22/06/2024 sera trop tard
-- [ ] respecte le plan donné ci-dessous
-- [ ] garder les explications *en italique* jusque la fin pour s'y référer en écrivant le rapport
-- [ ] supprimer les explications *en italique* juste avant de rendre la version finale du rapport
-- [ ] le rapport est un texte **rédigé** avec des phrases intelligibles (on ne se contente pas de répondre laconiquement aux questions posées)
-
-Idéalement, le rapport est rédigé au fur et à mesure avec le calendrier donné dans le sujet:
-
-- section Version 1 faite avant le 18/05/2024 (1pt/20 si c'est le cas)
-- section Version 2 faite avant le 08/06/2024 (1pt/20 si c'est le cas)
-
-Finalement, l'utilisation d'un outils de génération de langage est autorisées, à condition de le faire intelligemment. En particulier, veillez à:
-- avoir un rapport cohérent avec un style cohérent sur la totalité du document (niveau de langage, richesse du vocabulaire, termes utilisés, verbosité, ...)
-- un rapport trop verbeux est fastidieux à lire. Si vous utilisez un outil pour faire du texte verbeux inutile, on utilisera un outil pour en faire un résumé et on corrigera uniquement le résumé
-- les outils de génération insèrent parfois des phrases ne faisant pas partie du texte, mais qui s'adressent à l'interlocuteur (par exemple, pour vous informer que la limite de 2000 tokens est atteinte). La présence de telles phrases dans le rapport indique que vous n'avez pas relu et sera lourdement pénalisée.
-
-
-**Début du rapport** Tout ce qui précède sera enlevé pour la version finale
-
-------------------------------------------
 
 SAE S2.02 -- Rapport pour la ressource Graphes
 ===
 
-*Noms des auteurs, groupe*
 Fryson Adrien et Roget Benjamin, Groupe B6
 
 
@@ -154,6 +125,7 @@ Enfin, pour résoudre le problème, il ne reste plus qu'à lier le sommet ALPHA 
 
 Version 3 : optimisation multi-critères
 ---
+
 ### Présentation d'un exemple
 
 ![illustration des chemins possible](./img/exempleV3.png)
@@ -200,16 +172,11 @@ Le score du meilleur chemin est donc de 0.00979.
 Le score du deuxième chemin est de 0,0231.
 Nous avons donc bien le score du premier chemin inférieur au second, ce qui nous permet d'arriver aux mêmes conclusions que dans l'exemple.
 
-### Implémentation de la Version 3
 
-*Écrire une classe de test qui reprend l'exemple, définit toutes les données de la plateforme, construit le graphe et calcule la solution.*
+
 *Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
 *Donner ici le **nom complet de la classe**, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
-*En particulier, il peut s'agir de la même classe que celle donnée pour la Version 1, mais un commit différent.*
 
-*Suivre le même plan que pour les deux autres sections.*
-*Pour l'exemple, veillez à spécifier toutes les données des problèmes. En particulier, on ajoute ici l'expression des préférences d'optimisation de l'utilisatrice.*
-*Comme précédemment, il est possible d'utiliser le même exemple et simplement l'enrichir.*
 
 ----------------------------------------------------
 
