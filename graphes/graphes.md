@@ -85,7 +85,7 @@ L'algorithme qui doit être utilisé pour résoudre ce problème est l'algorithm
 
 *Écrire une classe de test qui reprend l'exemple, définit toutes les données de la plateforme, construit le graphe et calcule la solution.*
 *Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
-*Donner ici le VoyageurTest.java, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
+*Donner ici le VoyageurTest.java, **VoyageurTest.java**, **18/05/2024** **b2d69ddab6a21c695e3e3c46b06dad4157fdb7d2** et un **https://gitlab.univ-lille.fr/sae2.01-2.02/2024/B6/-/blob/b2d69ddab6a21c695e3e3c46b06dad4157fdb7d2/tests/graphes/v1/VoyageurTest.java***.
 
 *On insiste sur l'importance de spécifier le commit. En effet, quand vous commencerez la Version 2, le code utilisé pour le test de la Version 1 sera modifié. Il se peut que vous n'ayez pas le temps de finaliser la Version 2 et vous retrouver avec un code qui ne marche pas même pour la Version 1. C'est pourquoi il est important de rédiger le rapport au fur et à mesure et de donner ici un lien vers la version de votre code qui marche pour la Version 1 du projet.*
 
@@ -148,7 +148,7 @@ Enfin, pour résoudre le problème, il ne reste plus qu'à lier le sommet ALPHA 
 
 *Écrire une classe de test qui reprend l'exemple, définit toutes les données de la plateforme, construit le graphe et calcule la solution.*
 *Votre classe peut utiliser des assertions (test unitaire) ou bien afficher la solution.*
-*Donner ici le **nom complet de la classe**, **la date et l'identifiant du commit à regarder** et un **lien vers la page de cette classe sur gitlab qui correspond au bon commit***.
+*Donner ici le **VoyageurTestReadMe.java**, **06/06/2024** **6edb7bbf481c3f304eb5a45ff5be5d48a7310751** et un **https://gitlab.univ-lille.fr/sae2.01-2.02/2024/B6/-/blob/6edb7bbf481c3f304eb5a45ff5be5d48a7310751/tests/graphes/VoyageurTestReadMe.java***.
 *En particulier, il peut s'agir de la même classe que celle donnée pour la Version 1, mais un commit différent.*
 
 
