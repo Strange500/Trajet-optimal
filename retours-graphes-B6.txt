@@ -1,0 +1,13 @@
+# B6
+
+*Fryson Adrien et Roget Benjamin*
+
+Vous avez réussi à proposer une solution au problème posé, au moins pour la V1 et la V2. 
+Pour la V1 vous avez construit 3 graphes, ce qui est inutile. Il suffit de construire le graphe pour le critère demandé par l'utilisateur à la demande. Ce n'est pas grave, ça marche quand même, mais cela vous met sur une mauvaise piste pour la V3.
+
+Votre modèle pour la V2 me semble un peu compliqué, mais j'imagine que vous avez voulu éviter des chemins qui tournent entre les "gares" de la même ville. Il y avait une soultion un peu plus simple, mais qui globalemnet revent au même.
+
+Pour la V3, je ne suis pas sûre d'avoir compris dans les détails le modèle que vous proposez, et je n'ai pas réussi à trouver mon chemin dans votre code pour voir ce que vous avez implémenté (votre code est globalement très comlpiqué).
+Cependant, vous semblez appliquer des coefficients aux chemins. Je ne sais pas comment avec ça vous décidez si sur un trançon on prendra e.g. le train ou l'avion.
+La bonne manière de faire est d'appliquer des pondérations aux poids des arêtes.
+On construit un seul graphe dans lequel chaque arête correspond à un moyen de transport unique, mais dont le poids traduit la préférence de l'utilisatrice, comme dans les exemples donnés en TD. Par exemple, on multiplie le temps en avion par 3 et on fait un calcul d'itinéraire plus court en temps.
